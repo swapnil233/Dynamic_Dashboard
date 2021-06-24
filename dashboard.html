@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,27 +14,11 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-
 </head>
-
 <body>
-    <form>
-        <h1>Log In</h1>
-        <!-- <h2>Log into your account using your email address</h2> -->
+    <h1>Hello</h1>
+    <button type="submit" id="logout_btn">log out</button>
 
-        <label for="user_name">Name</label>
-        <input type="text" name="name" id="user_name">
-       
-        <label for="user_email">Email Address</label>
-        <input type="text" name="email" id="user_email">
-
-        <label for="user_pass">Password</label>
-        <input type="password" name="Password" id="user_pass">
-
-        <button type="submit" id="login_btn">Log In</button>
-    </form>
-
-    <script src="./login.js"></script>
+    <script src="./dashboard.js"></script>
 </body>
-
 </html>

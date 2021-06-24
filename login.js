@@ -10,7 +10,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-document.getElementById('submit_btn').addEventListener('click', (e) => {
+document.getElementById('login_btn').addEventListener('click', (e) => {
     e.preventDefault();
 
     var user_name = document.getElementById('user_name').value;
@@ -20,12 +20,28 @@ document.getElementById('submit_btn').addEventListener('click', (e) => {
     // Log In
     firebase.auth().signInWithEmailAndPassword(user_email, user_pass)
         .then((userCredential) => {
-            // Signed in
+            // If sign in is successful
             var user = userCredential.user;
+
+            var current_user = firebase.auth().currentUser;
+            
+            // Updating user's profile with the name they provided in the form
+            current_user.updateProfile({
+                displayName: user_name
+            })
+
+            window.location.replace("dashboard.html")
         })
+        // If sign-in is not successful
         .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorMessage)
+            window.alert(error.message)
         });
+});
+
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        window.location.replace('dashboard.html')
+    } else {
+        console.log("no user signed in")
+    }
 });
