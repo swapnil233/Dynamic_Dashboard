@@ -61,6 +61,7 @@ button {
     background-color: rgb(117, 125, 240);
     border: none;
     border-radius: 5px;
+    outline: none;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
