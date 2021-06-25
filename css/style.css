@@ -75,3 +75,12 @@ button {
 button:hover {
     top: -2px;
 }
+
+p:first-of-type {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+}
