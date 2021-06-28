@@ -18,12 +18,20 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         document.getElementById("user_name").innerHTML = userDisplayName
 
+        console.log(userDisplayName)
+
     } else {
         window.location.replace('index.html')
     }
 });
 
+// Logout
 document.getElementById('logout_btn').addEventListener("click", (e) => {
     e.preventDefault();
-    firebase.auth().signOut()
+    firebase.auth().signOut().then(() => {
+
+        // Will use this async method for later tasks
+        
+        return
+    })
 })

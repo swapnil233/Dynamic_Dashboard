@@ -4,20 +4,22 @@ import {
 
 firebase.initializeApp(firebaseConfig);
 
-document.getElementById('signup_btn').addEventListener("click", (e) => {
+document.querySelector('#signup_btn').addEventListener("click", (e) => {
     e.preventDefault();
 
-    var user_name = document.getElementById('user_name').value;
     var user_email = document.getElementById('user_email').value;
     var user_pass = document.getElementById('user_pass').value;
+    var user_name = document.getElementById('user_name').value;
 
     // Sign Up
     firebase.auth().createUserWithEmailAndPassword(user_email, user_pass)
+        // Success
         .then((userCredentials) => {
-            firebase.auth().currentUser.updateProfile({
+            userCredentials.user.updateProfile({
                 displayName: user_name
             })
         })
+        // Errors
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
