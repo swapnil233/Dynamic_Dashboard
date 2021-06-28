@@ -16,8 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -35,9 +34,22 @@
                 <span class="material-icons icon">settings</span>
 
                 <!-- TODO: Let user choose this -->
-                <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="Business woman" class="top-avatar">
+                <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                    alt="Business woman" class="top-avatar">
 
-                
+                <div class="profile-dropdown-wrapper">
+                    <div id="dropdown-icon-wrapper">
+                        <span class="material-icons icon" id="profile-dropdown">expand_more</span>
+                    </div>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <h3 id='user_name'></span></h3>
+                        <button type="submit" id="logout_btn">Log Out</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -46,8 +58,7 @@
 </body>
 
 <!-- 
-    <h3 id='user_name'></span></h3>
-    <button type="submit" id="logout_btn">Log Out</button>
+    
  -->
 
 </html>
