@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/dashboard.css">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
 </head>
+
 <body>
-    <h1>Hello, <span id='user_name'></span></h1>
-    <button type="submit" id="logout_btn">log out</button>
+    <div class="top-bar">
+        <div class="topbar-wrapper">
+            <div class="top-left">
+                <span class="logo">DashApp</span>
+            </div>
+            <div class="top-right">
+                <span class="material-icons icon">notifications</span>
+                <span class="material-icons icon">settings</span>
+
+                <!-- TODO: Let user choose this -->
+                <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="Business woman" class="top-avatar">
+
+                
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="./js/dashboard.js"></script>
 </body>
+
+<!-- 
+    <h3 id='user_name'></span></h3>
+    <button type="submit" id="logout_btn">Log Out</button>
+ -->
+
 </html>
