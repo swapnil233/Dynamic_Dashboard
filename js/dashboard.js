@@ -34,3 +34,9 @@ document.getElementById('logout_btn').addEventListener("click", (e) => {
         return
     })
 })
+
+// Dropdown menu
+document.querySelector("#profile-dropdown").addEventListener("click", (e) => {
+    // Hide/show the dropdown menu when arrow is clicked
+    document.querySelector(".dropdown-content").classList.toggle("show");
+})
