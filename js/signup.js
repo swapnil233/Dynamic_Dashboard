@@ -1,4 +1,4 @@
-firebase.auth().onAuthStateChanged(function (user) {
+var unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         window.location.replace('dashboard.html')
     } else {
@@ -9,6 +9,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 document.querySelector('#signup_btn').addEventListener("click", (e) => {
     e.preventDefault();
 
+    // Turn off auth state change listner
+    unsubscribe();
+
     var user_email = document.getElementById('user_email').value;
     var user_pass = document.getElementById('user_pass').value;
     var user_name = document.getElementById('user_name').value;
@@ -17,9 +20,11 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
     firebase.auth().createUserWithEmailAndPassword(user_email, user_pass)
         // Success
         .then((userCredentials) => {
-            userCredentials.user.updateProfile({
+            return userCredentials.user.updateProfile({
                 displayName: user_name
             })
+        }).then(() => {
+            window.location.replace('dashboard.html')
         })
         // Errors
         .catch(function (error) {
