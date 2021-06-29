@@ -1,3 +1,11 @@
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        window.location.replace('dashboard.html')
+    } else {
+        console.log("no user signed in")
+    }
+});
+
 document.getElementById('login_btn').addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -10,12 +18,4 @@ document.getElementById('login_btn').addEventListener('click', (e) => {
         .catch((error) => {
             window.alert(error.message)
         });
-});
-
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        window.location.replace('dashboard.html')
-    } else {
-        console.log("no user signed in")
-    }
 });
