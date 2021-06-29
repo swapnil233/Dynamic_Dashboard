@@ -26,28 +26,41 @@
                 <span class="logo">DashApp</span>
             </div>
             <div class="top-right">
-                <span class="material-icons icon">notifications</span>
-                <span class="material-icons icon">settings</span>
-
                 <!-- TODO: Let user choose this -->
                 <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                    alt="Business woman" class="top-avatar">
+                    class="top-avatar">
 
                 <div class="profile-dropdown-wrapper">
                     <div id="dropdown-icon-wrapper">
-                        <span class="material-icons icon" id="profile-dropdown">expand_more</span>
+                        <span class="material-icons icon bold" id="profile-dropdown">expand_more</span>
                     </div>
 
                     <div class="dropdown-content" id="myDropdown">
                         <h3 id='user_name'></span></h3>
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a href="#" id="update-profile-btn">Update Profile</a>
                         <button type="submit" id="logout_btn">Log Out</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Update Profile Modal -->
+    <div class="profile-update-wrapper">
+        <form class="profile-update-form">
+            <div class="profile-update-header-wrapper">
+                <h1>Update Profile Information</h1>
+                <span class="material-icons icon" id="close-modal">close</span>
+            </div>
+
+            <label for="profile_name">New Username</label>
+            <input type="text" name="email" id="profile_name">
+
+            <!-- <label for="profile_image">New Profile Image</label>
+            <input type="password" name="Password" id="profile_image"> -->
+
+            <button type="submit" id="update">Update</button>
+        </form>
     </div>
 
     <!-- Firebase -->
@@ -80,4 +93,5 @@
     <!-- Scripts -->
     <script src="./js/dashboard.js"></script>
 </body>
+
 </html>
