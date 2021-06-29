@@ -1,8 +1,10 @@
-import {
-    firebaseConfig
-} from './firebase_keys.js'
-
-firebase.initializeApp(firebaseConfig);
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        window.location.replace('dashboard.html')
+    } else {
+        return
+    }
+});
 
 document.querySelector('#signup_btn').addEventListener("click", (e) => {
     e.preventDefault();
@@ -32,11 +34,3 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
             console.log(error);
         });
 })
-
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        window.location.replace('dashboard.html')
-    } else {
-        return
-    }
-});

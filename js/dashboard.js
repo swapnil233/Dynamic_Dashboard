@@ -1,13 +1,12 @@
-import {
-    firebaseConfig
-} from './firebase_keys.js';
-
-firebase.initializeApp(firebaseConfig);
+// Get data
+db.collection('guides').get().then(snapshot => {
+    console.log(snapshot.docs)
+})
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
 
-        // Fetch user's data from firebase.auth().currentUser aka the user instance for later 
+        // Fetch user's data for later
         const userDisplayName = user.displayName;
         const email = user.email;
         const photoURL = user.photoURL;
@@ -19,28 +18,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         // Display their name
         document.getElementById("user_name").innerHTML = userDisplayName
         console.log(userDisplayName)
-
-        // Dropdown Menu
-        document.getElementById('dropdown-icon-wrapper').addEventListener("click", (e) => {
-            e.preventDefault()
-            console.log("SD")
-
-            document.getElementById("myDropdown").classList.toggle("show");
-        })
-
-        // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
 
     } else {
         window.location.replace('index.html')

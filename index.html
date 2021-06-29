@@ -12,18 +12,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-
 </head>
 
 <body>
     <form>
         <h1>Log In</h1>
         <!-- <h2>Log into your account using your email address</h2> -->
-       
+
         <label for="user_email">Email Address</label>
         <input type="text" name="email" id="user_email">
 
@@ -36,7 +31,29 @@
         <p><a href="./forgotPassword.html">Forgot Password</a></p>
     </form>
 
-    <script type="module" src="./js/login.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAj09MQ7pVM7Fqo6G-IvRGYGf5To7bQyFk",
+            authDomain: "simplelogin-369dd.firebaseapp.com",
+            projectId: "simplelogin-369dd",
+            storageBucket: "simplelogin-369dd.appspot.com",
+            messagingSenderId: "334337354126",
+            appId: "1:334337354126:web:d647adefa26d0df2605cdf"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // make auth reference
+        const auth = firebase.auth();
+    </script>
+
+    <!-- Scripts -->
+    <script src="./js/login.js"></script>
 </body>
 
 </html>

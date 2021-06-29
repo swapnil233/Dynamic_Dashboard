@@ -1,9 +1,3 @@
-import {
-    firebaseConfig
-} from './firebase_keys.js'
-
-firebase.initializeApp(firebaseConfig);
-
 document.querySelector('#login_btn').addEventListener("click", (e) => {
     e.preventDefault();
 
