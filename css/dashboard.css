@@ -139,7 +139,7 @@ form {
 }
 
 form h1 {
-    font-size: 30px;
+    font-size: 25px;
 }
 
 form h2 {
@@ -163,4 +163,9 @@ input {
     padding-left: 15px;
     border: 1px solid rgb(207, 205, 205);
     border-radius: 5px;
+}
+
+.disabled {
+    outline:none;
+    cursor:default;
 }

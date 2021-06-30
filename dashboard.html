@@ -49,15 +49,18 @@
     <div class="profile-update-wrapper">
         <form class="profile-update-form">
             <div class="profile-update-header-wrapper">
-                <h1>Update Profile Information</h1>
+                <h1>Edit Your Personal Settings</h1>
                 <span class="material-icons icon" id="close-modal">close</span>
             </div>
 
+            <label for="profile_name">Email Address</label>
+            <input class="disabled" type="email" name="email" id="profile_email" placeholder=" " readonly>
+
             <label for="profile_name">New Username</label>
-            <input type="text" name="email" id="profile_name">
+            <input type="text" name="user_name" id="profile_name">
 
             <label for="profile_image">New Profile Image</label>
-            <input type="password" name="Password" id="profile_image">
+            <input type="file" name="image" id="profile_image">
 
             <button type="submit" id="update">Update</button>
         </form>
@@ -83,11 +86,6 @@
         // make auth and firestore references
         const auth = firebase.auth();
         const db = firebase.firestore();
-
-        // update firestore settings
-        db.settings({
-            timestampsInSnapshots: true
-        });
     </script>
 
     <!-- Scripts -->

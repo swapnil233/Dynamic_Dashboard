@@ -53,6 +53,9 @@ const updateProfileModal = () => {
     openModalButton.addEventListener("click", (e) => {
         e.preventDefault();
 
+        // Show user's email address in the email field
+        document.querySelector("#profile_email").placeholder = firebase.auth().currentUser.email;;
+
         // If the modal doesn't have the CSS "show" class:
         if (!modal.classList.contains("show")) {
 
