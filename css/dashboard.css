@@ -66,6 +66,7 @@ body {
     flex-direction: column;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
 }
 
 .dropdown-content a {
@@ -94,6 +95,10 @@ button {
     position: relative;
     top: 0;
     transition: top ease 0.15s;
+}
+
+.top-bar button {
+    border-radius: 2px;
 }
 
 #user_name {

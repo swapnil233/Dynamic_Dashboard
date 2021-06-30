@@ -20,17 +20,6 @@ db.collection('guides').get().then(snapshot => {
     console.log(snapshot.docs)
 })
 
-// Logout
-document.getElementById('logout_btn').addEventListener("click", (e) => {
-    e.preventDefault();
-    auth.signOut().then(() => {
-
-        // Will use this async method for later tasks
-
-        return
-    })
-})
-
 // Fetch user's data
 const fethUserData = (user) => {
     const userData = {
@@ -51,28 +40,37 @@ const dropDownMenu = () => {
 }
 
 const updateProfileModal = () => {
+
+    // DOM Elements
     const modal = document.querySelector(".profile-update-wrapper");
+    const openModalButton = document.querySelector("#update-profile-btn");
+    const updateButton = document.querySelector("#update");
+    const updateProfileForm = document.querySelector(".profile-update-form");
+    const profileNameField = document.querySelector("#profile_name");
+    const closeModalButton = document.querySelector("#close-modal");
 
     // Open profile updating modal from navbar upon click
-    document.querySelector("#update-profile-btn").addEventListener("click", (e) => {
-        
+    openModalButton.addEventListener("click", (e) => {
+        e.preventDefault();
+
         // If the modal doesn't have the CSS "show" class:
         if (!modal.classList.contains("show")) {
-            
+
             // Toggle that class into the modal
             modal.classList.toggle("show");
 
             // Upon clicking on "update" button inside modal:
-            document.querySelector("#update").addEventListener("click", (e) => {
+            updateButton.addEventListener("click", (e) => {
                 e.preventDefault();
 
                 // Get value of new displayName
-                const newName = document.querySelector("#profile_name").value;
+                const newName = profileNameField.value;
 
                 // Update displayName.
                 if (newName !== "") {
                     updateUsername(newName)
-                    updateDisplayNameInDOM()
+                    updateProfileForm.reset();
+                    modal.classList.toggle("show")
                 } else {
                     window.alert("Must choose a new name to update")
                 }
@@ -81,7 +79,7 @@ const updateProfileModal = () => {
     })
 
     // Close profile updating modal upon clicking the "x"
-    document.querySelector("#close-modal").addEventListener("click", (e) => {
+    closeModalButton.addEventListener("click", () => {
         modal.classList.toggle("show");
     })
 }
@@ -90,6 +88,8 @@ const updateProfileModal = () => {
 const updateUsername = (newName) => {
     auth.currentUser.updateProfile({
         displayName: newName
+    }).then(() => {
+        updateDisplayNameInDOM()
     });
 }
 
@@ -97,3 +97,14 @@ const updateUsername = (newName) => {
 const updateDisplayNameInDOM = () => {
     document.querySelector("#user_name").innerHTML = fethUserData(firebase.auth().currentUser).userDisplayName;
 }
+
+// Logout
+document.getElementById('logout_btn').addEventListener("click", (e) => {
+    e.preventDefault();
+    auth.signOut().then(() => {
+
+        // Will use this async method for later tasks
+
+        return
+    })
+})
