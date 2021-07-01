@@ -12,14 +12,15 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // Email Verification
         if (!user.emailVerified) {
+            // if user is unverified: show the option to verify and upon clicking it, verify the user.
             document.querySelector("#verify-email-button").classList.toggle("show");
             varifyEmail()
         } else {
             document.querySelector(".verified").classList.toggle("show")
         }
 
-
     } else {
+        // If the user is not logged in
         window.location.replace('index.html')
     }
 });
@@ -28,18 +29,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 db.collection('guides').get().then(snapshot => {
     console.log(snapshot.docs)
 })
-
-// Fetch user's data
-const fethUserData = (user) => {
-    const userData = {
-        userDisplayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified,
-        uid: user.uid
-    };
-    return userData;
-};
 
 const dropDownMenu = () => {
     document.querySelector("#profile-dropdown").addEventListener("click", (e) => {
@@ -58,11 +47,11 @@ const updateProfileModal = () => {
     const profileNameField = document.querySelector("#profile_name");
     const closeModalButton = document.querySelector("#close-modal");
 
-    // Open "update profile" modal when clicked
+    // Open "update profile" modal when clicked from dropdown menu
     openModalButton.addEventListener("click", (e) => {
         e.preventDefault();
 
-        // Hide the dropdown menu
+        // Hide the dropdown menu after opening update profile modal
         document.querySelector(".dropdown-content").classList.toggle("show");
 
         // Show user's email address in the email field
@@ -104,37 +93,32 @@ const updateUsername = (newName) => {
     auth.currentUser.updateProfile({
         displayName: newName
     }).then(() => {
+        // Once the name has been updated, append it to the user dropdown menu
         updateDisplayNameInDOM()
     });
 }
 
 // Verify Email Address
 const varifyEmail = () => {
-    const verifyEmailButton = document.querySelector("#verify-email-button");
-
-    verifyEmailButton.addEventListener("click", (e) => {
+    document.querySelector("#verify-email-button").addEventListener("click", (e) => {
         e.preventDefault();
 
+        // Use Firebase's verification method to send the user a verification link
         firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
+                // Hide the "Verify" button upon clicking it
                 document.querySelector("#verify-email-button").classList.toggle("show");
-                console.log("verification email sent")
             });
     })
 }
 
 // Show user's display name inside the DOM
 const updateDisplayNameInDOM = () => {
-    document.querySelector("#user_name").innerHTML = fethUserData(firebase.auth().currentUser).userDisplayName;
+    document.querySelector("#user_name").innerHTML = firebase.auth().currentUser.displayName;
 }
 
 // Logout
 document.getElementById('logout_btn').addEventListener("click", (e) => {
     e.preventDefault();
-    auth.signOut().then(() => {
-
-        // Will use this async method for later tasks
-
-        return
-    })
+    auth.signOut();
 })
