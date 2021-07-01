@@ -10,6 +10,15 @@ firebase.auth().onAuthStateChanged(function (user) {
         // Modal
         updateProfileModal();
 
+        // Email Verification
+        if (!user.emailVerified) {
+            document.querySelector("#verify-email-button").classList.toggle("show");
+            varifyEmail()
+        } else {
+            document.querySelector(".verified").classList.toggle("show")
+        }
+
+
     } else {
         window.location.replace('index.html')
     }
@@ -42,16 +51,19 @@ const dropDownMenu = () => {
 const updateProfileModal = () => {
 
     // DOM Elements
-    const modal = document.querySelector(".profile-update-wrapper");
+    const modal = document.querySelector(".modal");
     const openModalButton = document.querySelector("#update-profile-btn");
     const updateButton = document.querySelector("#update");
     const updateProfileForm = document.querySelector(".profile-update-form");
     const profileNameField = document.querySelector("#profile_name");
     const closeModalButton = document.querySelector("#close-modal");
 
-    // Open profile updating modal from navbar upon click
+    // Open "update profile" modal when clicked
     openModalButton.addEventListener("click", (e) => {
         e.preventDefault();
+
+        // Hide the dropdown menu
+        document.querySelector(".dropdown-content").classList.toggle("show");
 
         // Show user's email address in the email field
         document.querySelector("#profile_email").placeholder = firebase.auth().currentUser.email;;
@@ -74,7 +86,7 @@ const updateProfileModal = () => {
                     updateUsername(newName)
                     updateProfileForm.reset();
                     modal.classList.toggle("show")
-                } else {
+                } else if (newName == "") {
                     window.alert("Must choose a new name to update")
                 }
             })
@@ -94,6 +106,21 @@ const updateUsername = (newName) => {
     }).then(() => {
         updateDisplayNameInDOM()
     });
+}
+
+// Verify Email Address
+const varifyEmail = () => {
+    const verifyEmailButton = document.querySelector("#verify-email-button");
+
+    verifyEmailButton.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        firebase.auth().currentUser.sendEmailVerification()
+            .then(() => {
+                document.querySelector("#verify-email-button").classList.toggle("show");
+                console.log("verification email sent")
+            });
+    })
 }
 
 // Show user's display name inside the DOM

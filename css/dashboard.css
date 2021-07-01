@@ -101,16 +101,31 @@ button {
     border-radius: 2px;
 }
 
+.verify-btn {
+    display: none;
+    margin-left: 10px;
+    border-radius: 5px;
+    height: 35px;
+    padding: 0 10px;
+}
+
 #user_name {
     padding: 10px;
 }
 
-.profile-update-wrapper {
+.modal {
     display: none;
-    width: 100%;
-    height: 100vh;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .profile-update-header-wrapper {
@@ -118,12 +133,26 @@ button {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-
     margin-bottom: 30px;
 }
 
+/* Check Marks */
+.verified {
+    display: none !important;
+    color: #339900 !important;
+}
+.unvarified {
+    display: none !important;
+    color: #cc3300 !important;
+}
+
+.verify-link {
+    display: none;
+    margin-left: 10px;
+}
+
 .show {
-    display:flex;
+    display: flex !important;
 }
 
 form {
@@ -158,14 +187,26 @@ label {
 }
 
 input {
-    margin-bottom: 30px;
     height: 40px;
     padding-left: 15px;
     border: 1px solid rgb(207, 205, 205);
     border-radius: 5px;
+    width: 100%;
+}
+
+.input-wrapper {
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper span {
+    margin-left: 10px;
+    cursor: default;
 }
 
 .disabled {
-    outline:none;
-    cursor:default;
+    outline: none;
+    cursor: default;
 }

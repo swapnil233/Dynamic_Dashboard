@@ -46,21 +46,33 @@
     </div>
 
     <!-- Update Profile Modal -->
-    <div class="profile-update-wrapper">
+    <div class="modal">
+        <!-- Update Profile Modal Content -->
         <form class="profile-update-form">
             <div class="profile-update-header-wrapper">
                 <h1>Edit Your Personal Settings</h1>
                 <span class="material-icons icon" id="close-modal">close</span>
             </div>
 
+            <!-- Profile Name -->
             <label for="profile_name">Email Address</label>
-            <input class="disabled" type="email" name="email" id="profile_email" placeholder=" " readonly>
+            <div class="input-wrapper">
+                <input class="disabled" type="email" name="email" id="profile_email" placeholder=" " readonly>
+                <span class="material-icons verified">verified</span>
+                <a href="#" class="verify-link" id="verify-email-button">Verify</a>
+            </div>  
 
+            <!-- Profile Email Address -->
             <label for="profile_name">New Username</label>
-            <input type="text" name="user_name" id="profile_name">
+            <div class="input-wrapper">
+                <input type="text" name="user_name" id="profile_name">
+            </div>
 
+            <!-- Profile Picture -->
             <label for="profile_image">New Profile Image</label>
-            <input type="file" name="image" id="profile_image">
+            <div class="input-wrapper">
+                <input type="file" name="image" id="profile_image">
+            </div>
 
             <button type="submit" id="update">Update</button>
         </form>
