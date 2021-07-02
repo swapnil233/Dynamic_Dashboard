@@ -17,11 +17,11 @@ body {
 form {
     width: 400px;
     padding: 2rem;
+    margin: 2rem;
     background-color: #f0f0f0;
     -webkit-box-shadow: 0px 6px 15px -4px #000000;
     box-shadow: 0px 6px 15px -4px #000000;
     border-radius: 10px;
-
     display: flex;
     justify-content: center;
     flex-direction: column;

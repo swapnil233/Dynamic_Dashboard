@@ -54,8 +54,9 @@ const updateProfileModal = () => {
         // Hide the dropdown menu after opening update profile modal
         document.querySelector(".dropdown-content").classList.toggle("show");
 
-        // Show user's email address in the email field
-        document.querySelector("#profile_email").placeholder = firebase.auth().currentUser.email;;
+        // Show user's email address and current username in placeholders
+        document.querySelector("#profile_email").placeholder = firebase.auth().currentUser.email;
+        document.querySelector("#profile_name").placeholder = firebase.auth().currentUser.displayName;
 
         // If the modal doesn't have the CSS "show" class:
         if (!modal.classList.contains("show")) {
@@ -108,6 +109,18 @@ const varifyEmail = () => {
             .then(() => {
                 // Hide the "Verify" button upon clicking it
                 document.querySelector("#verify-email-button").classList.toggle("show");
+
+                // Start a 1s listener to detect when user has verified their email address
+                this.emailVerificationListener = setInterval(() => {
+                    firebase.auth().currentUser.reload().then(ok => {
+                        // If the user verifies their email, kill the process and display the verification checkmark.
+                        if (firebase.auth().currentUser.emailVerified) {
+                            document.querySelector(".verified").classList.toggle("show")
+                            clearInterval(this.emailVerificationListener)
+                        }
+                    })
+                    // Once user clicks on "verify", this will listen for verification confirmation once every 2 seconds.
+                }, 1000)
             });
     })
 }
