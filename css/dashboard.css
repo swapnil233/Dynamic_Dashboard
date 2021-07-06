@@ -26,7 +26,7 @@ span {
 
 .topbar-wrapper {
     height: 100%;
-    padding: 10px 30px;
+    padding: 30px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -60,6 +60,11 @@ span {
 .profile-dropdown-wrapper {
     position: relative;
     display: inline-block;
+}
+
+#profile-dropdown {
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-content {

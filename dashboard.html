@@ -22,17 +22,18 @@
 <body>
     <div class="top-bar">
         <div class="topbar-wrapper">
+
             <div class="top-left">
                 <span class="logo">DashApp</span>
             </div>
-            <div class="top-right">
-                <!-- TODO: Let user choose this -->
-                <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                    class="top-avatar">
 
-                <div class="profile-dropdown-wrapper">
-                    <div id="dropdown-icon-wrapper">
-                        <span class="material-icons icon bold" id="profile-dropdown">expand_more</span>
+            <div class="top-right">
+                <div class="profile-dropdown-wrapper">  
+                    <div id="profile-dropdown">
+                        <!-- TODO: Let user choose this -->
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                            class="top-avatar">
+                        <span class="material-icons icon bold">expand_more</span>
                     </div>
 
                     <div class="dropdown-content" id="myDropdown">
@@ -55,23 +56,17 @@
             </div>
 
             <!-- Profile Email Address -->
-            <label for="profile_name">Email Address</label>
+            <label for="profile_email">Email Address</label>
             <div class="input-wrapper">
                 <input class="disabled" type="email" name="email" id="profile_email" placeholder=" " readonly>
                 <span class="material-icons verified">verified</span>
                 <a href="#" class="verify-link" id="verify-email-button">Verify</a>
-            </div>  
+            </div>
 
             <!-- Profile Name -->
             <label for="profile_name">New Username</label>
             <div class="input-wrapper">
-                <input type="text" name="user_name" id="profile_name" placeholder=" ">
-            </div>
-
-            <!-- Profile Picture -->
-            <label for="profile_image">New Profile Image</label>
-            <div class="input-wrapper">
-                <input type="file" name="image" id="profile_image">
+                <input type="text" name="user_name" id="profile_name">
             </div>
 
             <button type="submit" id="update">Update</button>
