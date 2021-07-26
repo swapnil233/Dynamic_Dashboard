@@ -77,7 +77,7 @@ const updateProfileModal = (currentUser) => {
                 // Update displayName.
                 if (newName !== "") {
                     updateUsername(newName)
-                    updateProfileForm.reset();
+                    //updateProfileForm.reset();
                     modal.classList.toggle("show")
                     firebase.auth().currentUser.reload();
                 } else {
