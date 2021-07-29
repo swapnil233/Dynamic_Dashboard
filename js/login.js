@@ -14,6 +14,9 @@ document.getElementById('login_btn').addEventListener('click', (e) => {
 
     // Log In
     firebase.auth().signInWithEmailAndPassword(user_email, user_pass)
+        .then(() => {
+            document.getElementById('login_btn').innerHTML = "Logging In..."
+        }) 
         // If sign-in is not successful
         .catch((error) => {
             window.alert(error.message)

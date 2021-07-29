@@ -5,7 +5,10 @@ document.querySelector('#login_btn').addEventListener("click", (e) => {
 
     firebase.auth().sendPasswordResetEmail(email)
         .then(() => {
-            window.alert("Password reset link sent to your email.")
+            document.querySelector('#login_btn').disabled = true;
+            document.querySelector('#login_btn').innerHTML = "Reset Email Sent to " + email;
+            document.querySelector('#login_btn').style.cursor="default";
+            document.querySelector('#login_btn').style.hover="none"
         })
         .catch((error) => {
             var errorCode = error.code;

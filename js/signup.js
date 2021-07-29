@@ -20,6 +20,7 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
     firebase.auth().createUserWithEmailAndPassword(user_email, user_pass)
         // Success
         .then((userCredentials) => {
+            document.querySelector('#signup_btn').innerHTML = "Signing Up..."
             return userCredentials.user.updateProfile({
                 displayName: user_name
             })
