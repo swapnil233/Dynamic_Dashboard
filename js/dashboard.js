@@ -188,7 +188,7 @@ const chooseFile = (e) => {
 const updateDp = (currentUser) => {
     if ("name" in file) {
         // Create storage ref & put the file in it
-        storage.ref("users/" + currentUser.uid + "/profile.jpg").put(file).then(() => {
+        storage.ref("users/" + currentUser.uid + "/profileImage").put(file).then(() => {
             // success => get download link, put it in DB, update dp img src
             storage.ref("users/" + currentUser.uid + "/profile.jpg").getDownloadURL()
                 .then(imgURL => {
