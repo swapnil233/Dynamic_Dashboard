@@ -1,4 +1,6 @@
-firebase.auth().onAuthStateChanged(function (user) {
+// "auth" and "db" defined inside 'dashboard.html' file
+
+auth.onAuthStateChanged(function (user) {
     if (user) {
 
         // Display user name
@@ -59,9 +61,13 @@ const updateProfileModal = (currentUser) => {
         // Hide the dropdown menu after opening update profile modal
         document.querySelector(".dropdown-content").classList.toggle("show");
 
-        // Show user's email address and current username in placeholders
+        // Show user's email address, current username, and bio in placeholders
         document.querySelector("#profile_email").placeholder = currentUser.email;
         document.querySelector("#profile_name").placeholder = currentUser.displayName;
+        
+        db.collection('users').doc(currentUser.uid).get().then((doc) => {
+            document.querySelector("#user_bio").placeholder = doc.data().bio;
+        })
 
         // If the modal doesn't have the CSS "show" class:
         if (!modal.classList.contains("show")) {
@@ -86,13 +92,13 @@ const updateProfileModal = (currentUser) => {
                     })
                     //updateProfileForm.reset();
                     modal.classList.toggle("show")
-                    firebase.auth().currentUser.reload();
+                    auth.currentUser.reload();
                 } else {
                     window.alert("Must choose a new name to update")
                 }
 
                 // Create a reference of the user within Firestore 'users' collection, with reference id = user's uid
-                firebase.firestore().collection('users').doc(currentUser.uid).set({
+                db.collection('users').doc(currentUser.uid).set({
                     bio: userBioField.value
                 }, {
                     merge: true
@@ -113,7 +119,7 @@ const updateUsername = (newName) => {
         displayName: newName
     }).then(() => {
         // Once the name has been updated, append it to the user dropdown menu
-        updateDisplayNameInDOM(firebase.auth().currentUser)
+        updateDisplayNameInDOM(auth.currentUser)
     });
 }
 
