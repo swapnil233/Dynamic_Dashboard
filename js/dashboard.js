@@ -49,6 +49,7 @@ const updateProfileModal = (currentUser) => {
     const updateButton = document.querySelector("#update");
     const updateProfileForm = document.querySelector(".profile-update-form");
     const profileNameField = document.querySelector("#profile_name");
+    const userBioField = document.querySelector("#user_bio");
     const closeModalButton = document.querySelector("#close-modal");
 
     // Open "update profile" modal when clicked from dropdown menu
@@ -78,12 +79,24 @@ const updateProfileModal = (currentUser) => {
                 // Update displayName.
                 if (newName !== "") {
                     updateUsername(newName)
+                    db.collection('users').doc(currentUser.uid).set(
+                        {
+                            name: newName.value
+                        }
+                    )
                     //updateProfileForm.reset();
                     modal.classList.toggle("show")
                     firebase.auth().currentUser.reload();
                 } else {
                     window.alert("Must choose a new name to update")
                 }
+
+                // Create a reference of the user within Firestore 'users' collection, with reference id = user's uid
+                firebase.firestore().collection('users').doc(currentUser.uid).set(
+                    {
+                        bio: userBioField.value
+                    }
+                )
             })
         }
     })
@@ -132,5 +145,5 @@ const verifyEmail = (currentUser) => {
 
 // Show user's display name inside the DOM
 const updateDisplayNameInDOM = (currentUser) => {
-    document.querySelector("#user_name").innerHTML = currentUser.displayName;
-}
+        document.querySelector("#user_name").innerHTML = currentUser.displayName;
+    }
