@@ -184,21 +184,28 @@ const chooseFile = (e) => {
     file = e.target.files[0]
 }
 
-// Store dp in storage and db as link
+// Store dp in storage as file, and db as link
 const updateDp = (currentUser) => {
-    // Create storage ref & put the file in it
-    storage.ref("users/" + currentUser.uid + "/profile.jpg").put(file).then(() => {
-        // success => get download link, put it in DB, update dp img src
-        storage.ref("users/" + currentUser.uid + "/profile.jpg").getDownloadURL().then(imgURL => {
-            db.collection("users").doc(currentUser.uid).set({
-                dp_URL: imgURL
-            }, {
-                merge: true
-            })
-            document.querySelector("#nav_dp").src = imgURL;
+    if ("name" in file) {
+        // Create storage ref & put the file in it
+        storage.ref("users/" + currentUser.uid + "/profile.jpg").put(file).then(() => {
+            // success => get download link, put it in DB, update dp img src
+            storage.ref("users/" + currentUser.uid + "/profile.jpg").getDownloadURL()
+                .then(imgURL => {
+                    db.collection("users").doc(currentUser.uid).set({
+                        dp_URL: imgURL,
+                        dp_URL_last_modified: file.lastModifiedDate
+                    }, {
+                        merge: true
+                    })
+                    document.querySelector("#nav_dp").src = imgURL;
+                })
+            console.log("success")
+        }).catch(() => {
+            console.log(error.message)
         })
-        console.log("success")
-    }).catch(() => {
-        console.log(error.message)
-    })
+    } else {
+        console.log("Empty/no file")
+    }
+
 }
