@@ -186,24 +186,33 @@ const chooseFile = (e) => {
 
 // Store dp in storage as file, and db as link
 const updateDp = (currentUser) => {
+    // Check if new dp has been added/exists.
     if ("name" in file) {
         // Create storage ref & put the file in it
-        storage.ref("users/" + currentUser.uid + "/profileImage").put(file).then(() => {
-            // success => get download link, put it in DB, update dp img src
-            storage.ref("users/" + currentUser.uid + "/profileImage").getDownloadURL()
-                .then(imgURL => {
-                    db.collection("users").doc(currentUser.uid).set({
-                        dp_URL: imgURL,
-                        dp_URL_last_modified: file.lastModifiedDate
-                    }, {
-                        merge: true
+        storage
+            .ref("users/" + currentUser.uid + "/profileImage")
+            .put(file)
+            .then(() => {
+                // success => get download link, put it in DB, update dp img src
+                storage
+                    .ref("users/" + currentUser.uid + "/profileImage")
+                    .getDownloadURL()
+                    .then(imgURL => {
+                        db
+                            .collection("users")
+                            .doc(currentUser.uid)
+                            .set({
+                                dp_URL: imgURL,
+                                dp_URL_last_modified: file.lastModifiedDate
+                            }, {
+                                merge: true
+                            })
+                        document.querySelector("#nav_dp").src = imgURL;
                     })
-                    document.querySelector("#nav_dp").src = imgURL;
-                })
-            console.log("success")
-        }).catch(() => {
-            console.log(error.message)
-        })
+                console.log("success")
+            }).catch(() => {
+                console.log(error.message)
+            })
     } else {
         console.log("Empty/no file")
     }
