@@ -182,12 +182,25 @@ let file = {}
 const chooseFile = (e) => {
     // Get the file from local machine
     file = e.target.files[0]
+    console.log(file )
 }
 
 // Store dp in storage as file, and db as link
 const updateDp = (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
+        // Check if uploaded file is an image
+        if (file.type !== "image/jpeg" && file.type !== "image/png" && file.type !== "image/gif") {
+            alert("You can only upload .jpeg, .jpg, .png and .gif under 10mb")
+            return
+        }
+
+        // Check image file size
+        if (file.size/1024/1024>10) {
+            alert("The image size must be under 10mb")
+            return
+        }
+
         // Create storage ref & put the file in it
         storage
             .ref("users/" + currentUser.uid + "/profileImage")
