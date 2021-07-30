@@ -79,11 +79,11 @@ const updateProfileModal = (currentUser) => {
                 // Update displayName.
                 if (newName !== "") {
                     updateUsername(newName)
-                    db.collection('users').doc(currentUser.uid).set(
-                        {
-                            name: newName.value
-                        }
-                    )
+                    db.collection('users').doc(currentUser.uid).set({
+                        name: newName
+                    }, {
+                        merge: true
+                    })
                     //updateProfileForm.reset();
                     modal.classList.toggle("show")
                     firebase.auth().currentUser.reload();
@@ -92,11 +92,11 @@ const updateProfileModal = (currentUser) => {
                 }
 
                 // Create a reference of the user within Firestore 'users' collection, with reference id = user's uid
-                firebase.firestore().collection('users').doc(currentUser.uid).set(
-                    {
-                        bio: userBioField.value
-                    }
-                )
+                firebase.firestore().collection('users').doc(currentUser.uid).set({
+                    bio: userBioField.value
+                }, {
+                    merge: true
+                })
             })
         }
     })
@@ -145,5 +145,5 @@ const verifyEmail = (currentUser) => {
 
 // Show user's display name inside the DOM
 const updateDisplayNameInDOM = (currentUser) => {
-        document.querySelector("#user_name").innerHTML = currentUser.displayName;
-    }
+    document.querySelector("#user_name").innerHTML = currentUser.displayName;
+}
