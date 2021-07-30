@@ -31,8 +31,8 @@
                 <div class="profile-dropdown-wrapper">  
                     <div id="profile-dropdown">
                         <!-- TODO: Let user choose this -->
-                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                            class="top-avatar">
+                        <img src="./img/no_user.png"
+                            class="top-avatar" id="nav_dp">
                         <span class="material-icons icon bold">expand_more</span>
                     </div>
 
@@ -69,10 +69,16 @@
                 <input type="text" name="user_name" id="profile_name">
             </div>
 
-            <!-- Profile Name -->
+            <!-- Biography -->
             <label for="user_bio">Short Biography</label>
             <div class="input-wrapper">
                 <input type="textarea" name="user_bio" id="user_bio">
+            </div>
+
+            <!-- User's Display Picture -->
+            <label for="user_dp">Display Picture</label>
+            <div class="input-wrapper">
+                <input type="file" name="user_dp" id="user_dp" onchange="chooseFile(event)">
             </div>
 
             <button type="submit" id="update">Update</button>
@@ -83,6 +89,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
     <script>
         var firebaseConfig = {
@@ -99,6 +106,7 @@
         // make auth and firestore references
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const storage = firebase.storage();
     </script>
 
     <!-- Scripts -->

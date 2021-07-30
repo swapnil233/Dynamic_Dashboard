@@ -6,6 +6,13 @@ auth.onAuthStateChanged(function (user) {
         // Display user name
         updateDisplayNameInDOM(user)
 
+        // Display user's set DP
+        db.collection('users').doc(user.uid).get().then((doc) => {
+            if (doc.data().dp_URL) {
+                document.querySelector("#nav_dp").src = doc.data().dp_URL;
+            }
+        })
+
         // Dropdown Nav Menu
         dropDownMenu()
 
@@ -29,6 +36,12 @@ auth.onAuthStateChanged(function (user) {
             e.preventDefault();
             auth.signOut();
         })
+
+        // db.collection("users").get().then(docs => {
+        //     docs.docs.forEach(doc => {
+        //         console.log(doc.data())
+        //     });
+        // })
 
     } else {
         // If the user is not logged in
@@ -64,7 +77,7 @@ const updateProfileModal = (currentUser) => {
         // Show user's email address, current username, and bio in placeholders
         document.querySelector("#profile_email").placeholder = currentUser.email;
         document.querySelector("#profile_name").placeholder = currentUser.displayName;
-        
+
         db.collection('users').doc(currentUser.uid).get().then((doc) => {
             document.querySelector("#user_bio").placeholder = doc.data().bio;
         })
@@ -79,30 +92,40 @@ const updateProfileModal = (currentUser) => {
             updateButton.addEventListener("click", (e) => {
                 e.preventDefault();
 
-                // Get value of new displayName
+                // Get values
                 const newName = profileNameField.value;
+                const bio = userBioField.value;
 
-                // Update displayName.
+                // Update displayName
                 if (newName !== "") {
-                    updateUsername(newName)
+                    updateUsername(newName);
+                    // Update username inside Firestore database
                     db.collection('users').doc(currentUser.uid).set({
                         name: newName
                     }, {
                         merge: true
                     })
-                    //updateProfileForm.reset();
-                    modal.classList.toggle("show")
-                    auth.currentUser.reload();
-                } else {
-                    window.alert("Must choose a new name to update")
                 }
 
-                // Create a reference of the user within Firestore 'users' collection, with reference id = user's uid
-                db.collection('users').doc(currentUser.uid).set({
-                    bio: userBioField.value
-                }, {
-                    merge: true
-                })
+                // Update bio
+                if (bio !== "") {
+                    // Update bio inside Firebase database
+                    db.collection('users').doc(currentUser.uid).set({
+                        bio: userBioField.value
+                    }, {
+                        merge: true
+                    })
+                }
+
+                // Update dp
+                if (file !== "") {
+                    updateDp(currentUser)
+                }
+
+                // Close up the modal after tasks are done
+                modal.classList.toggle("show")
+                auth.currentUser.reload();
+                updateProfileForm.reset();
             })
         }
     })
@@ -152,4 +175,30 @@ const verifyEmail = (currentUser) => {
 // Show user's display name inside the DOM
 const updateDisplayNameInDOM = (currentUser) => {
     document.querySelector("#user_name").innerHTML = currentUser.displayName;
+}
+
+// Grab dp img and store it in file var
+let file = {}
+const chooseFile = (e) => {
+    // Get the file from local machine
+    file = e.target.files[0]
+}
+
+// Store dp in storage and db as link
+const updateDp = (currentUser) => {
+    // Create storage ref & put the file in it
+    storage.ref("users/" + currentUser.uid + "/profile.jpg").put(file).then(() => {
+        // success => get download link, put it in DB, update dp img src
+        storage.ref("users/" + currentUser.uid + "/profile.jpg").getDownloadURL().then(imgURL => {
+            db.collection("users").doc(currentUser.uid).set({
+                dp_URL: imgURL
+            }, {
+                merge: true
+            })
+            document.querySelector("#nav_dp").src = imgURL;
+        })
+        console.log("success")
+    }).catch(() => {
+        console.log(error.message)
+    })
 }
