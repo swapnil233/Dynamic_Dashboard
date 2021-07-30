@@ -19,12 +19,20 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
     // Sign Up
     firebase.auth().createUserWithEmailAndPassword(user_email, user_pass)
         // Success
-        .then((userCredentials) => {
+        .then(() => {
             document.querySelector('#signup_btn').innerHTML = "Signing Up..."
-            return userCredentials.user.updateProfile({
+        })
+        .then((userCredentials) => {
+            userCredentials.user.updateProfile({
                 displayName: user_name
             })
-        }).then(() => {
+
+            return firebase.firestore().collection('users').doc(userCredentials.user.uid).set({
+                name: user_name,
+                email: user_email
+            })
+        })
+        .then(() => {
             window.location.replace('dashboard.html')
         })
         // Errors
