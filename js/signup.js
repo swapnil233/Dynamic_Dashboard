@@ -26,6 +26,9 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
                 displayName: user_name
             })
 
+            // Send a verification email
+            userCredentials.user.sendEmailVerification();
+
             return firebase.firestore().collection('users').doc(userCredentials.user.uid).set({
                 name: user_name,
                 email: user_email
