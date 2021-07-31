@@ -32,7 +32,8 @@ auth.onAuthStateChanged(function (user) {
 
         // Logout
         document.getElementById('logout_btn').addEventListener("click", (e) => {
-            document.getElementById('logout_btn').innerHTML = 'Logging Out...'
+            document.querySelector(".loader").classList.toggle("hidden")
+            document.querySelector(".btn_text").classList.toggle("hidden")
             e.preventDefault();
             auth.signOut();
         })
@@ -238,7 +239,6 @@ const chooseFile = (e) => {
 const updateDp = async (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
-        console.log("files here")
         try {
             // Check if uploaded file is an image
             if (
@@ -256,7 +256,7 @@ const updateDp = async (currentUser) => {
                 alert("The image size must be under 10mb");
                 return;
             }
-            console.log("File passed requirements")
+            console.log("Image passed requirements")
 
             // Create storage ref & put the file in it
             const userPicRef = storage.ref(

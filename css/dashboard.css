@@ -166,6 +166,10 @@ button {
     display: flex !important;
 }
 
+.hidden {
+    display: none;
+}
+
 form {
     width: 400px;
     padding: 2rem;
