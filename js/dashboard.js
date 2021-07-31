@@ -182,55 +182,98 @@ let file = {}
 const chooseFile = (e) => {
     // Get the file from local machine
     file = e.target.files[0]
-    console.log(file )
+    console.log(file)
 }
+
+// // Store dp in storage as file, and db as link
+// const updateDp = (currentUser) => {
+//     // Check if new dp has been added/exists.
+//     if ("name" in file) {
+//         // Check if uploaded file is an image
+//         if (file.type !== "image/jpeg" && file.type !== "image/png" && file.type !== "image/gif") {
+//             alert("You can only upload .jpeg, .jpg, .png and .gif under 10mb")
+//             return
+//         }
+
+//         // Check image file size
+//         if (file.size/1024/1024>6) {
+//             alert("The image size must be under 6 mb")
+//             return
+//         }
+
+//         // Create storage ref & put the file in it
+//         storage
+//             .ref("users/" + currentUser.uid + "/profileImage")
+//             .put(file)
+//             .then(() => {
+//                 // success => get download link, put it in DB, update dp img src
+//                 storage
+//                     .ref("users/" + currentUser.uid + "/profileImage")
+//                     .getDownloadURL()
+//                     .then(imgURL => {
+//                         db
+//                             .collection("users")
+//                             .doc(currentUser.uid)
+//                             .set({
+//                                 dp_URL: imgURL,
+//                                 dp_URL_last_modified: file.lastModifiedDate
+//                             }, {
+//                                 merge: true
+//                             })
+//                         document.querySelector("#nav_dp").src = imgURL;
+//                     })
+//                 console.log("success")
+//             }).catch(() => {
+//                 console.log(error.message)
+//             })
+//     } else {
+//         console.log("Empty/no file")
+//     }
+// }
 
 // Store dp in storage as file, and db as link
-const updateDp = (currentUser) => {
+const updateDp = async (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
-        // Check if uploaded file is an image
-        if (file.type !== "image/jpeg" && file.type !== "image/png" && file.type !== "image/gif") {
-            alert("You can only upload .jpeg, .jpg, .png and .gif under 10mb")
-            return
-        }
+        try {
+            // Check if uploaded file is an image
+            if (
+                file.type !== "image/jpeg" &&
+                file.type !== "image/png" &&
+                file.type !== "image/gif"
+            ) {
+                alert("You can only upload .jpeg, .jpg, .png and .gif under 10mb");
+                return;
+            }
 
-        // Check image file size
-        if (file.size/1024/1024>10) {
-            alert("The image size must be under 10mb")
-            return
-        }
+            // Check image file size
+            if (file.size / 1024 / 1024 > 10) {
+                alert("The image size must be under 10mb");
+                return;
+            }
 
-        // Create storage ref & put the file in it
-        storage
-            .ref("users/" + currentUser.uid + "/profileImage")
-            .put(file)
-            .then(() => {
-                // success => get download link, put it in DB, update dp img src
-                storage
-                    .ref("users/" + currentUser.uid + "/profileImage")
-                    .getDownloadURL()
-                    .then(imgURL => {
-                        db
-                            .collection("users")
-                            .doc(currentUser.uid)
-                            .set({
-                                dp_URL: imgURL,
-                                dp_URL_last_modified: file.lastModifiedDate
-                            }, {
-                                merge: true
-                            })
-                        document.querySelector("#nav_dp").src = imgURL;
-                    })
-                console.log("success")
-            }).catch(() => {
-                console.log(error.message)
-            })
+            // Create storage ref & put the file in it
+            const userPicRef = storage.ref(
+                "users/" + currentUser.uid + "/profileImage"
+            );
+            await userPicRef.put(file);
+            console.log("Image uploaded")
+
+            // success => get download link, put it in DB, update dp img src
+            const imgURL = await userPicRef.getDownloadURL();
+            console.log(`Image URL: ${imgURL}`)
+            await db.collection("users").doc(currentUser.uid).set({
+                dp_URL: imgURL,
+                dp_URL_last_modified: file.lastModifiedDate,
+            }, {
+                merge: true,
+            });
+            console.log("Document Added")
+            document.querySelector("#nav_dp").src = imgURL;
+        } catch (error) {
+            console.log(error);
+        }
     } else {
-        console.log("Empty/no file")
+        console.log("Empty/no file");
     }
-
-}
-
-// TODO:
-// any format image upload for DP
+};
