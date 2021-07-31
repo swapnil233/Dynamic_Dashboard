@@ -256,6 +256,7 @@ const updateDp = async (currentUser) => {
                 alert("The image size must be under 10mb");
                 return;
             }
+            console.log("File passed requirements")
 
             // Create storage ref & put the file in it
             const userPicRef = storage.ref(
