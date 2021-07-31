@@ -1,6 +1,5 @@
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        document.getElementById('login_btn').innerHTML = "Logging In..."
         window.location.replace('dashboard.html')
     } else {
         console.log("no user signed in")
@@ -10,16 +9,23 @@ firebase.auth().onAuthStateChanged(function (user) {
 document.getElementById('login_btn').addEventListener('click', (e) => {
     e.preventDefault();
 
+    // Start loading animation
+    document.querySelector(".loader").classList.toggle("hidden")
+    document.querySelector(".btn_text").classList.toggle("hidden")
+
+    // Get email and pass values
     const user_email = document.getElementById('user_email').value;
     const user_pass = document.getElementById('user_pass').value;
 
     // Log In
     firebase.auth().signInWithEmailAndPassword(user_email, user_pass)
-        .then(() => {
-            document.getElementById('login_btn').innerHTML = "Logging In..."
-        }) 
         // If sign-in is not successful
         .catch((error) => {
+            // Stop loading animation & revert to "Log In" prompt
+            document.querySelector(".loader").classList.toggle("hidden")
+            document.querySelector(".btn_text").classList.toggle("hidden")
+
+            // Alert the user.
             window.alert(error.message)
         });
 });

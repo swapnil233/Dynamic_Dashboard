@@ -72,6 +72,15 @@ button {
     transition: top ease 0.15s;
 }
 
+.show {
+    display: flex !important;
+}
+
+
+.hidden {
+    display: none;
+}
+
 button:hover {
     top: -2px;
 }

@@ -12,6 +12,10 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
     // Turn off auth state change listner
     unsubscribe();
 
+    // Start loading animation
+    document.querySelector(".loader").classList.toggle("hidden")
+    document.querySelector(".btn_text").classList.toggle("hidden")
+
     var user_email = document.getElementById('user_email').value;
     var user_pass = document.getElementById('user_pass').value;
     var user_name = document.getElementById('user_name').value;
@@ -20,8 +24,8 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
     firebase.auth().createUserWithEmailAndPassword(user_email, user_pass)
         // Success
         .then((userCredentials) => {
-            document.querySelector('#signup_btn').innerHTML = "Signing Up..."
 
+            // Update the user's profile
             userCredentials.user.updateProfile({
                 displayName: user_name
             })
@@ -39,6 +43,10 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
         })
         // Errors
         .catch(function (error) {
+            // Stop loading animation & revert to "Log In" prompt
+            document.querySelector(".loader").classList.toggle("hidden")
+            document.querySelector(".btn_text").classList.toggle("hidden")
+
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
