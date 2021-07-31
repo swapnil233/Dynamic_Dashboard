@@ -183,6 +183,8 @@ const chooseFile = (e) => {
     // Get the file from local machine
     file = e.target.files[0]
     console.log(file)
+    console.log(file.name)
+    console.log(file.type)
 }
 
 // // Store dp in storage as file, and db as link
@@ -232,6 +234,7 @@ const chooseFile = (e) => {
 // }
 
 // Store dp in storage as file, and db as link
+
 const updateDp = async (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
