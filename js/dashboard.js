@@ -238,10 +238,12 @@ const chooseFile = (e) => {
 const updateDp = async (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
+        console.log("files here")
         try {
             // Check if uploaded file is an image
             if (
                 file.type !== "image/jpeg" &&
+                file.type !== "image/jpg" &&
                 file.type !== "image/png" &&
                 file.type !== "image/gif"
             ) {
