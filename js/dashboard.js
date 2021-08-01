@@ -1,23 +1,20 @@
 // "auth" and "db" defined inside 'dashboard.html' file
 
-auth.onAuthStateChanged(function (user) {
+auth.onAuthStateChanged((user) => {
     if (user) {
 
         // Display user name
         updateDisplayNameInDOM(user)
 
-        // Display user's set DP
+        // Show the user's pfp
         db.collection('users').doc(user.uid).get().then((doc) => {
             if (doc.data().dp_URL) {
                 document.querySelector("#nav_dp").src = doc.data().dp_URL;
             }
         })
 
-        // Dropdown Nav Menu
-        dropDownMenu()
-
         // Modal
-        updateProfileModal(user);
+        openAndCloseModal(user);
 
         // Email Verification
         if (!user.emailVerified) {
@@ -32,19 +29,23 @@ auth.onAuthStateChanged(function (user) {
 
         // Logout
         document.getElementById('logout_btn').addEventListener("click", (e) => {
-            // Start loading animation
-            document.querySelector(".loader").classList.toggle("hidden")
-            document.querySelector(".btn_text").classList.toggle("hidden")
             e.preventDefault();
+
+            // Start loading animation
+            startLoadingAnimation(
+                document.getElementById('logout_btn'),
+                document.querySelector(".loader"),
+                document.querySelector(".btn_text")
+            )
 
             // Sign the user out
             auth.signOut()
-            .catch((error) => {
-                // If signout can't be completed, revert loading animation
-                document.querySelector(".loader").classList.toggle("hidden")
-                document.querySelector(".btn_text").classList.toggle("hidden")
-                window.alert(error)
-            });
+                .catch((error) => {
+                    // If signout can't be completed, revert loading animation
+                    document.querySelector(".loader").classList.toggle("hidden")
+                    document.querySelector(".btn_text").classList.toggle("hidden")
+                    window.alert(error)
+                });
         })
 
     } else {
@@ -53,14 +54,13 @@ auth.onAuthStateChanged(function (user) {
     }
 });
 
-const dropDownMenu = () => {
-    document.querySelector("#profile-dropdown").addEventListener("click", (e) => {
-        // Hide/show the dropdown menu when arrow is clicked
-        document.querySelector(".dropdown-content").classList.toggle("show");
-    });
-}
+// Dropdown Menu
+document.querySelector("#profile-dropdown").addEventListener("click", (e) => {
+    // Hide/show the dropdown menu when arrow is clicked
+    document.querySelector(".dropdown-content").classList.toggle("show");
+});
 
-const updateProfileModal = (currentUser) => {
+const openAndCloseModal = (currentUser) => {
 
     // DOM Elements
     const modal = document.querySelector(".modal");
@@ -78,69 +78,109 @@ const updateProfileModal = (currentUser) => {
         // Hide the dropdown menu after opening update profile modal
         document.querySelector(".dropdown-content").classList.toggle("show");
 
-        // Show user's email address, current username, and bio in placeholders
+        // Show user's email address, current username
         document.querySelector("#profile_email").placeholder = currentUser.email;
         document.querySelector("#profile_name").placeholder = currentUser.displayName;
 
+        // Show the user's bio
         db.collection('users').doc(currentUser.uid).get().then((doc) => {
-            document.querySelector("#user_bio").placeholder = doc.data().bio;
+            if (doc.data().bio !== undefined) {
+                document.querySelector("#user_bio").placeholder = doc.data().bio;
+            } else {
+                document.querySelector("#user_bio").placeholder = "Create your bio"
+            }
         })
 
-        // If the modal doesn't have the CSS "show" class:
+        // If the modal isn't open:
         if (!modal.classList.contains("show")) {
 
-            // Toggle that class into the modal
+            // Open the modal
             modal.classList.toggle("show");
-
-            // Upon clicking on "update" button inside modal:
-            updateButton.addEventListener("click", (e) => {
-                e.preventDefault();
-
-                // Get values
-                const newName = profileNameField.value;
-                const bio = userBioField.value;
-
-                // Update displayName
-                if (newName !== "") {
-                    updateUsername(newName);
-                    // Update username inside Firestore database
-                    db.collection('users').doc(currentUser.uid).set({
-                        name: newName
-                    }, {
-                        merge: true
-                    })
-                }
-
-                // Update bio
-                if (bio !== "") {
-                    // Update bio inside Firebase database
-                    db.collection('users').doc(currentUser.uid).set({
-                        bio: userBioField.value
-                    }, {
-                        merge: true
-                    })
-                }
-
-                // Update dp
-                if (file !== "") {
-                    updateDp(currentUser)
-                }
-
-                // Close up the modal after tasks are done
-                modal.classList.toggle("show")
-                auth.currentUser.reload();
-                updateProfileForm.reset();
-            })
         }
+
+        // Upon clicking on "update" button inside modal:
+        updateButton.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Get values
+            const newName = profileNameField.value;
+            const newBio = userBioField.value;
+
+            // Update displayName
+            if (newName !== "") {
+                updateUsername(newName);
+                // Update username inside Firestore database
+                db.collection('users').doc(currentUser.uid).set({
+                    name: newName
+                }, {
+                    merge: true
+                })
+            }
+
+            // Update bio
+            if (newBio !== "") {
+                // Update bio inside Firebase database
+                db.collection('users').doc(currentUser.uid).set({
+                    bio: newBio
+                }, {
+                    merge: true
+                })
+            }
+
+            // Update dp
+            if (file !== "") {
+                // Start the loading animation
+                startLoadingAnimation(
+                    updateButton,
+                    document.querySelector(".update_loader"),
+                    document.querySelector(".update_btn_text")
+                )
+
+                // Once the pfp has been updated, end the loading animation
+                updateDp(currentUser).then(() => {
+                    endLoadingAnimation(
+                        updateButton,
+                        document.querySelector(".update_loader"),
+                        document.querySelector(".update_btn_text")
+                    )
+
+                    auth.currentUser.reload();
+                    updateProfileForm.reset();
+                })
+            }
+
+            // Close up the modal after tasks are done
+            // modal.classList.toggle("show")
+            auth.currentUser.reload();
+            updateProfileForm.reset();
+        })
     })
 
-    // Close profile updating modal upon clicking the "x"
+    // Close modal upon clicking the "x"
     closeModalButton.addEventListener("click", () => {
         modal.classList.toggle("show");
     })
 }
 
-// Update user's display name
+const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
+    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
+
+    loaderElement.classList.toggle("hidden");
+    buttonTextElement.classList.toggle("hidden");
+    buttonElement.style.cursor = 'default'
+    buttonElement.disabled = true
+}
+
+const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
+    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
+
+    loaderElement.classList.toggle("hidden");
+    buttonTextElement.classList.toggle("hidden");
+    buttonElement.style.cursor = 'pointer'
+    buttonElement.disabled = false
+}
+
+// Update username
 const updateUsername = (newName) => {
     auth.currentUser.updateProfile({
         displayName: newName
@@ -181,7 +221,7 @@ const updateDisplayNameInDOM = (currentUser) => {
     document.querySelector("#user_name").innerHTML = currentUser.displayName;
 }
 
-// Grab dp img and store it in file var
+// Grab pfp and store it in 'file'
 let file = {}
 const chooseFile = (e) => {
     // Get the file from local machine
@@ -191,6 +231,7 @@ const chooseFile = (e) => {
     console.log(file.type)
 }
 
+// Update pfp
 const updateDp = async (currentUser) => {
     // Check if new dp has been added/exists.
     if ("name" in file) {
@@ -231,10 +272,12 @@ const updateDp = async (currentUser) => {
             });
             console.log("Document Added")
             document.querySelector("#nav_dp").src = imgURL;
+            // Clear out the file
+            file = ""
         } catch (error) {
             console.log(error);
         }
     } else {
         console.log("Empty/no file");
     }
-};
+}
