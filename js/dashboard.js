@@ -108,7 +108,8 @@ const openAndCloseModal = (currentUser) => {
 
             // Update displayName
             if (newName !== "") {
-                updateUsername(newName);
+                updateUsername(newName)
+
                 // Update username inside Firestore database
                 db.collection('users').doc(currentUser.uid).set({
                     name: newName
@@ -124,6 +125,15 @@ const openAndCloseModal = (currentUser) => {
                     bio: newBio
                 }, {
                     merge: true
+                }).then(() => {
+                    // Show the user's bio
+                    db.collection('users').doc(currentUser.uid).get().then((doc) => {
+                        if (doc.data().bio !== undefined) {
+                            document.querySelector("#user_bio").placeholder = doc.data().bio;
+                        } else {
+                            document.querySelector("#user_bio").placeholder = "Create your bio"
+                        }
+                    })
                 })
             }
 
@@ -169,6 +179,9 @@ const updateUsername = (newName) => {
     }).then(() => {
         // Once the name has been updated, append it to the user dropdown menu
         updateDisplayNameInDOM(auth.currentUser)
+
+        // Update username in placeholder
+        document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
     });
 }
 
@@ -240,6 +253,7 @@ const updateDp = async (currentUser) => {
             const userPicRef = storage.ref(
                 "users/" + currentUser.uid + "/profileImage"
             );
+
             await userPicRef.put(file);
             console.log("Image uploaded")
 
