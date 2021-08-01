@@ -162,24 +162,6 @@ const openAndCloseModal = (currentUser) => {
     })
 }
 
-const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
-    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
-
-    loaderElement.classList.toggle("hidden");
-    buttonTextElement.classList.toggle("hidden");
-    buttonElement.style.cursor = 'default'
-    buttonElement.disabled = true
-}
-
-const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
-    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
-
-    loaderElement.classList.toggle("hidden");
-    buttonTextElement.classList.toggle("hidden");
-    buttonElement.style.cursor = 'pointer'
-    buttonElement.disabled = false
-}
-
 // Update username
 const updateUsername = (newName) => {
     auth.currentUser.updateProfile({
@@ -280,4 +262,22 @@ const updateDp = async (currentUser) => {
     } else {
         console.log("Empty/no file");
     }
+}
+
+const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
+    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
+
+    loaderElement.classList.toggle("hidden");
+    buttonTextElement.classList.toggle("hidden");
+    buttonElement.style.cursor = 'default'
+    buttonElement.disabled = true
+}
+
+const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
+    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
+
+    loaderElement.classList.toggle("hidden");
+    buttonTextElement.classList.toggle("hidden");
+    buttonElement.style.cursor = 'pointer'
+    buttonElement.disabled = false
 }
