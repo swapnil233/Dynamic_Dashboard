@@ -295,3 +295,4 @@ const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) =>
     buttonElement.style.cursor = 'pointer'
     buttonElement.disabled = false
 }
+
