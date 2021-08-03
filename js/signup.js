@@ -1,6 +1,6 @@
 var unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        window.location.replace('dashboard.html')
+        window.location.replace('../pages/dashboard.html')
     } else {
         return
     }
@@ -44,7 +44,7 @@ document.querySelector('#signup_btn').addEventListener("click", (e) => {
                     })
                 })
                 .then(() => {
-                    window.location.replace('dashboard.html')
+                    window.location.replace('../pages/dashboard.html')
                 })
                 // Errors
                 .catch(function (error) {

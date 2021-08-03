@@ -1,4 +1,4 @@
-// "auth" and "db" defined inside 'dashboard.html' file
+// "auth" and "db" defined inside './pages/dashboard.html' file
 
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -50,7 +50,7 @@ auth.onAuthStateChanged((user) => {
 
     } else {
         // If the user is not logged in
-        window.location.replace('index.html')
+        window.location.replace('../index.html')
     }
 });
 

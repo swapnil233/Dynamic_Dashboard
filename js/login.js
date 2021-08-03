@@ -1,6 +1,6 @@
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        window.location.replace('dashboard.html')
+        window.location.replace('./pages/dashboard.html')
     } else {
         console.log("no user signed in")
     }
