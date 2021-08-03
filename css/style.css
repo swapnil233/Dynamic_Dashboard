@@ -97,3 +97,23 @@ p:nth-of-type(2){
 p {
     text-align: center;
 }
+
+/* Under 500px */
+@media (max-width: 500px) {
+    form {
+        width: 90%;
+        padding: 1rem;
+        background-color: #f0f0f0;
+        -webkit-box-shadow: 0px 6px 15px -4px #000000;
+        box-shadow: 0px 6px 15px -4px #000000;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }   
+
+    form h1 {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+}
