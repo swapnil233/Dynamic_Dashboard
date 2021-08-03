@@ -262,7 +262,7 @@ const updateDp = async (currentUser) => {
             console.log(`Image URL: ${imgURL}`)
             await db.collection("users").doc(currentUser.uid).set({
                 dp_URL: imgURL,
-                dp_URL_last_modified: file.lastModifiedDate,
+                dp_URL_last_modified: file.lastModified,
             }, {
                 merge: true,
             });
