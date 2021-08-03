@@ -16,8 +16,6 @@ span {
 }
 
 .top-bar {
-    width: 100%;
-    height: 100%;
     background-color: #fff;
     position: sticky;
     position: -webkit-sticky;
@@ -47,7 +45,6 @@ span {
 .icon {
     cursor: pointer;
     color: #555;
-    margin-right: 10px;
 }
 
 .top-avatar {
@@ -187,14 +184,6 @@ form h1 {
     font-size: 25px;
 }
 
-form h2 {
-    margin-top: 10px;
-    margin-bottom: 30px;
-    font-weight: normal;
-    font-size: 15px;
-    color: #1f1f1f;
-}
-
 label {
     display: block;
     margin-bottom: 10px;
@@ -225,4 +214,53 @@ input {
 .disabled {
     outline: none;
     cursor: default;
+}
+
+@media (max-width: 500px) {
+    .topbar-wrapper {
+        padding: 10px 10%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-weight: bold;
+        font-size: 25px;
+        color: black;
+        cursor: pointer;
+    }
+
+    form {
+        width: 90%;
+        padding: 1rem;
+        margin: 5%;
+        margin-top: 200px;
+        background-color: #f0f0f0;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    form h1 {
+        font-size: 20px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 400;
+        font-size: 15px;
+    }
+    
+    input {
+        height: 40px;
+        padding-left: 15px;
+        border: 1px solid rgb(207, 205, 205);
+        border-radius: 5px;
+        width: 100%;
+    }
 }
