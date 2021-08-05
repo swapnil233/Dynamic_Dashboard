@@ -108,13 +108,25 @@ const openAndCloseModal = (currentUser) => {
 
             // Update displayName
             if (newName !== "") {
-                updateUsername(newName)
+                startLoadingAnimation(
+                    updateButton,
+                    document.querySelector(".update_loader"),
+                    document.querySelector(".update_btn_text")
+                )
 
-                // Update username inside Firestore database
-                db.collection('users').doc(currentUser.uid).set({
-                    name: newName
-                }, {
-                    merge: true
+                updateUsername(newName).then(() => {
+                    // Update username inside Firestore database
+                    db.collection('users').doc(currentUser.uid).set({
+                        name: newName
+                    }, {
+                        merge: true
+                    })
+                        
+                    endLoadingAnimation(
+                        updateButton,
+                        document.querySelector(".update_loader"),
+                        document.querySelector(".update_btn_text")
+                    )
                 })
             }
 
@@ -173,16 +185,16 @@ const openAndCloseModal = (currentUser) => {
 }
 
 // Update username
-const updateUsername = (newName) => {
-    auth.currentUser.updateProfile({
+const updateUsername = async (newName) => {
+    await auth.currentUser.updateProfile({
         displayName: newName
-    }).then(() => {
-        // Once the name has been updated, append it to the user dropdown menu
-        updateDisplayNameInDOM(auth.currentUser)
+    })
 
-        // Update username in placeholder
-        document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
-    });
+    // Once the name has been updated, append it to the user dropdown menu
+    updateDisplayNameInDOM(auth.currentUser)
+
+    // Update username in placeholder
+    document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
 }
 
 // Verify Email Address
@@ -249,6 +261,8 @@ const updateDp = async (currentUser) => {
             }
             console.log("Image passed requirements")
 
+            storage.ref("users/" + currentUser.uid + "/profileImage").put(file).then
+
             // Create storage ref & put the file in it
             const userPicRef = storage.ref(
                 "users/" + currentUser.uid + "/profileImage"
@@ -281,18 +295,23 @@ const updateDp = async (currentUser) => {
 const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
     // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
 
-    loaderElement.classList.toggle("hidden");
-    buttonTextElement.classList.toggle("hidden");
-    buttonElement.style.cursor = 'default'
-    buttonElement.disabled = true
+    // start loading animation if loaderElement is hidden
+    if (loaderElement.classList.contains("hidden")) {
+        buttonElement.style.cursor = 'default'
+        buttonElement.disabled = true
+        loaderElement.classList.remove("hidden");
+        buttonTextElement.classList.add("hidden");
+    }
 }
 
 const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
     // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
 
-    loaderElement.classList.toggle("hidden");
-    buttonTextElement.classList.toggle("hidden");
-    buttonElement.style.cursor = 'pointer'
-    buttonElement.disabled = false
+    // Hide the loading animation if loading animation is present
+    if (!loaderElement.classList.contains("hidden")) {
+        buttonElement.style.cursor = 'pointer'
+        buttonElement.disabled = false
+        loaderElement.classList.add("hidden");
+        buttonTextElement.classList.remove("hidden");
+    }
 }
-
