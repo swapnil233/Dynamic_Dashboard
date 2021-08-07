@@ -20,6 +20,7 @@
 </head>
 
 <body>
+    <!-- Nav Bar -->
     <div class="top-bar">
         <div class="topbar-wrapper">
 
@@ -28,9 +29,11 @@
             </div>
 
             <div class="top-right">
+                <a class="nav-link" href="./dashboard.html">Home</a>
+                <a class="nav-link" href="./myCollections.html">My Collections</a>
+
                 <div class="profile-dropdown-wrapper">
                     <div id="profile-dropdown">
-                        <!-- TODO: Let user choose this -->
                         <img src="../images/no_user.png" class="top-avatar" id="nav_dp">
                         <span class="material-icons icon bold">expand_more</span>
                     </div>
@@ -99,14 +102,13 @@
                 <span class="update_btn_text">Update</span>
                 <div class="update_loader hidden">
                     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
-                        height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
-                        xml:space="preserve">
-    
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px"
+                        viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+
                         <path fill="#000"
                             d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                            <animateTransform attributeType="xml" attributeName="transform" type="rotate"
-                                from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25"
+                                to="360 25 25" dur="0.6s" repeatCount="indefinite" />
                         </path>
                     </svg>
                 </div>
@@ -114,7 +116,21 @@
         </form>
     </div>
 
-    <!--  -->
+    <!-- Movies Database Search -->
+    <section class="movies-search-wrapper">
+        <div class="movies-search-container">
+            <div class="movies-search-search">
+                <form class="search-form">
+                    <input class="search-input" type="text" placeholder="Search for movies or TV shows...">
+                    <button class="search-button">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="movies" class="movies-search-results-container">
+            
+        </div>
+    </section>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -142,6 +158,10 @@
 
     <!-- Scripts -->
     <script src="../js/dashboard.js"></script>
+    <script src="../js/modules/fetchMovies.js"></script>
+
+    <!-- Axios.js -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

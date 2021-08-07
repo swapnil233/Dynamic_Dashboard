@@ -7,7 +7,6 @@
 
 body {
     position: relative;
-    background-color: black;
 }
 
 span {
@@ -38,6 +37,12 @@ span {
 .top-right {
     display: flex;
     align-items: center;
+}
+
+.nav-link {
+    margin-right: 30px;
+    text-decoration: none;
+    color: #333;
 }
 
 .logo {
@@ -164,14 +169,6 @@ button {
     margin-left: 10px;
 }
 
-.show {
-    display: flex !important;
-}
-
-.hidden {
-    display: none;
-}
-
 form {
     width: 400px;
     padding: 2rem;
@@ -219,6 +216,54 @@ input {
 .disabled {
     outline: none;
     cursor: default;
+}
+
+.show {
+    display: flex !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.movies-search-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.movies-search-container { 
+    max-width: 800px;
+    margin-top: 50px;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: row;
+    border-radius: 0;
+    padding: 0;
+    width: 600px;
+}
+
+.search-input {
+    border-radius: 0;
+}
+
+.search-button {
+    border-radius: 0;
+}
+
+.movies-search-results-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.movies-search-results-container > div > * {
+    margin: 10px 20px;
+    flex-basis: 100%;
 }
 
 @media (max-width: 500px) {
