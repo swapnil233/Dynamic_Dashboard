@@ -11,7 +11,7 @@ document.querySelector(".search-button").addEventListener("click", e => {
 });
 
 const getMovies = (searchText) => {
-    axios.get('http://www.omdbapi.com/?s='+ searchText + '&apikey=56bdb7b4').then((res) => {
+    axios.get('https://www.omdbapi.com/?s='+ searchText + '&apikey=56bdb7b4').then((res) => {
         let movies = res.data.Search;
         console.log(res.data.Search)
         
