@@ -226,6 +226,7 @@ input {
     display: none;
 }
 
+/* Movies Search */
 .movies-search-wrapper {
     display: flex;
     flex-direction: column;
@@ -254,16 +255,21 @@ input {
     border-radius: 0;
 }
 
-.movies-search-results-container{
+.movies-search-results {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
-.movies-search-results-container > div > * {
-    margin: 10px 20px;
-    flex-basis: 100%;
+.movie-container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.movie-image {
+    width: 100px;
 }
 
 @media (max-width: 500px) {
@@ -312,5 +318,18 @@ input {
         border: 1px solid rgb(207, 205, 205);
         border-radius: 5px;
         width: 100%;
+    }
+
+    .movies-search-container {
+        width: 100%;
+    }
+
+    .search-form {
+        width: 90%;
+        margin: 0px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 0;
+        border-radius: 0px;
     }
 }
