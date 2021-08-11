@@ -121,12 +121,15 @@ const openAndCloseModal = (currentUser) => {
                     }, {
                         merge: true
                     })
-                        
+
                     endLoadingAnimation(
                         updateButton,
                         document.querySelector(".update_loader"),
                         document.querySelector(".update_btn_text")
                     )
+
+                    // Success message
+                    successPopup("Username updated successfully!")
                 })
             }
 
@@ -146,6 +149,9 @@ const openAndCloseModal = (currentUser) => {
                             document.querySelector("#user_bio").placeholder = "Create your bio"
                         }
                     })
+                }).then(() => {
+                    // Success message
+                    successPopup("Bio updated successfully!")
                 })
             }
 
@@ -165,8 +171,6 @@ const openAndCloseModal = (currentUser) => {
                         document.querySelector(".update_loader"),
                         document.querySelector(".update_btn_text")
                     )
-
-                    successPopup("Profile updated successfully!")
 
                     auth.currentUser.reload();
                     updateProfileForm.reset();
@@ -290,6 +294,9 @@ const updateDp = async (currentUser) => {
 
             // Clear out the file
             file = ""
+
+            // Success message
+            successPopup("Success!");
         } catch (error) {
             console.log(error);
         }
