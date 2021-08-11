@@ -304,7 +304,7 @@ input {
 
     .modal > form {
         width: 90%;
-        margin: 0;
+        margin-top: 60px;
     }
 
     .profile-update-header-wrapper {
