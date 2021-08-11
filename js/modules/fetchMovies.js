@@ -3,7 +3,7 @@ document.querySelector(".search-button").addEventListener("click", e => {
 
     // Get movie search
     let searchText = document.querySelector(".search-input").value;
-    
+
     getMovies(searchText);
 });
 
@@ -35,9 +35,18 @@ const getMovies = (searchText) => {
                             <div class="movie-image">
                                 <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
                             </div>
+
                             <div class="movie-content">
-                                <h2 class="movie-name">${sortedMovies[i].Title}</h2>
-                                <p class="movie-release-date">Released: ${sortedMovies[i].Year}</p>
+                                <div class="add-content-container">
+                                    <div>
+                                        <h2 class="movie-name">${sortedMovies[i].Title}</h2>
+                                        <p class="movie-release-date">Released: ${sortedMovies[i].Year}</p>
+                                    </div>
+
+                                    <a class="add-to-collection" href="#">
+                                        <span class="material-icons icon" id=${sortedMovies[i].imdbID}>add</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         `
@@ -52,6 +61,51 @@ const getMovies = (searchText) => {
         console.log(err)
     })
 }
+
+// When a movie's "Add to Collection" link is clicked, return the movie's imdbID
+document.querySelector("#movies").addEventListener("click", e => {
+    e.preventDefault();
+    getMovieClickedID(e);
+});
+
+// Get the imdbID of the movie that was clicked
+const getMovieClickedID = (e) => {
+    e.preventDefault();
+    return e.target.id;
+}
+
+// Wheen a movie's "Add to Collection" link is clicked, append the available collections to add the movie to inside the "Add to Collection" button's parent element
+document.querySelector("#movies").addEventListener("click", e => {
+    e.preventDefault();
+    const movieID = getMovieClickedID(e);
+
+    // Get the available movie collections 
+    firebase
+        .firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then(doc => {
+            moviesCollection = doc.data().movies_collections
+        })
+        .then(() => {  
+
+            // Loop through each key in the moviesCollection object
+            for (let i = 0; i < Object.keys(moviesCollection).length; i++) {
+                console.log(Object.keys(moviesCollection)[i])
+
+                // Add each key to the innerHTML of the "Add to Collection" button's parent element
+                document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML += 
+                `
+                <br>
+                
+                <a class="collection-button" id="${Object.keys(moviesCollection)[i]}">
+                    ${Object.keys(moviesCollection)[i]}
+                </a>
+                `
+            }
+        })
+});
 
 // Function that sorts the movies array by "Year", descending
 function sortByReleaseYearDescending(a, b) {
