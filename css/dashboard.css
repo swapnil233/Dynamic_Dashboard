@@ -308,8 +308,10 @@ input {
     margin: 20px;
 }
 
-.movie-image {
-    width: 100px;
+.movie-image > img {
+    width: 300px;
+    height: 446px;
+    object-fit: cover;
 }
 
 .add-content-container {
@@ -394,5 +396,12 @@ input {
 
     .showOnMobile {
         display: block !important;
+    }
+}
+
+/* Media Query for width under 500px */
+@media (max-width: 500px) {
+    .movie-container {
+        margin: 20px 0px;
     }
 }
