@@ -272,9 +272,20 @@ input {
     width: 100px;
 }
 
-@media (max-width: 500px) {
+.hiddenOnMobile {
+    display: block;
+}
+
+.showOnMobile {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        max-width: 100%;
+    }
+
     .topbar-wrapper {
-        padding: 10px 10%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -287,49 +298,20 @@ input {
         cursor: pointer;
     }
 
-    form {
-        width: 90%;
-        padding: 1rem;
-        margin: 5%;
-        margin-top: 200px;
-        background-color: #f0f0f0;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-    
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    form h1 {
-        font-size: 20px;
-    }
-    
-    label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: 400;
-        font-size: 15px;
-    }
-    
-    input {
-        height: 40px;
-        padding-left: 15px;
-        border: 1px solid rgb(207, 205, 205);
-        border-radius: 5px;
-        width: 100%;
-    }
-
     .movies-search-container {
-        width: 100%;
+        max-width: 100%;
+        margin-top: 20px;
     }
 
-    .search-form {
-        width: 90%;
-        margin: 0px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 0;
-        border-radius: 0px;
+    .movies-search-search {
+        display: flex;
+    }
+
+    .hiddenOnMobile {
+        display: none;
+    }
+
+    .showOnMobile {
+        display: block !important;
     }
 }
