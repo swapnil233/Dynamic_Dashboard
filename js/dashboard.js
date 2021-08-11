@@ -1,4 +1,13 @@
-// "auth" and "db" defined inside './pages/dashboard.html' file
+// Import errorPopup and successPopup from "./modules/popups.js"
+import { errorPopup, successPopup } from "./modules/popups.js"
+
+// Import verifyEmail from "./modules/verifyEmail.js"
+import { verifyEmail } from "./modules/verifyEmail.js"
+
+// Import loading animations
+import {startLoadingAnimation, endLoadingAnimation} from "./modules/animations.js"
+
+import { file, updateDp, updateUsername , updateDisplayNameInDOM } from "./modules/userUpdates.js"
 
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -60,6 +69,7 @@ document.querySelector("#profile-dropdown").addEventListener("click", (e) => {
     document.querySelector(".dropdown-content").classList.toggle("show");
 });
 
+// Modal
 const openAndCloseModal = (currentUser) => {
 
     // DOM Elements
@@ -188,163 +198,4 @@ const openAndCloseModal = (currentUser) => {
     closeModalButton.addEventListener("click", () => {
         modal.classList.toggle("show");
     })
-}
-
-// Update username
-const updateUsername = async (newName) => {
-    await auth.currentUser.updateProfile({
-        displayName: newName
-    })
-
-    // Once the name has been updated, append it to the user dropdown menu
-    updateDisplayNameInDOM(auth.currentUser)
-
-    // Update username in placeholder
-    document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
-}
-
-// Verify Email Address
-const verifyEmail = (currentUser) => {
-    document.querySelector("#verify-email-button").addEventListener("click", (e) => {
-        e.preventDefault();
-
-        // Use Firebase's verification method to send the user a verification link
-        currentUser.sendEmailVerification()
-            .then(() => {
-                // Hide the "Verify" button upon clicking it
-                document.querySelector("#verify-email-button").classList.toggle("show");
-
-                // Start a 1 second listener to detect when user has verified their email address
-                this.emailVerificationListener = setInterval(() => {
-                    currentUser.reload()
-                        .then(ok => {
-                            // If the user verifies their email, kill the process and display the verification checkmark.
-                            if (currentUser.emailVerified) {
-                                document.querySelector(".verified").classList.toggle("show");
-                                clearInterval(this.emailVerificationListener);
-                            }
-                        })
-                }, 1000)
-            });
-    })
-}
-
-// Show user's display name inside the DOM
-const updateDisplayNameInDOM = (currentUser) => {
-    document.querySelector("#user_name").innerHTML = currentUser.displayName;
-}
-
-// Grab pfp and store it in 'file'
-let file = {}
-const chooseFile = (e) => {
-    // Get the file from local machine
-    file = e.target.files[0]
-    console.log(file)
-    console.log(file.name)
-    console.log(file.type)
-}
-
-// Update pfp
-const updateDp = async (currentUser) => {
-    // Check if new dp has been added/exists.
-    if ("name" in file) {
-        try {
-            // Check if uploaded file is an image
-            if (
-                file.type !== "image/jpeg" &&
-                file.type !== "image/jpg" &&
-                file.type !== "image/png" &&
-                file.type !== "image/gif"
-            ) {
-                // Create a pop-up to notify user that the file is not an image
-                errorPopup("File is not an image");
-                return;
-            }
-
-            // Check image file size
-            if (file.size / 1024 / 1024 > 10) {
-                // Create a pop-up to notify user that the file is too large
-                errorPopup("Size too large");
-                return;
-            }
-            console.log("Image passed requirements")
-
-            storage.ref("users/" + currentUser.uid + "/profileImage").put(file).then
-
-            // Create storage ref & put the file in it
-            const userPicRef = storage.ref(
-                "users/" + currentUser.uid + "/profileImage"
-            );
-
-            await userPicRef.put(file);
-            console.log("Image uploaded")
-
-            // success => get download link, put it in DB, update dp img src
-            const imgURL = await userPicRef.getDownloadURL();
-            console.log(`Image URL: ${imgURL}`)
-            await db.collection("users").doc(currentUser.uid).set({
-                dp_URL: imgURL,
-                dp_URL_last_modified: file.lastModified,
-            }, {
-                merge: true,
-            });
-
-            console.log("Document Added")
-            document.querySelector("#nav_dp").src = imgURL;
-
-            // Clear out the file
-            file = ""
-
-            // Success message
-            successPopup("Success!");
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        console.log("Empty/no file");
-    }
-}
-
-const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
-    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
-
-    // start loading animation if loaderElement is hidden
-    if (loaderElement.classList.contains("hidden")) {
-        buttonElement.style.cursor = 'default'
-        buttonElement.disabled = true
-        loaderElement.classList.remove("hidden");
-        buttonTextElement.classList.add("hidden");
-    }
-}
-
-const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
-    // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
-
-    // Hide the loading animation if loading animation is present
-    if (!loaderElement.classList.contains("hidden")) {
-        buttonElement.style.cursor = 'pointer'
-        buttonElement.disabled = false
-        loaderElement.classList.add("hidden");
-        buttonTextElement.classList.remove("hidden");
-    }
-}
-
-const errorPopup = (error) => {
-    const errorPopup = document.createElement("div")
-    errorPopup.classList.add("error-popup")
-    errorPopup.innerHTML = error
-    document.body.appendChild(errorPopup)
-    setTimeout(() => {
-        document.body.removeChild(errorPopup)
-    }, 3000)
-}
-
-const successPopup = (success) => {
-    const successPopup = document.createElement("div")
-    successPopup.classList.add("success-popup")
-    successPopup.innerHTML = success
-    document.body.appendChild(successPopup)
-    setTimeout(() => {
-        document.body.removeChild(successPopup)
-    }, 3000)
 }

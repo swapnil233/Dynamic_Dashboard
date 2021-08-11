@@ -1,3 +1,7 @@
+// Import the successPopup function and the errorPopup function from '../dashboard.js'
+import {successPopup} from './popups.js'
+import {errorPopup} from './popups.js'
+
 document.querySelector(".search-button").addEventListener("click", e => {
     e.preventDefault()
 
@@ -8,14 +12,15 @@ document.querySelector(".search-button").addEventListener("click", e => {
 });
 
 const getMovies = (searchText) => {
-    axios.get('https://www.omdbapi.com/?s=' + searchText + '&apikey=56bdb7b4').then((res) => {
+    axios.get('https://www.omdbapi.com/?s=' + searchText + '&apikey=56bdb7b4')
+    .then((res) => {
+
+        // Clear the console
+        console.clear();
 
         // Sort the movies by release year
         const sortedMovies = res.data.Search.sort(sortByReleaseYearAscending);
         console.log(sortedMovies);
-
-        // Clear the console
-        console.log('');
 
         // Empty the output div
         document.querySelector("#movies").innerHTML = '';
@@ -56,9 +61,8 @@ const getMovies = (searchText) => {
 
         // Append output into the output div
         document.querySelector("#movies").innerHTML += output;
-
-    }).catch((err) => {
-        console.log(err)
+    }).catch(() => {
+        errorPopup("The entry was not found");
     })
 }
 
@@ -88,15 +92,15 @@ document.querySelector("#movies").addEventListener("click", e => {
         .then(doc => {
             moviesCollection = doc.data().movies_collections
         })
-        .then(() => {  
+        .then(() => {
 
             // Loop through each key in the moviesCollection object
             for (let i = 0; i < Object.keys(moviesCollection).length; i++) {
                 console.log(Object.keys(moviesCollection)[i])
 
                 // Add each key to the innerHTML of the "Add to Collection" button's parent element
-                document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML += 
-                `
+                document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
+                    `
                 <br>
                 
                 <a class="collection-button" id="${Object.keys(moviesCollection)[i]}">
