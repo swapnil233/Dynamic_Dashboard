@@ -1,21 +1,66 @@
 const errorPopup = (error) => {
+    const errorIcon = 
+    `
+    <span class="material-icons error-icon">
+        error
+    </span>
+    `
+
+    const errorMessage = 
+    `
+    <div class="error-message">
+        <p>${error}</p>
+    </div>
+    `
+    // Create a div element, and add the class "error-popup" to it.
     const errorPopup = document.createElement("div")
     errorPopup.classList.add("error-popup")
-    errorPopup.innerHTML = error
-    document.body.appendChild(errorPopup)
+
+    // Add the error icon and error message to the div element.
+    errorPopup.innerHTML += errorIcon
+    errorPopup.innerHTML += errorMessage
+
+    // Append the div element to the body element.
+    document.body.appendChild(errorPopup)   
+
+    // Set the timeout to hide the error popup.
     setTimeout(() => {
+        // Remove the error popup from the body element.
         document.body.removeChild(errorPopup)
-    }, 2000)
+    }, 2000);
+
 }
 
 const successPopup = (success) => {
+    const successIcon = 
+    `
+    <span class="material-icons success-icon">
+        check_circle
+    </span>
+    `
+
+    const successMessage = 
+    `
+    <div class="error-message">
+        <p>${success}</p>
+    </div>
+    `
+    // Create a div element, and add the class "error-popup" to it.
     const successPopup = document.createElement("div")
     successPopup.classList.add("success-popup")
-    successPopup.innerHTML = success
-    document.body.appendChild(successPopup)
+
+    // Add the error icon and error message to the div element.
+    successPopup.innerHTML += successIcon
+    successPopup.innerHTML += successMessage
+
+    // Append the div element to the body element.
+    document.body.appendChild(successPopup)   
+
+    // Set the timeout to hide the error popup.
     setTimeout(() => {
+        // Remove the error popup from the body element.
         document.body.removeChild(successPopup)
-    }, 2000)
+    }, 2000);
 }
 
 const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {

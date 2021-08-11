@@ -10,43 +10,51 @@ body {
 }
 
 .error-popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* Alert red background color */
-    background-color: rgba(255, 0, 0, 1);
-    z-index: 9999;
-    padding: 20px;
+    /* A 50px width by 30px height at the top right of the screen */
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Light red background color with slight opacity */
+    background-color: rgb(255, 65, 65);
     color: #fff;
-    font-size: 15px;
-    line-height: 1.42857143;
+    border-radius: 5px;
     text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-overflow-style: scrollbar;
-    overflow-x: auto;
-    overflow-y: hidden;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: bold;
+    z-index: 9999;
 }
 
 .success-popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* Dark green background color */
-    background-color: rgba(0, 128, 0, 1);
-    z-index: 9999;
-    padding: 20px;
+    /* A 50px width by 30px height at the top right of the screen */
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Light green background color with slight opacity */
+    background-color: rgb(43, 226, 89);
     color: #fff;
-    font-size: 15px;
-    line-height: 1.42857143;
+    border-radius: 5px;
     text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-overflow-style: scrollbar;
-    overflow-x: auto;
-    overflow-y: hidden;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: bold;
+    z-index: 9999;
+}
+
+.error-icon {
+    margin-right: 10px;
+}
+
+.success-icon {
+    margin-right: 10px;
 }
 
 span {

@@ -65,8 +65,9 @@ const getMovies = (searchText) => {
             document.querySelector("#movies").innerHTML += output;
         }).catch(() => {
             errorPopup("The entry was not found");
-        })
+        });
 }
+
 
 // Get the imdbID of the movie that was clicked
 const getMovieClickedID = (e) => {
@@ -110,6 +111,7 @@ document.querySelector("#movies").addEventListener("click", e => {
             }
         })
 });
+
 
 // Function that sorts the movies array by "Year", descending
 function sortByReleaseYearDescending(a, b) {
