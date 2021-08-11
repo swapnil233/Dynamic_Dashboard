@@ -95,6 +95,9 @@ const verifyEmail = (currentUser) => {
             .then(() => {
                 // Hide the "Verify" button upon clicking it
                 document.querySelector("#verify-email-button").classList.toggle("show");
+
+                // Show a success message
+                successPopup("Verification email sent!");
             });
     })
 }
