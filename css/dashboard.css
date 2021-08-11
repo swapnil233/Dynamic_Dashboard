@@ -307,6 +307,10 @@ input {
         display: flex;
     }
 
+    .search-input {
+        font-size: 15px;
+    }
+
     .hiddenOnMobile {
         display: none;
     }
