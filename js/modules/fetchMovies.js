@@ -3,40 +3,45 @@ document.querySelector(".search-button").addEventListener("click", e => {
 
     // Get movie search
     let searchText = document.querySelector(".search-input").value;
-
+    
     getMovies(searchText);
 });
 
 const getMovies = (searchText) => {
-    axios.get('https://www.omdbapi.com/?s='+ searchText + '&apikey=56bdb7b4').then((res) => {
+    axios.get('https://www.omdbapi.com/?s=' + searchText + '&apikey=56bdb7b4').then((res) => {
 
         // Sort the movies by release year
-        const sortedMovies = res.data.Search.sort(sortByReleaseYearDescending);
+        const sortedMovies = res.data.Search.sort(sortByReleaseYearAscending);
         console.log(sortedMovies);
 
         // Clear the console
         console.log('');
-        
+
         // Empty the output div
         document.querySelector("#movies").innerHTML = '';
         let output = ''
 
-        for (let i = 0; i<sortedMovies.length; i++) {
+        // Loop through the movies and add them to the output
+        for (let i = 0; i < sortedMovies.length; i++) {
             console.log(sortedMovies[i].Title)
 
-            if (sortedMovies[i].Type==="movie" || sortedMovies[i].Type=="series"){
-                output += 
-                `
-                <div class="movie-container">
-                    <div class="movie-image">
-                        <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
-                    </div>
-                    <div class="movie-content">
-                        <h2 class="movie-name">${sortedMovies[i].Title}</h2>
-                        <p class="movie-release-date">Released: ${sortedMovies[i].Year}</p>
-                    </div>
-                </div>
-                `
+            // If sortedMovies[i] is a movie or a series, add it to the output
+            if (sortedMovies[i].Type === "movie" || sortedMovies[i].Type == "series") {
+                // If sortedMovies[i] has an image
+                if (sortedMovies[i].Poster !== "N/A") {
+                    output +=
+                        `
+                        <div class="movie-container">
+                            <div class="movie-image">
+                                <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
+                            </div>
+                            <div class="movie-content">
+                                <h2 class="movie-name">${sortedMovies[i].Title}</h2>
+                                <p class="movie-release-date">Released: ${sortedMovies[i].Year}</p>
+                            </div>
+                        </div>
+                        `
+                }
             }
         }
 
