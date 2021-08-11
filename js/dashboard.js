@@ -166,10 +166,10 @@ const openAndCloseModal = (currentUser) => {
                         document.querySelector(".update_btn_text")
                     )
 
+                    successPopup("Profile updated successfully!")
+
                     auth.currentUser.reload();
                     updateProfileForm.reset();
-
-                    successPopup("Profile updated successfully!")
                 })
             }
 
