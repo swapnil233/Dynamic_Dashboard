@@ -298,6 +298,23 @@ input {
         cursor: pointer;
     }
 
+    .modal {
+        height: 100%;
+    }
+
+    .modal > form {
+        width: 90%;
+        margin: 0;
+    }
+
+    .profile-update-header-wrapper {
+        margin-bottom: 10px;
+    }
+
+    .profile-update-header-wrapper > h1 {
+        font-size: 20px;
+    }
+
     .movies-search-container {
         max-width: 100%;
         margin-top: 20px;
