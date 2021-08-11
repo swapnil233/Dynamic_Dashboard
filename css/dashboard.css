@@ -312,6 +312,17 @@ input {
     width: 100px;
 }
 
+.add-content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-content-container > div > h2 {
+    font-size: 20px;
+    margin: 5px 0px;
+}
+
 .hiddenOnMobile {
     display: block;
 }
