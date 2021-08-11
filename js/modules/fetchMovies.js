@@ -1,5 +1,8 @@
 // Import interactions
-import {successPopup, errorPopup} from './interactions.js';
+import {
+    successPopup,
+    errorPopup
+} from './interactions.js';
 
 document.querySelector(".search-button").addEventListener("click", e => {
     e.preventDefault()
@@ -12,29 +15,29 @@ document.querySelector(".search-button").addEventListener("click", e => {
 
 const getMovies = (searchText) => {
     axios.get('https://www.omdbapi.com/?s=' + searchText + '&apikey=56bdb7b4')
-    .then((res) => {
+        .then((res) => {
 
-        // Clear the console
-        console.clear();
+            // Clear the console
+            console.clear();
 
-        // Sort the movies by release year
-        const sortedMovies = res.data.Search.sort(sortByReleaseYearAscending);
-        console.log(sortedMovies);
+            // Sort the movies by release year
+            const sortedMovies = res.data.Search.sort(sortByReleaseYearAscending);
+            console.log(sortedMovies);
 
-        // Empty the output div
-        document.querySelector("#movies").innerHTML = '';
-        let output = ''
+            // Empty the output div
+            document.querySelector("#movies").innerHTML = '';
+            let output = ''
 
-        // Loop through the movies and add them to the output
-        for (let i = 0; i < sortedMovies.length; i++) {
-            console.log(sortedMovies[i].Title)
+            // Loop through the movies and add them to the output
+            for (let i = 0; i < sortedMovies.length; i++) {
+                console.log(sortedMovies[i].Title)
 
-            // If sortedMovies[i] is a movie or a series, add it to the output
-            if (sortedMovies[i].Type === "movie" || sortedMovies[i].Type == "series") {
-                // If sortedMovies[i] has an image
-                if (sortedMovies[i].Poster !== "N/A") {
-                    output +=
-                        `
+                // If sortedMovies[i] is a movie or a series, add it to the output
+                if (sortedMovies[i].Type === "movie" || sortedMovies[i].Type == "series") {
+                    // If sortedMovies[i] has an image
+                    if (sortedMovies[i].Poster !== "N/A") {
+                        output +=
+                            `
                         <div class="movie-container">
                             <div class="movie-image">
                                 <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
@@ -54,15 +57,21 @@ const getMovies = (searchText) => {
                             </div>
                         </div>
                         `
+                    }
                 }
             }
-        }
 
-        // Append output into the output div
-        document.querySelector("#movies").innerHTML += output;
-    }).catch(() => {
-        errorPopup("The entry was not found");
-    })
+            // Append output into the output div
+            document.querySelector("#movies").innerHTML += output;
+        }).catch(() => {
+            errorPopup("The entry was not found");
+        })
+}
+
+// Get the imdbID of the movie that was clicked
+const getMovieClickedID = (e) => {
+    e.preventDefault();
+    return e.target.id;
 }
 
 // When a movie's "Add to Collection" link is clicked, return the movie's imdbID
@@ -71,13 +80,7 @@ document.querySelector("#movies").addEventListener("click", e => {
     getMovieClickedID(e);
 });
 
-// Get the imdbID of the movie that was clicked
-const getMovieClickedID = (e) => {
-    e.preventDefault();
-    return e.target.id;
-}
-
-// Wheen a movie's "Add to Collection" link is clicked, append the available collections to add the movie to inside the "Add to Collection" button's parent element
+// Wheen a movie's "Add to Collection" link is clicked, show the available collections to add the movie to inside the "Add to Collection" button's parent element
 document.querySelector("#movies").addEventListener("click", e => {
     e.preventDefault();
     const movieID = getMovieClickedID(e);
@@ -88,10 +91,9 @@ document.querySelector("#movies").addEventListener("click", e => {
         .collection("users")
         .doc(firebase.auth().currentUser.uid)
         .get()
-        .then(doc => {
-            moviesCollection = doc.data().movies_collections
-        })
-        .then(() => {
+        .then((doc) => {
+            // Get a reference to the "movies_collections" collection, which is an object
+            const moviesCollection = doc.data().movies_collections
 
             // Loop through each key in the moviesCollection object
             for (let i = 0; i < Object.keys(moviesCollection).length; i++) {
@@ -99,12 +101,11 @@ document.querySelector("#movies").addEventListener("click", e => {
 
                 // Add each key to the innerHTML of the "Add to Collection" button's parent element
                 document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
-                    `
-                <br>
-                
-                <a class="collection-button" id="${Object.keys(moviesCollection)[i]}">
-                    ${Object.keys(moviesCollection)[i]}
-                </a>
+                `
+                    <br>
+                    <a class="collection-button" id="${Object.keys(moviesCollection)[i]}" href="#">
+                        ${Object.keys(moviesCollection)[i]}
+                    </a>
                 `
             }
         })
