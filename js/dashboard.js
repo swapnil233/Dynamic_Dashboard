@@ -168,6 +168,8 @@ const openAndCloseModal = (currentUser) => {
 
                     auth.currentUser.reload();
                     updateProfileForm.reset();
+
+                    successPopup("Profile updated successfully!")
                 })
             }
 
@@ -250,13 +252,15 @@ const updateDp = async (currentUser) => {
                 file.type !== "image/png" &&
                 file.type !== "image/gif"
             ) {
-                alert("You can only upload .jpeg, .jpg, .png and .gif under 10mb");
+                // Create a pop-up to notify user that the file is not an image
+                errorPopup("File is not an image");
                 return;
             }
 
             // Check image file size
             if (file.size / 1024 / 1024 > 10) {
-                alert("The image size must be under 10mb");
+                // Create a pop-up to notify user that the file is too large
+                errorPopup("Size too large");
                 return;
             }
             console.log("Image passed requirements")
@@ -280,8 +284,10 @@ const updateDp = async (currentUser) => {
             }, {
                 merge: true,
             });
+
             console.log("Document Added")
             document.querySelector("#nav_dp").src = imgURL;
+
             // Clear out the file
             file = ""
         } catch (error) {
@@ -314,4 +320,24 @@ const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) =>
         loaderElement.classList.add("hidden");
         buttonTextElement.classList.remove("hidden");
     }
+}
+
+const errorPopup = (error) => {
+    const errorPopup = document.createElement("div")
+    errorPopup.classList.add("error-popup")
+    errorPopup.innerHTML = error
+    document.body.appendChild(errorPopup)
+    setTimeout(() => {
+        document.body.removeChild(errorPopup)
+    }, 3000)
+}
+
+const successPopup = (success) => {
+    const successPopup = document.createElement("div")
+    successPopup.classList.add("success-popup")
+    successPopup.innerHTML = success
+    document.body.appendChild(successPopup)
+    setTimeout(() => {
+        document.body.removeChild(successPopup)
+    }, 3000)
 }
