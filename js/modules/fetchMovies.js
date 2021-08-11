@@ -1,6 +1,5 @@
-// Import the successPopup function and the errorPopup function from '../dashboard.js'
-import {successPopup} from './popups.js'
-import {errorPopup} from './popups.js'
+// Import interactions
+import {successPopup, errorPopup} from './interactions.js';
 
 document.querySelector(".search-button").addEventListener("click", e => {
     e.preventDefault()

@@ -1,13 +1,19 @@
-// Import errorPopup and successPopup from "./modules/popups.js"
-import { errorPopup, successPopup } from "./modules/popups.js"
+// Import UI Interactions
+import {
+    startLoadingAnimation,
+    endLoadingAnimation,
+    successPopup,
+    errorPopup
+} from "./modules/interactions.js"
 
-// Import verifyEmail from "./modules/verifyEmail.js"
-import { verifyEmail } from "./modules/verifyEmail.js"
-
-// Import loading animations
-import {startLoadingAnimation, endLoadingAnimation} from "./modules/animations.js"
-
-import { file, updateDp, updateUsername , updateDisplayNameInDOM } from "./modules/userUpdates.js"
+// User functionalities
+import {
+    file,
+    updateDp,
+    updateUsername,
+    updateDisplayNameInDOM,
+    verifyEmail
+} from "./modules/userUpdates.js"
 
 auth.onAuthStateChanged((user) => {
     if (user) {

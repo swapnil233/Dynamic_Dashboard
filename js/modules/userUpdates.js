@@ -1,5 +1,5 @@
-// Import errorPopup and successPopup from popups.js
-import { errorPopup, successPopup } from "./popups.js";
+// Import errorPopup and successPopup from interactions.js
+import { errorPopup, successPopup } from "./interactions.js";
 
 // Grab pfp and store it in 'file'
 let file = {}
@@ -85,9 +85,23 @@ const updateUsername = async (newName) => {
     document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
 }
 
+// Verify Email Address
+const verifyEmail = (currentUser) => {
+    document.querySelector("#verify-email-button").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // Use Firebase's verification method to send the user a verification link
+        currentUser.sendEmailVerification()
+            .then(() => {
+                // Hide the "Verify" button upon clicking it
+                document.querySelector("#verify-email-button").classList.toggle("show");
+            });
+    })
+}
+
 // Show user's display name inside the DOM
 const updateDisplayNameInDOM = (currentUser) => {
     document.querySelector("#user_name").innerHTML = currentUser.displayName;
 }
 
-export {file, updateDp, updateUsername, updateDisplayNameInDOM}
+export {file, updateDp, updateUsername, updateDisplayNameInDOM, verifyEmail}

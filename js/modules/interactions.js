@@ -1,3 +1,23 @@
+const errorPopup = (error) => {
+    const errorPopup = document.createElement("div")
+    errorPopup.classList.add("error-popup")
+    errorPopup.innerHTML = error
+    document.body.appendChild(errorPopup)
+    setTimeout(() => {
+        document.body.removeChild(errorPopup)
+    }, 2000)
+}
+
+const successPopup = (success) => {
+    const successPopup = document.createElement("div")
+    successPopup.classList.add("success-popup")
+    successPopup.innerHTML = success
+    document.body.appendChild(successPopup)
+    setTimeout(() => {
+        document.body.removeChild(successPopup)
+    }, 2000)
+}
+
 const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
     // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
 
@@ -22,4 +42,4 @@ const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) =>
     }
 }
 
-export {startLoadingAnimation, endLoadingAnimation}
+export {startLoadingAnimation, endLoadingAnimation, errorPopup, successPopup}
