@@ -1,9 +1,6 @@
 document.querySelector(".search-button").addEventListener("click", e => {
     e.preventDefault()
 
-    // Clear out the movies already showing
-    document.querySelector("#movies").innerHTML = '';
-
     // Get movie search
     let searchText = document.querySelector(".search-input").value;
 
@@ -12,33 +9,55 @@ document.querySelector(".search-button").addEventListener("click", e => {
 
 const getMovies = (searchText) => {
     axios.get('https://www.omdbapi.com/?s='+ searchText + '&apikey=56bdb7b4').then((res) => {
-        let movies = res.data.Search;
-        console.clear()
-        console.log(movies)
+
+        // Sort the movies by release year
+        const sortedMovies = res.data.Search.sort(sortByReleaseYearDescending);
+        console.log(sortedMovies);
+
+        // Clear the console
+        console.log('');
         
+        // Empty the output div
+        document.querySelector("#movies").innerHTML = '';
         let output = ''
 
-        for (let i = 0; i<movies.length; i++) {
-            console.log(movies[i].Title)
+        for (let i = 0; i<sortedMovies.length; i++) {
+            console.log(sortedMovies[i].Title)
 
-            if (movies[i].Type==="movie" || movies[i].Type=="series"){
+            if (sortedMovies[i].Type==="movie" || sortedMovies[i].Type=="series"){
                 output += 
                 `
                 <div class="movie-container">
                     <div class="movie-image">
-                        <img src=${movies[i].Poster} alt="${movies[i].Title} Poster">
+                        <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
                     </div>
                     <div class="movie-content">
-                        <h2 class="movie-name">${movies[i].Title}</h2>
-                        <p class="movie-release-date">Released: ${movies[i].Year}</p>
+                        <h2 class="movie-name">${sortedMovies[i].Title}</h2>
+                        <p class="movie-release-date">Released: ${sortedMovies[i].Year}</p>
                     </div>
                 </div>
                 `
             }
         }
 
-        document.querySelector("#movies").innerHTML = output;
+        // Append output into the output div
+        document.querySelector("#movies").innerHTML += output;
+
     }).catch((err) => {
         console.log(err)
     })
+}
+
+// Function that sorts the movies array by "Year", descending
+function sortByReleaseYearDescending(a, b) {
+    if (a.Year < b.Year) return 1;
+    if (a.Year > b.Year) return -1;
+    return 0;
+}
+
+// Function that sorts the movies array by "Year", ascending
+function sortByReleaseYearAscending(a, b) {
+    if (a.Year < b.Year) return -1;
+    if (a.Year > b.Year) return 1;
+    return 0;
 }
