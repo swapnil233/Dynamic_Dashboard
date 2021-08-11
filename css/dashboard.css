@@ -313,6 +313,15 @@ input {
 
     .profile-update-header-wrapper > h1 {
         font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .profile-update-header-wrapper > label {
+        font-size: 16px;
+    }
+
+    .input-wrapper {
+        margin-bottom: 20px;
     }
 
     .movies-search-container {
