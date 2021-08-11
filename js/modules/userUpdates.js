@@ -24,24 +24,21 @@ const updateDp = async (currentUser) => {
                 file.type !== "image/gif"
             ) {
                 // Create a pop-up to notify user that the file is not an image
-                errorPopup("File is not an image");
+                errorPopup("File must be .jpg, .jpeg, .png, or .gif");
                 return;
             }
 
             // Check image file size
-            if (file.size / 1024 / 1024 > 10) {
+            if (file.size / 1024 / 1024 > 9) {
                 // Create a pop-up to notify user that the file is too large
-                errorPopup("Size too large");
+                errorPopup("File size must be less than 10mb");
                 return;
             }
             console.log("Image passed requirements")
-
-            storage.ref("users/" + currentUser.uid + "/profileImage").put(file).then
+            console.log("Uploading picture");
 
             // Create storage ref & put the file in it
-            const userPicRef = storage.ref(
-                "users/" + currentUser.uid + "/profileImage"
-            );
+            const userPicRef = storage.ref("users/" + currentUser.uid + "/profileImage");
 
             await userPicRef.put(file);
             console.log("Image uploaded")
@@ -49,6 +46,7 @@ const updateDp = async (currentUser) => {
             // success => get download link, put it in DB, update dp img src
             const imgURL = await userPicRef.getDownloadURL();
             console.log(`Image URL: ${imgURL}`)
+
             await db.collection("users").doc(currentUser.uid).set({
                 dp_URL: imgURL,
                 dp_URL_last_modified: file.lastModified,
@@ -63,7 +61,7 @@ const updateDp = async (currentUser) => {
             file = ""
 
             // Success message
-            successPopup("Success!");
+            successPopup("Profile Picture Updated Successfully!");
         } catch (error) {
             console.log(error);
         }

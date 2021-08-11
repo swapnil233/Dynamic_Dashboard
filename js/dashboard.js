@@ -193,8 +193,7 @@ const openAndCloseModal = (currentUser) => {
                 })
             }
 
-            // Close up the modal after tasks are done
-            // modal.classList.toggle("show")
+            // Reload the current user and reset the form
             auth.currentUser.reload();
             updateProfileForm.reset();
         })
