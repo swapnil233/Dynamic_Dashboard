@@ -1,5 +1,26 @@
-# Dynamic_Dashboard
-A dynamic dashboard that uses Google Firebase as its backend. I'll probably turn this dashboard into a larger web-app once user functionalities are implemented.
+# Movie Collections Dashboard 
+This is a web app created entirely in vanilla HTML5, CSS3 and JavaScript utilizing ES6 features for the front-end, and Firebase's Auth, Firestore and Storage for the back-end.
+
+In this website, users can:
+1. Sign up
+2. Log in
+3. Reset their password
+4. Once logged in, update their profile information, including:
+	a. Username
+	b. Biography
+	c. Display Picture
+5. Verify their email addresse
+6. Search up movies and TV shows
+7. Create new movie collections
+8. Add movies to their movie collections
+9. Delete entire collections
+10. Delete individual movies from collections 
+
+The website is also secure from unauthorized access, which I did using Firebase security rules.
+
+Movies are fetched using the [Open Movie Database (OMD)](https://www.omdbapi.com/) and Axios, and hosted on Netlify.
+
+I'll post the website link once it's finished.
 
 # TODOs:
 - Let user create a brand new collection on the myCollections.html page
