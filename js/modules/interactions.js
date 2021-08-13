@@ -21,10 +21,7 @@ const errorPopup = (error) => {
     errorPopup.innerHTML += errorMessage
 
     // Append the div element to the body element.
-    document.body.appendChild(errorPopup)   
-
-    // Shake the error popup
-    shakeErrorPopup(errorPopup)
+    document.body.appendChild(errorPopup)
 
     // Set the timeout to hide the error popup.
     setTimeout(() => {
@@ -88,28 +85,6 @@ const endLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) =>
         loaderElement.classList.add("hidden");
         buttonTextElement.classList.remove("hidden");
     }
-}
-
-// Animate the error popup to shake
-const shakeErrorPopup = (errorPopupElement) => {
-    // errorPopupElement is a DOM element.
-    const errorPopup = errorPopupElement.querySelector(".error-popup")
-    const errorIcon = errorPopupElement.querySelector(".error-icon")
-    const errorMessage = errorPopupElement.querySelector(".error-message")
-
-    const errorIconAnimation = errorIcon.animate([
-        { transform: 'translate3d(0, 0, 0)' },
-        { transform: 'translate3d(-3px, 0, 0)' },
-        { transform: 'translate3d(3px, 0, 0)' },
-        { transform: 'translate3d(0, 0, 0)' }
-    ], {
-        duration: 1000,
-        iterations: Infinity,
-        easing: 'ease-in-out'
-    })
-    errorIconAnimation.addEventListener('end', () => {
-        errorIconAnimation.play()
-    })
 }
 
 export {startLoadingAnimation, endLoadingAnimation, errorPopup, successPopup}
