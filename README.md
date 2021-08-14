@@ -16,7 +16,7 @@ In this website, users can:
 9. Delete entire collections
 10. Delete individual movies from collections 
 
-The website is also secure from unauthorized access, which I did using Firebase security rules.
+The website is also secure from unauthorized access, which is done using Firebase security rules.
 
 Movies are fetched using the [Open Movie Database (OMD)](https://www.omdbapi.com/) and Axios, and hosted on Netlify.
 

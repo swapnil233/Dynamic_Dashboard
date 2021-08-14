@@ -78,7 +78,7 @@ const displayMovies = (searchText) => {
 // Using event delegation, add an event listener to the parent element
 
 // When a movie's "Add to Collection" link is clicked, show the available collections to add the movie to inside the "Add to Collection" button's parent element.
-document.querySelector("#movies").addEventListener("click", e => {
+document.querySelector("#movies").addEventListener("click", (e) => {
     e.preventDefault();
 
     // If e.target id is an imdbID
@@ -114,34 +114,22 @@ document.querySelector("#movies").addEventListener("click", e => {
     // When a movie collection is clicked, add the movie to the collection
     if (e.target.className === "collection-button") {
 
-        /*
-        1. Get that collection button's first id.
-        2. Find the movies_collections key with that id inside Firestore, and nnsert the value of the second id into that key as a value.
-        */
+        // Get the ref to the movie collection name and the imdbID
+        const clicked_movies_collection_name = e.target.id.split(" ")[0];
+        const clicked_movie_imdbID = e.target.id.split(" ")[1];
 
-        // 1st ID of the collection button = name in Firestore
-        const collectionName = e.target.id.split(" ")[0].toString();
+        // test_array ref
+        var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
 
-        // 2nd ID of the collection button = imdbID
-        const movieIdName = e.target.id.split(" ")[1];
+        // collection ref
+        const collection = `movies_collections.${clicked_movies_collection_name}`
 
-        // Get the movies_collections key with that id inside Firestore, and nnsert the value of the second id into that key as a value
-        firebase
-            .firestore()
-            .collection("users")
-            .doc(firebase.auth().currentUser.uid)
-            .get()
-            .then((doc) => {
-                // Reference to the "movies_collections" collection, which is an object
-                const moviesCollectionRef = doc.data().movies_collections;
-                console.log(moviesCollectionRef)
-
-                const collection = moviesCollectionRef[collectionName];
-                console.log(collection)
-
-                // TODO: append the movies_collections key with the new movie's imdbID
-
-            })
+        // push into the doc
+        user_doc_ref.update({
+            [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
+        }).then(() => {
+            successPopup(`Added to your ${clicked_movies_collection_name} collection`)
+        })  
     }
 });
 
