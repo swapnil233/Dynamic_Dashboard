@@ -19,9 +19,6 @@ auth.onAuthStateChanged((user) => {
                 const collectionMovies = moviesCollection[collection]
                 console.log(`${collection}: ${collectionMovies}`)
 
-                // Append the collection's name to the top
-                document.querySelector("#movies-collections-container").innerHTML += `<h3>${collection}</h3>`
-
                 // Append each movie into the DOM
                 collectionMovies.forEach(movie => {
                     // Get movie's details
