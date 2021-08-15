@@ -25,7 +25,7 @@ auth.onAuthStateChanged((user) => {
                 // Append each movie into the DOM
                 collectionMovies.forEach(movie => {
                     // Get movie's details
-                    axios.get("http://www.omdbapi.com/?i=" + movie + "&apikey=56bdb7b4").then((res) => {
+                    axios.get("https://www.omdbapi.com/?i=" + movie + "&apikey=56bdb7b4").then((res) => {
                         // Append the poster, title, and year to the DOM
                         document.getElementById("movies-collections-container").innerHTML +=
                             `
