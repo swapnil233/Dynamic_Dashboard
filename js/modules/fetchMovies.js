@@ -86,29 +86,36 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Get the movie's imdbID
         const movieID = e.target.id;
 
-        // Get the available movie collections
-        firebase
-            .firestore()
-            .collection("users")
-            .doc(firebase.auth().currentUser.uid)
-            .get()
-            .then((doc) => {
-                // Get a reference to the "movies_collections" collection, which is an object
-                const moviesCollection = doc.data().movies_collections
+        // If the target's parent's parent's parent contains a "collection-container" element, don't add it again
+        if (e.target.parentElement.parentElement.parentElement.querySelector(".collection-container") === null) {
+            // Get the available movie collections
+            firebase
+                .firestore()
+                .collection("users")
+                .doc(firebase.auth().currentUser.uid)
+                .get()
+                .then((doc) => {
+                    // Get a reference to the "movies_collections" collection, which is an object
+                    const moviesCollection = doc.data().movies_collections
 
-                // Show user's movies collections
-                Object.keys(moviesCollection).forEach(collection => {
+                    // Show user's movies collections
+                    Object.keys(moviesCollection).forEach(collection => {
 
-                    // Add each key to the innerHTML of the "Add to Collection" button's parent element
-                    document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
-                        `
-                        <br>
-                        <a class="collection-button" id="${collection} ${movieID}" href="#">
-                            ${collection}
-                        </a>
-                        `
+                        // Add each key to the innerHTML of the "Add to Collection" button's parent element
+                        document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
+                            `
+                            <br>
+                            <div class="collection-container">
+                                <a class="collection-button" id="${collection} ${movieID}" href="#">
+                                    ${collection}
+                                </a>
+                            </div>
+                            `
+                    })
                 })
-            })
+        } else {
+            errorPopup("Already Open");
+        }
     }
 
     // When a movie collection is clicked, add the movie to the collection
@@ -117,6 +124,9 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Get the ref to the movie collection name and the imdbID
         const clicked_movies_collection_name = e.target.id.split(" ")[0];
         const clicked_movie_imdbID = e.target.id.split(" ")[1];
+
+        // Name of the movie
+        const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
 
         // test_array ref
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
@@ -128,8 +138,10 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         user_doc_ref.update({
             [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
         }).then(() => {
-            successPopup(`Added to your ${clicked_movies_collection_name} collection`)
-        })  
+            successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)
+        }).catch((err) => {
+            errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
+        })
     }
 });
 

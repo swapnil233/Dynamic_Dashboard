@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>My Collections</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/myCollections.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <div class="top-bar">
+        <div class="topbar-wrapper">
+
+            <div class="top-left">
+                <a href="./dashboard.html" style="text-decoration: none;">
+                    <span class="logo">Movies/Shows</span>
+                </a>
+            </div>
+
+            <div class="top-right">
+                <a class="nav-link hiddenOnMobile" href="./dashboard.html">Home</a>
+                <a class="nav-link hiddenOnMobile" href="./myCollections.html">My Collections</a>
+
+                <div class="profile-dropdown-wrapper">
+                    <div id="profile-dropdown">
+                        <img src="../images/no_user.png" class="top-avatar" id="nav_dp">
+                        <span class="material-icons icon bold">expand_more</span>
+                    </div>
+
+                    <div class="dropdown-content" id="myDropdown">
+                        <h3 id='user_name'></span></h3>
+                        <a href="#" id="update-profile-btn">Update Profile</a>
+                        <a href="./myCollections.html" class="showOnMobile">My Collections</a>
+                        <button type="submit" id="logout_btn">
+                            <span class="btn_text">Log Out</span>
+                            <div class="loader hidden">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
+                                    height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
+                                    xml:space="preserve">
+
+                                    <path fill="#000"
+                                        d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                        <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                            from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Profile Modal -->
+    <div class="modal">
+        <!-- Update Profile Modal Content -->
+        <form class="profile-update-form">
+            <div class="profile-update-header-wrapper">
+                <h1>Edit Your Personal Settings</h1>
+                <span class="material-icons icon" id="close-modal">close</span>
+            </div>
+
+            <!-- Profile Email Address -->
+            <label for="profile_email">Email Address</label>
+            <div class="input-wrapper">
+                <input class="disabled" type="email" name="email" id="profile_email" placeholder=" " readonly>
+                <span class="material-icons verified">verified</span>
+                <a href="#" class="verify-link" id="verify-email-button">Verify</a>
+            </div>
+
+            <!-- Profile Name -->
+            <label for="profile_name">New Username</label>
+            <div class="input-wrapper">
+                <input type="text" name="user_name" id="profile_name">
+            </div>
+
+            <!-- Biography -->
+            <label for="user_bio">Short Biography</label>
+            <div class="input-wrapper">
+                <input type="textarea" name="user_bio" id="user_bio">
+            </div>
+
+            <!-- User's Display Picture -->
+            <label for="user_dp">Display Picture</label>
+            <div class="input-wrapper">
+                <input type="file" name="user_dp" id="user_dp" onchange="chooseFile(event)">
+            </div>
+
+            <button type="submit" id="update">
+                <span class="update_btn_text">Update</span>
+                <div class="update_loader hidden">
+                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px"
+                        viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+
+                        <path fill="#000"
+                            d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25"
+                                to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                        </path>
+                    </svg>
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <!-- Movies Collections -->
+    <div class="collections-container" id="movies-collections-container">
+
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAj09MQ7pVM7Fqo6G-IvRGYGf5To7bQyFk",
+            authDomain: "simplelogin-369dd.firebaseapp.com",
+            projectId: "simplelogin-369dd",
+            storageBucket: "simplelogin-369dd.appspot.com",
+            messagingSenderId: "334337354126",
+            appId: "1:334337354126:web:d647adefa26d0df2605cdf"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js" type="module"></script>
+    <script src="../js/myCollections.js" type="module" defer></script>
+
+    <!-- Axios.js -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

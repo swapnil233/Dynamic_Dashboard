@@ -302,7 +302,7 @@ input {
     border-radius: 0;
 }
 
-.movies-search-results {
+.collections-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
