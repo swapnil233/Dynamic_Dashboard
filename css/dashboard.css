@@ -109,6 +109,15 @@ span {
     margin-left: 5px;
 }
 
+.logout-login-button {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    font-weight: normal;
+}
+
 .top-avatar {
     width: 40px;
     height: 40px;
@@ -285,7 +294,7 @@ input {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Movies Search */

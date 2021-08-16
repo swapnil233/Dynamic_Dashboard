@@ -50,7 +50,8 @@ auth.onAuthStateChanged((user) => {
             startLoadingAnimation(
                 document.getElementById('logout_btn'),
                 document.querySelector(".loader"),
-                document.querySelector(".btn_text")
+                document.querySelector(".btn_text"),
+                document.querySelector(".logout-icon")
             )
 
             // Sign the user out

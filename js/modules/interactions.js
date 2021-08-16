@@ -63,15 +63,17 @@ const successPopup = (success) => {
     }, 2000);
 }
 
-const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement) => {
+const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement, buttonIconElement) => {
     // buttonElement, loaderElement, and buttonTextElement are all DOM elements.
 
     // start loading animation if loaderElement is hidden
     if (loaderElement.classList.contains("hidden")) {
         buttonElement.style.cursor = 'default'
         buttonElement.disabled = true
+        buttonElement.style.justifyContent = 'center'
         loaderElement.classList.remove("hidden");
         buttonTextElement.classList.add("hidden");
+        buttonIconElement.classList.add("hidden");
     }
 }
 
