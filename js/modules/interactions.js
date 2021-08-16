@@ -73,7 +73,11 @@ const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement, 
         buttonElement.style.justifyContent = 'center'
         loaderElement.classList.remove("hidden");
         buttonTextElement.classList.add("hidden");
-        buttonIconElement.classList.add("hidden");
+        
+        // Sometimes a button won't have an icon, so only try to hide it if a buttonIconElement exists.
+        if (buttonIconElement) {
+            buttonIconElement.classList.add("hidden");
+        }
     }
 }
 

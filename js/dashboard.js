@@ -125,12 +125,6 @@ const openAndCloseModal = (currentUser) => {
 
             // Update displayName
             if (newName !== "") {
-                startLoadingAnimation(
-                    updateButton,
-                    document.querySelector(".update_loader"),
-                    document.querySelector(".update_btn_text")
-                )
-
                 updateUsername(newName).then(() => {
                     // Update username inside Firestore database
                     db.collection('users').doc(currentUser.uid).set({
@@ -138,13 +132,7 @@ const openAndCloseModal = (currentUser) => {
                     }, {
                         merge: true
                     })
-
-                    endLoadingAnimation(
-                        updateButton,
-                        document.querySelector(".update_loader"),
-                        document.querySelector(".update_btn_text")
-                    )
-
+                    
                     // Success message
                     successPopup("Username updated successfully!")
                 })
@@ -192,7 +180,7 @@ const openAndCloseModal = (currentUser) => {
                     auth.currentUser.reload();
                     updateProfileForm.reset();
                 })
-            }
+            } else {return}
 
             // Reload the current user and reset the form
             auth.currentUser.reload();
