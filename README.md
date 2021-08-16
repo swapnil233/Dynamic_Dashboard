@@ -1,3 +1,4 @@
+
 # Movie Collections Dashboard 
 This is a web app created entirely in vanilla HTML5, CSS3 and JavaScript utilizing ES6 features for the front-end, and Firebase's Auth, Firestore and Storage for the back-end.
 
@@ -32,3 +33,6 @@ I'll post the website link once it's finished.
   3. Get the list of movie collections in users>{uid}>movies_collections
   4. Inject a DOM element to show the movies_collections items. Each will be a link with an id equal to the name of the item.
   5. When the movies_collections item is clicked, put the imdbID of that movie into the collection item that was clicked
+
+# Showcase:
+[Imgur](https://imgur.com/3a8RQTr)
