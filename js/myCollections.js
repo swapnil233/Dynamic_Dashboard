@@ -10,19 +10,24 @@ auth.onAuthStateChanged((user) => {
         firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((doc) => {
             // movies_collections reference
             const moviesCollection = doc.data().movies_collections;
-            console.log(moviesCollection);
+            // console.log(moviesCollection);
 
             // For each movies collection
             Object.keys(moviesCollection).forEach(collection => {
 
                 // Get each collection's movies 
                 const collectionMovies = moviesCollection[collection]
-                console.log(`${collection}: ${collectionMovies}`)
+                // console.log(collectionMovies[0].split("_")[1])
+                // console.log(`${collection}: ${collectionMovies}`)
 
                 // Append each movie into the DOM
                 collectionMovies.forEach(movie => {
+
+                    const movie_imdbID = movie.split("_")[0]
+                    const movie_created_at = movie.split("_")[1]
+
                     // Get movie's details
-                    axios.get("https://www.omdbapi.com/?i=" + movie + "&apikey=56bdb7b4").then((res) => {
+                    axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
                         // Append the poster, title, and year to the DOM
                         document.getElementById("movies-collections-container").innerHTML +=
                             `
@@ -44,11 +49,6 @@ auth.onAuthStateChanged((user) => {
                     })
                 })
             })
-
-            // Using for loops, iterate through each collection and append the collection's name to the top
-            for (var i = 0; i < Object.keys(moviesCollection).length; i++) {
-                document.querySelector("#movies-collections-container").innerHTML += `<h3>${Object.keys(moviesCollection)[i]}</h3>`
-            }
         })
     } else {
         // If the user is not logged in

@@ -34,15 +34,14 @@ const displayMovies = (searchText) => {
                 console.log(sortedMovies[i].Title)
                 console.log(sortedMovies[i].imdbID)
 
-                // Get full details of the movies 
-                // axios.get("http://www.omdbapi.com/?i=" + sortedMovies[i].imdbID + "&apikey=56bdb7b4").then((res) => {
-                //     console.log(res.data);
-                // })
-
                 // If sortedMovies[i] is a movie or a series, add it to the output
                 if (sortedMovies[i].Type === "movie" || sortedMovies[i].Type == "series") {
                     // If sortedMovies[i] has an image
                     if (sortedMovies[i].Poster !== "N/A") {
+                        // Get the timestamp
+                        var date = new Date(Date.now());
+                        const timeAdded = date.toISOString();
+
                         output +=
                             `
                         <div class="movie-container">
@@ -58,7 +57,7 @@ const displayMovies = (searchText) => {
                                     </div>
 
                                     <div class="add-to-collection">
-                                        <span class="material-icons icon" id=${sortedMovies[i].imdbID}>add</span>
+                                        <span class="material-icons icon" id="${sortedMovies[i].imdbID}_${timeAdded}">add</span>
                                     </div>
                                 </div>
                             </div>
@@ -77,10 +76,10 @@ const displayMovies = (searchText) => {
 
 // Using event delegation, add an event listener to the parent element
 
-// When a movie's "Add to Collection" link is clicked, show the available collections to add the movie to inside the "Add to Collection" button's parent element.
 document.querySelector("#movies").addEventListener("click", (e) => {
     e.preventDefault();
 
+    // Show available movies collections when + is clicked
     // If e.target id is an imdbID
     if (e.target.id[0] === "t") {
         // Get the movie's imdbID
@@ -95,12 +94,11 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                 .doc(firebase.auth().currentUser.uid)
                 .get()
                 .then((doc) => {
-                    // Get a reference to the "movies_collections" collection, which is an object
+                    // Get a reference to the "movies_collections" object from Firestore
                     const moviesCollection = doc.data().movies_collections
 
-                    // Show user's movies collections
+                    // Append user's movies collections titles
                     Object.keys(moviesCollection).forEach(collection => {
-
                         // Add each key to the innerHTML of the "Add to Collection" button's parent element
                         document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
                             `
@@ -124,6 +122,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Get the ref to the movie collection name and the imdbID
         const clicked_movies_collection_name = e.target.id.split(" ")[0];
         const clicked_movie_imdbID = e.target.id.split(" ")[1];
+        console.log(clicked_movie_imdbID)
 
         // Name of the movie
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
