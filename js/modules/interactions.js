@@ -71,6 +71,7 @@ const startLoadingAnimation = (buttonElement, loaderElement, buttonTextElement, 
         buttonElement.style.cursor = 'default'
         buttonElement.disabled = true
         buttonElement.style.justifyContent = 'center'
+        
         loaderElement.classList.remove("hidden");
         buttonTextElement.classList.add("hidden");
         

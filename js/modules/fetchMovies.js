@@ -1,7 +1,9 @@
 // Import interactions
 import {
     successPopup,
-    errorPopup
+    errorPopup,
+    startLoadingAnimation,
+    endLoadingAnimation
 } from './interactions.js';
 
 document.querySelector(".search-button").addEventListener("click", e => {
@@ -15,6 +17,19 @@ document.querySelector(".search-button").addEventListener("click", e => {
 
 // Get the movies from the API
 const displayMovies = (searchText) => {
+
+    // Start loading animation
+    startLoadingAnimation(
+        // Button element
+        document.querySelector(".search-button"),
+
+        // Loader element
+        document.querySelector(".search-loader"),
+
+        // Button Text Element
+        document.querySelector(".search-btn-text")
+    );
+
     axios.get('https://www.omdbapi.com/?s=' + searchText + '&apikey=56bdb7b4')
         .then((res) => {
 
@@ -70,7 +85,32 @@ const displayMovies = (searchText) => {
 
             // Append output into the output div
             document.querySelector("#movies").innerHTML += output;
+
+            // End loading animation
+            endLoadingAnimation(
+                // Button element
+                document.querySelector(".search-button"),
+
+                // Loader element
+                document.querySelector(".search-loader"),
+
+                // Button Text Element
+                document.querySelector(".search-btn-text")
+            );
+
         }).catch(() => {
+            // End loading animation
+            endLoadingAnimation(
+                // Button element
+                document.querySelector(".search-button"),
+
+                // Loader element
+                document.querySelector(".search-loader"),
+
+                // Button Text Element
+                document.querySelector(".search-btn-text")
+            );
+
             errorPopup("The entry was not found");
         });
 }
