@@ -57,7 +57,8 @@ const displayMovies = (searchText) => {
                                     </div>
 
                                     <div class="add-to-collection">
-                                        <span class="material-icons icon" id="${sortedMovies[i].imdbID}_${timeAdded}">add</span>
+                                        <!-- <span class="material-icons icon" id="${sortedMovies[i].imdbID}_${timeAdded}">add</span> -->
+                                        <span class="material-icons icon" id=${sortedMovies[i].imdbID}>add</span>
                                     </div>
                                 </div>
                             </div>
@@ -122,16 +123,12 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Get the ref to the movie collection name and the imdbID
         const clicked_movies_collection_name = e.target.id.split(" ")[0];
         const clicked_movie_imdbID = e.target.id.split(" ")[1];
-        console.log(clicked_movie_imdbID)
 
         // Name of the movie
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
 
-        // test_array ref
+        // User's doc ref
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-
-        // collection ref
-        const collection = `movies_collections.${clicked_movies_collection_name}`
 
         // push into the doc
         user_doc_ref.update({
@@ -141,6 +138,8 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         }).catch((err) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
         })
+
+        // I THINK I NEED TO MAKE EACH MOVIES COLLECTION AN OBJECT INSTEAD OF AN ARRAY SO THEY WON'T GET CALLED OUT OF ORDER
     }
 });
 
