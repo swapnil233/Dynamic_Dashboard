@@ -56,10 +56,6 @@ body {
     margin-right: 10px;
 }
 
-.seach-loader {
-    
-}
-
 span {
     margin: 0;
     padding: 0;
@@ -202,8 +198,9 @@ button {
 }
 
 #user_name {
-    padding: 10px;
+    padding: 10px 16px;
     margin: 0 auto;
+    letter-spacing: 0.5px;
 }
 
 .modal {
