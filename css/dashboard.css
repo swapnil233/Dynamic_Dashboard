@@ -393,8 +393,9 @@ input {
     }
 
     .modal > form {
-        width: 90%;
-        margin-top: 60px;
+        margin: 0;
+        height: 100vh;
+        padding: 20px 30px 20px 30px;
     }
 
     .profile-update-header-wrapper {
@@ -402,12 +403,12 @@ input {
     }
 
     .profile-update-header-wrapper > h1 {
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 10px;
     }
 
     .profile-update-header-wrapper > label {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .input-wrapper {
