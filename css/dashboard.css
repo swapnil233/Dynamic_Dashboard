@@ -102,6 +102,7 @@ span {
 .icon {
     cursor: pointer;
     color: #555;
+    margin-left: 5px;
 }
 
 .top-avatar {
@@ -340,6 +341,11 @@ input {
     display: none !important;
 }
 
+.no-overflow {
+    width: 24px;
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
     .top-bar {
         max-width: 100%;
@@ -403,6 +409,14 @@ input {
 
     .showOnMobile {
         display: block !important;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+    
+    .icon {
+        margin-left: 5px;
     }
 }
 
