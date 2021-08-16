@@ -19,7 +19,7 @@ body {
     justify-content: center;
     /* Light red background color with slight opacity */
     background-color: rgb(255, 65, 65);
-    color: #fff;
+    color: rgb(15, 15, 15);
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
@@ -39,7 +39,7 @@ body {
     align-items: center;
     /* Light green background color with slight opacity */
     background-color: rgb(43, 226, 89);
-    color: #fff;
+    color: rgb(15, 15, 15);
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
@@ -307,6 +307,7 @@ input {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    max-width: 1600px;
 }
 
 .movie-container {
@@ -320,6 +321,7 @@ input {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    max-width: 1600px;
 }
 
 .movie-image > img {
