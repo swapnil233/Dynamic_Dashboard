@@ -92,6 +92,10 @@ span {
     color: #333;
 }
 
+.nav-link > span {
+    margin-right: 10px;
+}
+
 .logo {
     font-weight: bold;
     font-size: 30px;
@@ -101,7 +105,7 @@ span {
 
 .icon {
     cursor: pointer;
-    color: #555;
+    color: black;
     margin-left: 5px;
 }
 
@@ -130,7 +134,7 @@ span {
     right: 0px;
     background-color: #f1f1f1;
     flex-direction: column;
-    min-width: 160px;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     border-radius: 2px;
 }
@@ -139,11 +143,20 @@ span {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
 }
 
 .dropdown-content a:hover {
     background-color: #ddd
+}
+
+#update-profile-btn {
+    display: flex;
+    align-items: center;
+}
+
+#update-profile-btn > span {
+    margin-left: 0;
+    margin-right: 10px;
 }
 
 button {
@@ -177,6 +190,7 @@ button {
 
 #user_name {
     padding: 10px;
+    margin: 0 auto;
 }
 
 .modal {
@@ -342,7 +356,9 @@ input {
 }
 
 .hiddenOnMobile {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .showOnMobile {
@@ -416,7 +432,13 @@ input {
     }
 
     .showOnMobile {
-        display: block !important;
+        display: flex !important;
+        align-items: center;
+    }
+
+    .showOnMobile > span {
+        margin-left: 0;
+        margin-right: 10px;
     }
 
     .logo {
