@@ -35,4 +35,8 @@ I'll post the website link once it's finished.
   5. When the movies_collections item is clicked, put the imdbID of that movie into the collection item that was clicked
 
 # Showcase:
-[Contribution guidelines for this project](showcase/1.png)
+[Login Page](showcase/1.png)
+[Signup Page](showcase/2.png)
+[Forgot Password Page](showcase/3.png)
+[Dashboard - After Searching Up Movies](showcase/4.png)
+[Dashboard - Updating Profile](showcase/5.png)
