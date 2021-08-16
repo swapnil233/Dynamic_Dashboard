@@ -35,4 +35,4 @@ I'll post the website link once it's finished.
   5. When the movies_collections item is clicked, put the imdbID of that movie into the collection item that was clicked
 
 # Showcase:
-![Login Page](https://imgur.com/3a8RQTr)
+[Imgur](https://imgur.com/3a8RQTr)
