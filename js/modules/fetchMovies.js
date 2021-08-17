@@ -160,30 +160,28 @@ document.querySelector("#movies").addEventListener("click", (e) => {
     // When a movie collection is clicked, add the movie to the collection
     if (e.target.className === "collection-button") {
 
-        // Get the ref to the movie collection name and the imdbID
-        const clicked_movies_collection_name = e.target.textContent;
-        
+        // Collection name
+        const clicked_movies_collection_name = e.target.textContent.replace(/\s/g, "");
+
+        // Movie's imdbID.
         // clicked_movie_imdbID needs to be the last id of the collection button to account for collection names with spaces.
         const idArray = e.target.id.split(" ");
         const clicked_movie_imdbID = idArray[idArray.length - 1];
 
-        // Name of the movie
+        // Movie Name
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
 
         // User's doc ref
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
 
-        // push into the doc
-        user_doc_ref.set({
-            // I think this might be creating a new array by the name of clicked_movies_collection_name?
+        // push into the doc ref "movies_collections" object
+        user_doc_ref.update({
             [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
-        }, {merge:true}).then(() => {
+        }).then(() => {
             successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)
         }).catch((err) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
         })
-
-        // I THINK I NEED TO MAKE EACH MOVIES COLLECTION AN OBJECT INSTEAD OF AN ARRAY SO THEY WON'T GET CALLED OUT OF ORDER
     }
 });
 
