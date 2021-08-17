@@ -174,10 +174,10 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
 
         // push into the doc
-        user_doc_ref.update({
+        user_doc_ref.set({
             // I think this might be creating a new array by the name of clicked_movies_collection_name?
             [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
-        }).then(() => {
+        }, {merge:true}).then(() => {
             successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)
         }).catch((err) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
