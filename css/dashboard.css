@@ -23,6 +23,7 @@ body {
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
+    font-weight: lighter;
     line-height: 1.7;
     font-weight: bold;
     z-index: 9999;
