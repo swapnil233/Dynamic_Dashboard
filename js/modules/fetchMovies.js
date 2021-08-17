@@ -145,7 +145,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                             `
                             <br>
                             <div class="collection-container">
-                                <a class="collection-button" id="${collection} ${movieID}" href="#">
+                                <a class="collection-button" id="${collection}" data-imdbID="${movieID}" href="#">
                                     ${collection}
                                 </a>
                             </div>
@@ -160,18 +160,16 @@ document.querySelector("#movies").addEventListener("click", (e) => {
     // When a movie collection is clicked, add the movie to the collection
     if (e.target.className === "collection-button") {
 
-        // Collection name
+        // Collection name.
         const clicked_movies_collection_name = e.target.textContent.replace(/\s/g, "");
 
         // Movie's imdbID.
-        // clicked_movie_imdbID needs to be the last id of the collection button to account for collection names with spaces.
-        const idArray = e.target.id.split(" ");
-        const clicked_movie_imdbID = idArray[idArray.length - 1];
+        const clicked_movie_imdbID = e.target.dataset.imdbid;
 
-        // Movie Name
+        // Movie Name.
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
 
-        // User's doc ref
+        // User's doc ref.
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
 
         // push into the doc ref "movies_collections" object
