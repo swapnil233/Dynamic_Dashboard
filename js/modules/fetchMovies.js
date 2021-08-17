@@ -140,13 +140,14 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
                     // Append user's movies collections titles
                     Object.keys(moviesCollection).forEach(collection => {
+                        const collectionName = collection.replace(/\s+/g, ' ').trim();
                         // Add each key to the innerHTML of the "Add to Collection" button's parent element
                         document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
                             `
                             <br>
                             <div class="collection-container">
-                                <a class="collection-button" id="${collection}" data-imdbID="${movieID}" href="#">
-                                    ${collection}
+                                <a class="collection-button" id="${collectionName}" data-imdbID="${movieID}" href="#">
+                                    ${collectionName}
                                 </a>
                             </div>
                             `
@@ -161,7 +162,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
     if (e.target.className === "collection-button") {
 
         // Collection name.
-        const clicked_movies_collection_name = e.target.textContent.replace(/\s/g, "");
+        const clicked_movies_collection_name = e.target.textContent.replace(/\s+/g, ' ').trim();
 
         // Movie's imdbID.
         const clicked_movie_imdbID = e.target.dataset.imdbid;
