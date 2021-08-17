@@ -161,8 +161,11 @@ document.querySelector("#movies").addEventListener("click", (e) => {
     if (e.target.className === "collection-button") {
 
         // Get the ref to the movie collection name and the imdbID
-        const clicked_movies_collection_name = e.target.id.split(" ")[0];
-        const clicked_movie_imdbID = e.target.id.split(" ")[1];
+        const clicked_movies_collection_name = e.target.textContent;
+        
+        // clicked_movie_imdbID needs to be the last id of the collection button to account for collection names with spaces.
+        const idArray = e.target.id.split(" ");
+        const clicked_movie_imdbID = idArray[idArray.length - 1];
 
         // Name of the movie
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
@@ -172,6 +175,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
         // push into the doc
         user_doc_ref.update({
+            // I think this might be creating a new array by the name of clicked_movies_collection_name?
             [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
         }).then(() => {
             successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)

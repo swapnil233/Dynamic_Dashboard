@@ -327,6 +327,10 @@ input {
     border-radius: 0;
 }
 
+.create-new-collection-button {
+    border-radius: 0;
+}
+
 .movies-search-results {
     display: flex;
     justify-content: center;
@@ -378,6 +382,19 @@ input {
 .no-overflow {
     width: 24px;
     overflow: hidden;
+}
+
+/* Create new collections form */
+.create-new-collection-continer {
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0px;
+    max-width: 1600px;
+}
+
+.create-new-collection-form {
+    display: flex;
+
 }
 
 @media (max-width: 768px) {
