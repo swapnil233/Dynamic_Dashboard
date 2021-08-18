@@ -307,8 +307,7 @@ input {
     align-items: center;
 }
 
-.movies-search-container { 
-    max-width: 800px;
+.movies-search-container {
     margin-top: 50px;
 }
 

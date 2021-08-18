@@ -38,7 +38,6 @@ const displayMovies = (searchText) => {
 
             // Sort the movies by release year
             const sortedMovies = res.data.Search.sort(sortByReleaseYearAscending);
-            console.log(sortedMovies);
 
             // Empty the output div
             document.querySelector("#movies").innerHTML = '';
@@ -46,16 +45,11 @@ const displayMovies = (searchText) => {
 
             // Loop through the movies and add them to the output
             for (let i = 0; i < sortedMovies.length; i++) {
-                console.log(sortedMovies[i].Title)
-                console.log(sortedMovies[i].imdbID)
 
                 // If sortedMovies[i] is a movie or a series, add it to the output
                 if (sortedMovies[i].Type === "movie" || sortedMovies[i].Type == "series") {
                     // If sortedMovies[i] has an image
                     if (sortedMovies[i].Poster !== "N/A") {
-                        // Get the timestamp
-                        var date = new Date(Date.now());
-                        const timeAdded = date.toISOString();
 
                         output +=
                             `
@@ -72,7 +66,6 @@ const displayMovies = (searchText) => {
                                     </div>
 
                                     <div class="add-to-collection">
-                                        <!-- <span class="material-icons icon" id="${sortedMovies[i].imdbID}_${timeAdded}">add</span> -->
                                         <span class="material-icons icon" id=${sortedMovies[i].imdbID}>add</span>
                                     </div>
                                 </div>
@@ -115,7 +108,7 @@ const displayMovies = (searchText) => {
         });
 }
 
-// Using event delegation, add an event listener to the parent element
+// Using event delegation, add an event listener to the parent element of each movie's + button
 
 document.querySelector("#movies").addEventListener("click", (e) => {
     e.preventDefault();
@@ -135,12 +128,15 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                 .doc(firebase.auth().currentUser.uid)
                 .get()
                 .then((doc) => {
-                    // Get a reference to the "movies_collections" object from Firestore
+                    // "movies_collections" object from Firestore
                     const moviesCollection = doc.data().movies_collections
 
-                    // Append user's movies collections titles
+                    // Append user's movies_collections titles (the keys)
                     Object.keys(moviesCollection).forEach(collection => {
+
+                        // Collection name -- get rid of whitespace before and after
                         const collectionName = collection.replace(/\s+/g, ' ').trim();
+
                         // Add each key to the innerHTML of the "Add to Collection" button's parent element
                         document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
                             `
@@ -158,10 +154,10 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         }
     }
 
-    // When a movie collection is clicked, add the movie to the collection
+    // When a movie collection name is clicked, add the movie it's under to the collection
     if (e.target.className === "collection-button") {
 
-        // Collection name.
+        // Collection name -- get rid of whitespace before and after
         const clicked_movies_collection_name = e.target.textContent.replace(/\s+/g, ' ').trim();
 
         // Movie's imdbID.
