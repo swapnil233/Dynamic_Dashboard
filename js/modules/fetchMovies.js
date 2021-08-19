@@ -171,7 +171,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
         // push into the doc ref "movies_collections" object
         user_doc_ref.update({
-            [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
+            [`movies_collections.${clicked_movies_collection_name}.movies`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
         }).then(() => {
             successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)
         }).catch((err) => {
@@ -193,3 +193,9 @@ function sortByReleaseYearAscending(a, b) {
     if (a.Year > b.Year) return 1;
     return 0;
 }
+
+/*
++ Clicked -> shows movies collections
+click on a collection
+    -- 
+*/

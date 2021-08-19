@@ -4,44 +4,48 @@ import {
     errorPopup
 } from "./modules/interactions.js"
 
+// While user is authenticated
 auth.onAuthStateChanged((user) => {
     if (user) {
+
+        const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
         // Get the movie collections
-        firebase
-            .firestore()
-            .collection("users")
-            .doc(firebase.auth().currentUser.uid)
+        userDocRef
             .get()
             .then((doc) => {
 
-                if (doc.data().movies_collections) {
-                    // movies_collections reference
-                    const moviesCollection = doc.data().movies_collections;
+                // If a "movies_collections" object doesn't exist, create it
+                if (!doc.data().movies_collections) {
+                    userDocRef.set({
+                        movies_collections: {}
+                    }, {merge: true})
 
-                    if (moviesCollection == "") {
-                        console.log("no movies collections yet")
-                        return
-                    }
+                    return
+                }
 
-                    // For each movies collection
-                    Object.keys(moviesCollection).forEach(collection => {
+                // movies_collections ref
+                const movies_collections = doc.data().movies_collections;
 
-                        // Get each collection's movies 
-                        const collectionMovies = moviesCollection[collection]
-                        // console.log(collectionMovies[0].split("_")[1])
-                        // console.log(`${collection}: ${collectionMovies}`)
+                if (movies_collections == "") {
+                    console.log("No movies collections exist yet")
+                    return
+                }
 
-                        // Append each movie into the DOM
-                        collectionMovies.forEach(movie => {
+                // For each movies_collections key
+                Object.keys(movies_collections).forEach(movies_collection_object => {
 
-                            const movie_imdbID = movie.split("_")[0]
-                            const movie_created_at = movie.split("_")[1]
+                    // Get movies_collections -> {collection_name} -> movies array
+                    const movies_collections_movies_array = movies_collections[movies_collection_object].movies;
 
-                            // Get movie's details
-                            axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                                // Append the poster, title, and year to the DOM
-                                document.getElementById("movies-collections-container").innerHTML +=
-                                    `
+                    // For each imdbID inside movies_collections -> {collection_name} -> movies array
+                    movies_collections_movies_array.forEach(movie_imdbID => {
+
+                        // Get movie's details
+                        axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
+                            // Append the poster, title, and year to the DOM
+                            document.getElementById("movies-collections-container").innerHTML +=
+                                `
                             <div class="movie-container">
                                 <div class="movie-image">
                                     <img src=${res.data.Poster} alt="${res.data.Title} Poster">
@@ -57,12 +61,9 @@ auth.onAuthStateChanged((user) => {
                                 </div>
                             </div>
                             `
-                            })
                         })
                     })
-                } else {
-                    return
-                }
+                })
             })
     } else {
         // If the user is not logged in
@@ -70,22 +71,37 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
+// Creating a new movies collection
 const createNewCollection = () => {
     event.preventDefault();
+
+    // Get the field values for the new collection name and description
     const newCollectionName = document.querySelector(".search-input").value
+    const newCollectionDescription = document.querySelector(".description").value
+
+    // Ref to the user's doc
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
         if (doc.data().movies_collections[newCollectionName]) {
             errorPopup(`${newCollectionName} is already a movies collection`)
-            document.querySelector(".new-collection-input").value = "";
+            document.querySelector(".search-input").value = "";
             return
         } else {
+            // Get the current timestamp
+            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
             // Inside userDocRef, there is a movies_collections object. Add a new key-value pair to it, where the key is newUserCollectionName and the value is an empty array.
             userDocRef.set({
                 movies_collections: {
-                    [newCollectionName]: []
+                    // Need to put it in brackets because using ES6's "computer property" syntax
+                    [newCollectionName]: {
+                        dateCreated: timestamp,
+                        description: newCollectionDescription,
+                        createdBy: firebase.auth().currentUser.email,
+                        movies: []
+                    }
                 }
             }, {
                 merge: true
