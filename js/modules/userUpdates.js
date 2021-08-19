@@ -49,7 +49,7 @@ const updateDp = async (currentUser) => {
 
             await db.collection("users").doc(currentUser.uid).set({
                 dp_URL: imgURL,
-                dp_URL_last_modified: file.lastModified,
+                dp_URL_last_modified: firebase.firestore.FieldValue.serverTimestamp()
             }, {
                 merge: true,
             });
