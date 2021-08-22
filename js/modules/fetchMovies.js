@@ -160,8 +160,11 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Collection name -- get rid of whitespace before and after
         const clicked_movies_collection_name = e.target.textContent.replace(/\s+/g, ' ').trim();
 
+        // Current timestamp
+        const timestamp = new Date().toISOString();
+
         // Movie's imdbID.
-        const clicked_movie_imdbID = e.target.dataset.imdbid;
+        const clicked_movie_imdbID = e.target.dataset.imdbid + "_" + timestamp;
 
         // Movie Name.
         const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
@@ -193,9 +196,3 @@ function sortByReleaseYearAscending(a, b) {
     if (a.Year > b.Year) return 1;
     return 0;
 }
-
-/*
-+ Clicked -> shows movies collections
-click on a collection
-    -- 
-*/

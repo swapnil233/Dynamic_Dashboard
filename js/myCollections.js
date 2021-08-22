@@ -26,6 +26,7 @@ auth.onAuthStateChanged((user) => {
 
                 // movies_collections ref
                 const movies_collections = doc.data().movies_collections;
+                
 
                 if (movies_collections == "") {
                     console.log("No movies collections exist yet")
@@ -39,7 +40,10 @@ auth.onAuthStateChanged((user) => {
                     const movies_collections_movies_array = movies_collections[movies_collection_object].movies;
 
                     // For each imdbID inside movies_collections -> {collection_name} -> movies array
-                    movies_collections_movies_array.forEach(movie_imdbID => {
+                    movies_collections_movies_array.forEach(movie => {
+
+                        // Get the imdbID
+                        let movie_imdbID = movie.split("_")[0];
 
                         // Get movie's details
                         axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
@@ -95,7 +99,7 @@ const createNewCollection = () => {
             // Inside userDocRef, there is a movies_collections object. Add a new key-value pair to it, where the key is newUserCollectionName and the value is an empty array.
             userDocRef.set({
                 movies_collections: {
-                    // Need to put it in brackets because using ES6's "computer property" syntax
+                    // Need to put it in brackets because using ES6's "computed property" syntax
                     [newCollectionName]: {
                         dateCreated: timestamp,
                         description: newCollectionDescription,
