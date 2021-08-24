@@ -114,7 +114,6 @@ document.querySelector("#movies").addEventListener("click", (e) => {
     e.preventDefault();
 
     // Show available movies collections when + is clicked
-    // If e.target id is an imdbID
     if (e.target.id[0] === "t") {
         // Get the movie's imdbID
         const movieID = e.target.id;

@@ -8,6 +8,7 @@ import {
 auth.onAuthStateChanged((user) => {
     if (user) {
 
+        // Get the ref to the user doc
         const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
         // Get the movie collections
@@ -15,56 +16,35 @@ auth.onAuthStateChanged((user) => {
             .get()
             .then((doc) => {
 
-                // If a "movies_collections" object doesn't exist, create it
+                // If a "movies_collections" object doesn't exist, create it. This shouldn't ever be the case as it's created upon signup, but just in case.
                 if (!doc.data().movies_collections) {
                     userDocRef.set({
                         movies_collections: {}
-                    }, {merge: true})
-
+                    }, {
+                        merge: true
+                    })
                     return
                 }
 
                 // movies_collections ref
                 const movies_collections = doc.data().movies_collections;
-                
-
-                if (movies_collections == "") {
-                    console.log("No movies collections exist yet")
-                    return
-                }
 
                 // For each movies_collections key
-                Object.keys(movies_collections).forEach(movies_collection_object => {
+                Object.keys(movies_collections).forEach(collection_name => {
 
                     // Get movies_collections -> {collection_name} -> movies array
-                    const movies_collections_movies_array = movies_collections[movies_collection_object].movies;
+                    const movies_array = movies_collections[collection_name].movies;
 
                     // For each imdbID inside movies_collections -> {collection_name} -> movies array
-                    movies_collections_movies_array.forEach(movie => {
+                    movies_array.forEach(movie => {
 
                         // Get the imdbID
                         let movie_imdbID = movie.split("_")[0];
 
-                        // Get movie's details
-                        axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                            // Append the poster, title, and year to the DOM
-                            document.getElementById("movies-collections-container").innerHTML +=
-                                `
-                            <div class="movie-container">
-                                <div class="movie-image">
-                                    <img src=${res.data.Poster} alt="${res.data.Title} Poster">
-                                </div>
+                        addMovieElementToContainerForID(movie_imdbID);
 
-                                <div class="movie-content">
-                                    <div class="add-content-container">
-                                        <div>
-                                            <h2 class="movie-name">${res.data.Title}</h2>
-                                            <p class="movie-release-date">Released: ${res.data.Year}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `
+                        axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
+                            updateMovieElement(movie_imdbID, res)
                         })
                     })
                 })
@@ -117,3 +97,27 @@ const createNewCollection = () => {
 }
 
 document.querySelector("#newCollectionBtn").addEventListener("click", createNewCollection);
+
+
+// Movie Insertion Helper Functions to add movies to the page sequentially instead of paralell
+const addMovieElementToContainerForID = (movie_imdbID) => {
+    document.getElementById("movies-collections-container").innerHTML +=
+        `<div class="movie-container" id="movie_${movie_imdbID}"></div>`;
+}
+const updateMovieElement = (movie_imdbID, res) => {
+    let movieContainerElement = document.getElementById(`movie_${movie_imdbID}`);
+    movieContainerElement.innerHTML = `
+    <div class="movie-image">
+        <img src=${res.data.Poster} alt="${res.data.Title} Poster">
+    </div>
+
+    <div class="movie-content">
+        <div class="add-content-container">
+            <div>
+                <h2 class="movie-name">${res.data.Title}</h2>
+                <p class="movie-release-date">Released: ${res.data.Year}</p>
+            </div>
+        </div>
+    </div>
+  `;
+}
