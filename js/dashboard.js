@@ -24,6 +24,8 @@ auth.onAuthStateChanged((user) => {
         // Show the user's pfp
         db.collection('users').doc(user.uid).get().then((doc) => {
             if (doc.data().dp_URL) {
+                document.querySelector("#nav_dp").classList.add("skeleton");
+                document.querySelector("#nav_dp").src = "";
                 document.querySelector("#nav_dp").src = doc.data().dp_URL;
             }
         })

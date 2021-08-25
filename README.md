@@ -24,7 +24,6 @@ Movies are fetched using the [Open Movie Database (OMD)](https://www.omdbapi.com
 I'll post the website link once it's finished.
 
 # TODOs:
-- Fetch user's movies_collections items in sequential order when making the axios call
 - Show a list of user's collections
 - Implement movie deletion feature from collections page
 - Design "add to collection" popups
