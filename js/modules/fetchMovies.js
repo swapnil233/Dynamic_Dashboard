@@ -51,11 +51,11 @@ const displayMovies = (searchText) => {
                     // If sortedMovies[i] has an image
                     if (sortedMovies[i].Poster !== "N/A") {
 
-                        output +=
+                        document.querySelector("#movies").innerHTML +=
                             `
                         <div class="movie-container">
                             <div class="movie-image">
-                                <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster">
+                                <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster" class="skeleton">
                             </div>
 
                             <div class="movie-content">
@@ -77,7 +77,7 @@ const displayMovies = (searchText) => {
             }
 
             // Append output into the output div
-            document.querySelector("#movies").innerHTML += output;
+            // document.querySelector("#movies").innerHTML += output;
 
             // End loading animation
             endLoadingAnimation(
