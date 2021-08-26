@@ -9,6 +9,10 @@ body {
     position: relative;
 }
 
+.fw-200 {
+    font-weight: 200;
+}
+
 .error-popup {
     /* A 50px width by 30px height at the top right of the screen */
     position: fixed;
@@ -105,7 +109,7 @@ span {
     color: #333;
 }
 
-.nav-link > span {
+.nav-link>span {
     margin-right: 10px;
 }
 
@@ -176,7 +180,7 @@ span {
     align-items: center;
 }
 
-#update-profile-btn > span {
+#update-profile-btn>span {
     margin-left: 0;
     margin-right: 10px;
 }
@@ -243,6 +247,7 @@ button {
     display: none !important;
     color: #339900 !important;
 }
+
 .unvarified {
     display: none !important;
     color: #cc3300 !important;
@@ -359,7 +364,7 @@ input {
     max-width: 1600px;
 }
 
-.movie-image > img {
+.movie-image>img {
     width: 300px;
     height: 446px;
     object-fit: cover;
@@ -372,7 +377,7 @@ input {
     align-items: center;
 }
 
-.add-content-container > div > h2 {
+.add-content-container>div>h2 {
     font-size: 20px;
     margin: 5px 0px;
 }
@@ -409,6 +414,10 @@ input {
     border-radius: 0;
 }
 
+.create-new-collection-header {
+    font-weight: 300;
+}
+
 .existing-collections-container {
     width: 90%;
     max-width: 1400px;
@@ -440,7 +449,7 @@ input {
     width: max-content;
 }
 
-.existing-collections > p:last-child {
+.existing-collections>p:last-child {
     margin-right: 0;
 }
 
@@ -474,7 +483,7 @@ input {
         height: 100%;
     }
 
-    .modal > form {
+    .modal>form {
         margin: 0;
         height: 100vh;
         padding: 20px 30px 20px 30px;
@@ -484,12 +493,12 @@ input {
         margin-bottom: 10px;
     }
 
-    .profile-update-header-wrapper > h1 {
+    .profile-update-header-wrapper>h1 {
         font-size: 18px;
         margin-bottom: 10px;
     }
 
-    .profile-update-header-wrapper > label {
+    .profile-update-header-wrapper>label {
         font-size: 14px;
     }
 
@@ -504,18 +513,27 @@ input {
 
     .movies-search-search {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: nowrap;
     }
 
     .movie-container {
         width: 90%;
     }
 
-    .movie-image > img {
+    .movie-image>img {
         width: 100%;
     }
 
     .search-input {
         font-size: 15px;
+    }
+
+    .search-form {
+        width: 90%;
+        margin: 20px 0px 30px 0px;
     }
 
     .hiddenOnMobile {
@@ -527,7 +545,7 @@ input {
         align-items: center;
     }
 
-    .showOnMobile > span {
+    .showOnMobile>span {
         margin-left: 0;
         margin-right: 10px;
     }
@@ -535,7 +553,7 @@ input {
     .logo {
         font-size: 22px;
     }
-    
+
     .icon {
         margin-left: 5px;
     }
