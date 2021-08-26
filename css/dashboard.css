@@ -517,6 +517,8 @@ input {
         align-items: center;
         align-content: center;
         flex-wrap: nowrap;
+        width: 90%;
+        margin: 0 auto;
     }
 
     .movie-container {
@@ -532,7 +534,6 @@ input {
     }
 
     .search-form {
-        width: 90%;
         margin: 20px 0px 30px 0px;
     }
 

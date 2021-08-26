@@ -126,7 +126,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
             <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
         </div>
 
-        <div class="movie-content collection-${collection_name.replace(/\s+/g, ' ').trim()}">
+        <div class="movie-content" data-imdbid="${collection_name.replace(/\s+/g, ' ').trim()}">
             <div class="add-content-container">
                 <div>
                     <h2 class="movie-name">${res.data.Title}</h2>
