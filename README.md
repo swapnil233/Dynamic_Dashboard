@@ -27,6 +27,7 @@ I'll post the website link once it's finished.
 - Show a list of user's collections
 - Implement movie deletion feature from collections page
 - Design "add to collection" popups
+- Let users filter their search by movies, series or episodes using the OMDB API param 'type'
 
 # Future: 
 - Movies collections pagination

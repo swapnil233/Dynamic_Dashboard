@@ -32,6 +32,16 @@ auth.onAuthStateChanged((user) => {
                 // For each movies_collections key
                 Object.keys(movies_collections).forEach(collection_name => {
 
+                    // Add the name of each collection_name to the existing collections div
+                    document.querySelector(".existing-collections").innerHTML +=
+                    `
+                    <div class="collection-name-container">
+                        <p class="collection-name">
+                            ${collection_name}
+                        </p>
+                    </div>
+                    `
+
                     // Get movies_collections -> {collection_name} -> movies array
                     const movies_array = movies_collections[collection_name].movies;
 
@@ -44,7 +54,7 @@ auth.onAuthStateChanged((user) => {
                         addMovieElementToContainerForID(movie_imdbID);
 
                         axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                            updateMovieElement(movie_imdbID, res)
+                            updateMovieElement(movie_imdbID, collection_name, res)
                         })
                     })
                 })
@@ -71,12 +81,16 @@ const createNewCollection = () => {
         if (doc.data().movies_collections[newCollectionName]) {
             errorPopup(`${newCollectionName} is already a movies collection`)
             document.querySelector(".search-input").value = "";
+            document.querySelector(".description").value = "";
             return
         } else {
             // Get the current timestamp
             const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
             // Inside userDocRef, there is a movies_collections object. Add a new key-value pair to it, where the key is newUserCollectionName and the value is an empty array.
+
+            document.querySelector(".existing-collections").innerHTML = '';
+
             userDocRef.set({
                 movies_collections: {
                     // Need to put it in brackets because using ES6's "computed property" syntax
@@ -104,20 +118,24 @@ const addMovieElementToContainerForID = (movie_imdbID) => {
     document.getElementById("movies-collections-container").innerHTML +=
         `<div class="movie-container" id="movie_${movie_imdbID}"></div>`;
 }
-const updateMovieElement = (movie_imdbID, res) => {
+const updateMovieElement = (movie_imdbID, collection_name, res) => {
     let movieContainerElement = document.getElementById(`movie_${movie_imdbID}`);
-    movieContainerElement.innerHTML = `
-    <div class="movie-image">
-        <img src=${res.data.Poster} alt="${res.data.Title} Poster">
-    </div>
+    movieContainerElement.innerHTML =
+        `
+        <div class="movie-image">
+            <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
+        </div>
 
-    <div class="movie-content">
-        <div class="add-content-container">
-            <div>
-                <h2 class="movie-name">${res.data.Title}</h2>
-                <p class="movie-release-date">Released: ${res.data.Year}</p>
+        <div class="movie-content collection-${collection_name.replace(/\s+/g, ' ').trim()}">
+            <div class="add-content-container">
+                <div>
+                    <h2 class="movie-name">${res.data.Title}</h2>
+                    <p class="movie-release-date">Released: ${res.data.Year}</p>
+                </div>
+                <div class="movies-options">
+                    <button class="delete-movie-btn" id="delete_${movie_imdbID}">Delete</button>
+                </div>
             </div>
         </div>
-    </div>
-  `;
+    `;
 }

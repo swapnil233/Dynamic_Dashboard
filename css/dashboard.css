@@ -14,7 +14,6 @@ body {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    margin-left: 10px;
     display: flex;
     justify-content: center;
     /* Light red background color with slight opacity */
@@ -25,7 +24,7 @@ body {
     font-size: 14px;
     font-weight: lighter;
     line-height: 1.7;
-    font-weight: bold;
+    font-weight: normal;
     z-index: 9999;
 }
 
@@ -34,7 +33,6 @@ body {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    margin-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,7 +43,7 @@ body {
     padding: 10px;
     font-size: 14px;
     line-height: 1.7;
-    font-weight: bold;
+    font-weight: normal;
     z-index: 9999;
 }
 
@@ -236,7 +234,6 @@ button {
 .profile-update-header-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 30px;
 }
@@ -366,6 +363,7 @@ input {
     width: 300px;
     height: 446px;
     object-fit: cover;
+    border-radius: 5px;
 }
 
 .add-content-container {
@@ -411,7 +409,45 @@ input {
     border-radius: 0;
 }
 
+.existing-collections-container {
+    width: 90%;
+    max-width: 1400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.existing-collections-header {
+    margin-right: 20px;
+}
+
+.existing-collections {
+    display: flex;
+}
+
+.collection-name-container {
+    margin-right: 10px;
+    padding: 5px 15px;
+    border-radius: 50px;
+    background-color: rgb(239 236 236);
+    cursor: pointer;
+}
+
+.existing-collections > p:last-child {
+    margin-right: 0;
+}
+
 @media (max-width: 768px) {
+    .success-popup {
+        margin-left: 10px;
+    }
+
+    .error-popup {
+        margin-left: 10px;
+    }
+
     .top-bar {
         max-width: 100%;
     }
@@ -489,6 +525,15 @@ input {
     
     .icon {
         margin-left: 5px;
+    }
+
+    .existing-collections-container {
+        justify-content: flex-start;
+    }
+
+    .collection-name {
+        width: max-content;
+
     }
 }
 
