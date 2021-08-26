@@ -133,7 +133,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
                     <p class="movie-release-date">Released: ${res.data.Year}</p>
                 </div>
                 <div class="movies-options">
-                    <button class="delete-movie-btn" id="delete_${movie_imdbID}">Delete</button>
+                    
                 </div>
             </div>
         </div>
