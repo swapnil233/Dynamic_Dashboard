@@ -317,6 +317,10 @@ input {
     display: none !important;
 }
 
+.movies-options {
+    margin-left: 20px;
+}
+
 /* Movies Search */
 .movies-search-wrapper {
     display: flex;

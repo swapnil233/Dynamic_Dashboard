@@ -40,7 +40,7 @@ auth.onAuthStateChanged((user) => {
                     // Add the name of each collection_name to the existing collections div
                     document.querySelector(".existing-collections").innerHTML +=
                         `
-                <div class="collection-name-container">
+                <div class="collection-name-container active">
                     <p class="collection-name">
                         All
                     </p>
@@ -154,7 +154,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
                     <p class="movie-release-date">Released: ${res.data.Year}</p>
                 </div>
                 <div class="movies-options">
-                    
+                <span class="material-icons no-overflow icon">more_horiz</span>
                 </div>
             </div>
         </div>
@@ -185,8 +185,6 @@ document.querySelector(".existing-collections").addEventListener("click", (event
     if (event.target.classList.contains("collection-name-container") || event.target.classList.contains("collection-name")) {
         const collection_name = event.target.textContent.replace(/\s+/g, ' ').trim();
         const collection = filterMovies(movies_collections_object, collection_name);
-        console.log(collection);
-        console.log(movies_collections_object)
 
         // Add the "active" class to the clicked collection name after removing it from all other instances
         document.querySelectorAll(".collection-name-container").forEach(collection_name_container => {
