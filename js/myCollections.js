@@ -35,6 +35,19 @@ auth.onAuthStateChanged((user) => {
                 // Global assignment of movies_collections object
                 movies_collections_object = movies_collections;
 
+                // If the user has any collections, show the "All" option in the filter options
+                if (Object.keys(movies_collections).length >= 1) {
+                    // Add the name of each collection_name to the existing collections div
+                    document.querySelector(".existing-collections").innerHTML +=
+                        `
+                <div class="collection-name-container">
+                    <p class="collection-name">
+                        All
+                    </p>
+                </div>
+                `
+                }
+
                 // For each movies_collections key
                 Object.keys(movies_collections).forEach(collection_name => {
 
@@ -173,17 +186,42 @@ document.querySelector(".existing-collections").addEventListener("click", (event
         const collection_name = event.target.textContent.replace(/\s+/g, ' ').trim();
         const collection = filterMovies(movies_collections_object, collection_name);
         console.log(collection);
-        
+        console.log(movies_collections_object)
+
+        // Add the "active" class to the clicked collection name after removing it from all other instances
+        document.querySelectorAll(".collection-name-container").forEach(collection_name_container => {
+            collection_name_container.classList.remove("active");
+        })
+        if (event.target.classList.contains("collection-name-container")) {
+            event.target.classList.add("active");
+        } else if (event.target.classList.contains("collection-name")) {
+            event.target.parentElement.classList.add("active");
+        }
+
         // Empty the movies-collections-container div
         document.getElementById("movies-collections-container").innerHTML = '';
 
-        // For each imdbID inside collection -> movies array, add the movie to the movies-collections-container div
-        collection.movies.forEach(movie => {
-            let movie_imdbID = movie.split("_")[0];
-            addMovieElementToContainerForID(movie_imdbID);
-            axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                updateMovieElement(movie_imdbID, collection_name, res)
+        // If collection_name === "All", show all the movies inside movies_collections_object
+        if (collection_name === "All") {
+            Object.keys(movies_collections_object).forEach(collection_name => {
+                const collection = movies_collections_object[collection_name];
+                collection.movies.forEach(movie => {
+                    let movie_imdbID = movie.split("_")[0];
+                    addMovieElementToContainerForID(movie_imdbID);
+                    axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
+                        updateMovieElement(movie_imdbID, collection_name, res)
+                    })
+                })
             })
-        })
+        } else {
+            // For each imdbID inside collection -> movies array, add the movie to the movies-collections-container div
+            collection.movies.forEach(movie => {
+                let movie_imdbID = movie.split("_")[0];
+                addMovieElementToContainerForID(movie_imdbID);
+                axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
+                    updateMovieElement(movie_imdbID, collection_name, res)
+                })
+            })
+        }
     }
 })
