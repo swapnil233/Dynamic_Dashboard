@@ -24,7 +24,6 @@ Movies are fetched using the [Open Movie Database (OMD)](https://www.omdbapi.com
 I'll post the website link once it's finished.
 
 # TODOs:
-- Show a list of user's collections
 - Implement movie deletion feature from collections page
 - Design "add to collection" popups
 - Let users filter their search by movies, series or episodes using the OMDB API param 'type'
