@@ -452,6 +452,10 @@ input {
     width: max-content;
 }
 
+.active {
+    background-color: #747def;
+}
+
 .existing-collections>p:last-child {
     margin-right: 0;
 }
