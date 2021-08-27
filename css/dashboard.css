@@ -335,6 +335,7 @@ input {
     border-radius: 0;
     padding: 0;
     width: 600px;
+    margin: 2rem auto;
 }
 
 .search-input {
