@@ -5,7 +5,9 @@ import {
 } from "./modules/interactions.js"
 
 // Import user functionalities
-import { createNewCollection } from './modules/userUpdates.js'
+import {
+    createNewCollection
+} from './modules/userUpdates.js'
 
 // Global variable to store the movies_collections object
 var movies_collections_object;
@@ -111,9 +113,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
                     <h2 class="movie-name">${res.data.Title}</h2>
                     <p class="movie-release-date">Released: ${res.data.Year}</p>
                 </div>
-                <div class="movies-options">
-                <span class="material-icons no-overflow icon">more_horiz</span>
-                </div>
+                <span class="material-icons no-overflow icon" data-imdbid="${movie_imdbID}" data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" style="color:#f55757"">delete</span>
             </div>
         </div>
     `;
@@ -169,5 +169,41 @@ document.querySelector(".existing-collections").addEventListener("click", (event
                 })
             })
         }
+    }
+})
+
+// Delete a movie from a collection
+document.querySelector(".collections-container").addEventListener("click", (e) => {
+    if (e.target.classList.contains("icon")) {
+
+        const imdbID = e.target.dataset.imdbid;
+        const collectionName = e.target.dataset.fromcollection;
+        const movieName = e.target.parentElement.querySelector(".movie-name").textContent;
+
+        // Get the user's doc ref
+        const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
+        // Go to the collection name
+        userDocRef.get().then((doc) => {
+            const collection_ref_in_firebase = doc.data().movies_collections[collectionName].movies;
+
+            for (let i in collection_ref_in_firebase) {
+                if (collection_ref_in_firebase[i].split("_")[0] === imdbID) {
+                    console.log("Deleting: " + collection_ref_in_firebase[i] + " from " + collectionName);
+
+                    // Index of collection_ref_in_firebase[i] inside doc.data().movies_collections[collectionName].movies.collectionName
+                    const index = doc.data().movies_collections[collectionName].movies.indexOf(collection_ref_in_firebase[i]);
+
+                    // Remove that one from the collection inside firebase
+                    userDocRef.update({
+                        [`movies_collections.${collectionName}.movies`]: firebase.firestore.FieldValue.arrayRemove(collection_ref_in_firebase[i])
+                    }).then(() => {
+                        // Remove the movie from the DOM
+                        document.getElementById(`movie_${imdbID}`).remove();
+                        successPopup(`Removed ${movieName} from ${collectionName}`)
+                    })
+                }
+            }
+        })
     }
 })
