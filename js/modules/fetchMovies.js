@@ -52,10 +52,10 @@ const displayMovies = (searchText) => {
                     if (sortedMovies[i].Poster !== "N/A") {
 
                         document.querySelector("#movies").innerHTML +=
-                            `
+                        `
                         <div class="movie-container">
                             <div class="movie-image">
-                                <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster" class="skeleton">
+                                <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster Image" class="skeleton">
                             </div>
 
                             <div class="movie-content">
