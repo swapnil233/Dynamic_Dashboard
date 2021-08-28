@@ -98,7 +98,7 @@ const createNewCollection = () => {
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
         if (doc.data().movies_collections[newCollectionName]) {
-            errorPopup(`${newCollectionName} is already a movies collection`)
+            errorPopup(`${newCollectionName} is already a collection`)
             document.querySelector(".search-input").value = "";
             document.querySelector(".description").value = "";
             return
@@ -106,10 +106,7 @@ const createNewCollection = () => {
             // Get the current timestamp
             const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-            // Inside userDocRef, there is a movies_collections object. Add a new key-value pair to it, where the key is newUserCollectionName and the value is an empty array.
-
-            document.querySelector(".existing-collections").innerHTML = '';
-
+            // Create new collection inside movies_collections
             userDocRef.set({
                 movies_collections: {
                     // Need to put it in brackets because using ES6's "computed property" syntax
@@ -124,6 +121,11 @@ const createNewCollection = () => {
                 merge: true
             }).then(() => {
                 successPopup(`${newCollectionName} collection has been created`)
+                document.querySelector(".search-input").value = "";
+                document.querySelector(".description").value = "";
+
+                // Add "Action" as a filter option manually, so the user doesn't have to refresh the page
+
             })
         }
     })
@@ -173,6 +175,7 @@ TODO: filterMovies function
 2. Return the object's value
 */
 
+// Function that filters the global movies_collections_object 
 const filterMovies = (movies_collections_object, filterBy) => {
     for (let key in movies_collections_object) {
         if (key === filterBy) {
