@@ -105,4 +105,51 @@ const updateDisplayNameInDOM = (currentUser) => {
     document.querySelector("#user_name").innerHTML = currentUser.displayName;
 }
 
-export {file, updateDp, updateUsername, updateDisplayNameInDOM, verifyEmail}
+// Creating a new movies collection
+const createNewCollection = () => {
+    event.preventDefault();
+
+    // Get the field values for the new collection name and description
+    const newCollectionName = document.querySelector(".search-input").value
+    const newCollectionDescription = document.querySelector(".description").value
+
+    // Ref to the user's doc
+    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
+    // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
+    userDocRef.get().then((doc) => {
+        if (doc.data().movies_collections[newCollectionName]) {
+            errorPopup(`${newCollectionName} is already a collection`)
+            document.querySelector(".search-input").value = "";
+            document.querySelector(".description").value = "";
+            return
+        } else {
+            // Get the current timestamp
+            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+            // Create new collection inside movies_collections
+            userDocRef.set({
+                movies_collections: {
+                    // Need to put it in brackets because using ES6's "computed property" syntax
+                    [newCollectionName]: {
+                        dateCreated: timestamp,
+                        description: newCollectionDescription,
+                        createdBy: firebase.auth().currentUser.email,
+                        movies: []
+                    }
+                }
+            }, {
+                merge: true
+            }).then(() => {
+                successPopup(`${newCollectionName} collection has been created`)
+                document.querySelector(".search-input").value = "";
+                document.querySelector(".description").value = "";
+
+                // Add "Action" as a filter option manually, so the user doesn't have to refresh the page
+
+            })
+        }
+    })
+}
+
+export {file, updateDp, updateUsername, updateDisplayNameInDOM, verifyEmail, createNewCollection}

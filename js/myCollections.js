@@ -4,6 +4,9 @@ import {
     errorPopup
 } from "./modules/interactions.js"
 
+// Import user functionalities
+import { createNewCollection } from './modules/userUpdates.js'
+
 // Global variable to store the movies_collections object
 var movies_collections_object;
 
@@ -84,53 +87,6 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-// Creating a new movies collection
-const createNewCollection = () => {
-    event.preventDefault();
-
-    // Get the field values for the new collection name and description
-    const newCollectionName = document.querySelector(".search-input").value
-    const newCollectionDescription = document.querySelector(".description").value
-
-    // Ref to the user's doc
-    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
-
-    // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
-    userDocRef.get().then((doc) => {
-        if (doc.data().movies_collections[newCollectionName]) {
-            errorPopup(`${newCollectionName} is already a collection`)
-            document.querySelector(".search-input").value = "";
-            document.querySelector(".description").value = "";
-            return
-        } else {
-            // Get the current timestamp
-            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-            // Create new collection inside movies_collections
-            userDocRef.set({
-                movies_collections: {
-                    // Need to put it in brackets because using ES6's "computed property" syntax
-                    [newCollectionName]: {
-                        dateCreated: timestamp,
-                        description: newCollectionDescription,
-                        createdBy: firebase.auth().currentUser.email,
-                        movies: []
-                    }
-                }
-            }, {
-                merge: true
-            }).then(() => {
-                successPopup(`${newCollectionName} collection has been created`)
-                document.querySelector(".search-input").value = "";
-                document.querySelector(".description").value = "";
-
-                // Add "Action" as a filter option manually, so the user doesn't have to refresh the page
-
-            })
-        }
-    })
-}
-
 // Create a new movies collection when the user clicks the "Create" button
 document.querySelector("#newCollectionBtn").addEventListener("click", createNewCollection);
 
@@ -163,18 +119,6 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
     `;
 }
 
-/*
-TODO: Ability to filter by collections
-
-1. Create a global variable 
-2. Assign the user's entire movies_collections object into that variable
-3. Create a function called filterMovies(movies_collections_object, filterBy)
-
-TODO: filterMovies function
-1. Go through the object's keys until you find the key that matches the filterBy input
-2. Return the object's value
-*/
-
 // Function that filters the global movies_collections_object 
 const filterMovies = (movies_collections_object, filterBy) => {
     for (let key in movies_collections_object) {
@@ -184,6 +128,7 @@ const filterMovies = (movies_collections_object, filterBy) => {
     }
 }
 
+// Show filtered movies on the DOM when filter option clicked
 document.querySelector(".existing-collections").addEventListener("click", (event) => {
     if (event.target.classList.contains("collection-name-container") || event.target.classList.contains("collection-name")) {
         const collection_name = event.target.textContent.replace(/\s+/g, ' ').trim();
