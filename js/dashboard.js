@@ -27,6 +27,7 @@ auth.onAuthStateChanged((user) => {
                 document.querySelector("#nav_dp").classList.add("skeleton");
                 document.querySelector("#nav_dp").src = "";
                 document.querySelector("#nav_dp").src = doc.data().dp_URL;
+                document.querySelector("#nav_dp").alt = "Profile picture of " + user.displayName;
             }
         })
 
