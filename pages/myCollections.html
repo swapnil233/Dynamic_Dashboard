@@ -31,16 +31,21 @@
             </div>
 
             <div class="top-right">
+                <!-- Home Redirect, Desktop -->
                 <a class="nav-link hiddenOnMobile" href="./dashboard.html">
                     <span class="material-icons icon">home</span>
                     Home
                 </a>
+
+                <!-- My Collections Redirect, Desktop -->
                 <a class="nav-link hiddenOnMobile" href="./myCollections.html">
                     <span class="material-icons icon">apps</span>
                     My Collections
                 </a>
 
+                <!-- Dropdown Wrapper -->
                 <div class="profile-dropdown-wrapper">
+                    <!-- PFP and Dropdown Arrow -->
                     <div id="profile-dropdown">
                         <img src="../images/no_user.png" class="top-avatar" id="nav_dp">
                         <span class="no-overflow">
@@ -48,23 +53,35 @@
                         </span>
                     </div>
 
+                    <!-- Dropdown Menu -->
                     <div class="dropdown-content" id="myDropdown">
-                        <h3 id='user_name'></span></h3>
-                        <a href="./myCollections.html" class="showOnMobile">
+
+                        <!-- Username -->
+                        <h3 id='user_name'></h3>
+
+                        <!-- Home Redirect -->
+                        <a href="./dashboard.html" class="showOnMobile">
                             <span class="material-icons icon">home</span>
                             Home
                         </a>
+
+                        <!-- Update Profile Redirect -->
                         <a href="#" id="update-profile-btn">
                             <span class="material-icons icon">manage_accounts</span>
                             Update Profile
                         </a>
+
+                        <!-- My Collections Redirect -->
                         <a href="./myCollections.html" class="showOnMobile">
                             <span class="material-icons icon">apps</span>
                             My Collections
                         </a>
+
+                        <!-- Logout Button -->
                         <button class="logout-login-button" type="submit" id="logout_btn">
                             <span class="btn_text">Log Out</span>
                             <span class="material-icons icon logout-icon">logout</span>
+                            <!-- Logout Button Loader -->
                             <div class="loader hidden">
                                 <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
@@ -120,6 +137,7 @@
                 <input type="file" name="user_dp" id="user_dp" onchange="chooseFile(event)">
             </div>
 
+            <!-- Update Profile Button -->
             <button type="submit" id="update">
                 <span class="update_btn_text">Update</span>
                 <div class="update_loader hidden">
