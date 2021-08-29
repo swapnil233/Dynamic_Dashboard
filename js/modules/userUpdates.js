@@ -116,6 +116,12 @@ const createNewCollection = () => {
     // Ref to the user's doc
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
+    // If newCollectionName = "All", show error message
+    if (newCollectionName === "All") {
+        errorPopup("Collection name cannot be 'All'");
+        return;
+    }
+
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
         if (doc.data().movies_collections[newCollectionName]) {
