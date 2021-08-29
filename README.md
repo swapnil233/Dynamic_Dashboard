@@ -24,9 +24,10 @@ Movies are fetched using the [Open Movie Database (OMD)](https://www.omdbapi.com
 I'll post the website link once it's finished.
 
 # TODOs:
-- Implement movie deletion feature from collections page
 - Design "add to collection" popups
-- Let users filter their search by movies, series or episodes using the OMDB API param 'type'
+- Let users filter their search by movies, series or episodes using the OMDB API param 'type' in the search page
+- 
+- Optimize showing movies_collections by storing them in a global variable in the beginning of the page load and then just show them when the user clicks on the "Add to Collection" button (or the + button) -- this way, the user doesn't have to wait for the page to load to see the collections and it reduces the amount of data that needs to be fetched from Firestore
 
 # Future: 
 - Movies collections pagination
@@ -43,3 +44,5 @@ I'll post the website link once it's finished.
 [Dashboard - After Searching Up Movies](showcase/4.png)
 
 [Dashboard - Updating Profile](showcase/5.png)
+
+[Collections Page](showcase/collections_page.png)
