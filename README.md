@@ -37,12 +37,10 @@ I'll post the website link once it's finished.
 # Showcase:
 ![Imgur](https://imgur.com/R0Ytz2N.png)
 
-[Signup Page](showcase/2.png)
+![Imgur](https://imgur.com/QFCCPX2.png)
 
-[Forgot Password Page](showcase/3.png)
+![Imgur](https://imgur.com/e2ZOWb6.png)
 
-[Dashboard - After Searching Up Movies](showcase/4.png)
+![Imgur](https://imgur.com/LcNBHXC.png)
 
-[Dashboard - Updating Profile](showcase/5.png)
-
-[Collections Page](showcase/collections_page.png)
+![Imgur](https://imgur.com/ug1rM6z.png)
