@@ -132,14 +132,14 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                 // "movies_collections" object from Firestore
                 const moviesCollection = doc.data().movies_collections
 
+                // Show the add to collection popup
+                document.querySelector(".collections-modal").classList.toggle("hidden");
+
                 // Append user's movies_collections titles (the keys)
                 Object.keys(moviesCollection).forEach(collection => {
 
                     // Collection name -- get rid of whitespace before and after
                     const collectionName = collection.replace(/\s+/g, ' ').trim();
-
-                    // Show the add to collection popup
-                    document.querySelector(".collections-modal").classList.toggle("hidden");
 
                     // Add all the available collections as DOM elements inside .collections-modal-collections
                     document.querySelector(".collections-modal-collections").innerHTML +=
@@ -161,6 +161,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
 // Add an event listener to the 'Add to Collection' modal/popup
 document.querySelector(".collections-modal ").addEventListener("click", (e) => {
+    
     // When a movie collection name is clicked, add the movie it's under to the collection
     if (e.target.classList.contains("collection-button")) {
         console.log(e.target.id);

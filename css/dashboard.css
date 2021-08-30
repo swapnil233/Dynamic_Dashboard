@@ -637,6 +637,12 @@ input {
     .existing-collections-container {
         justify-content: flex-start;
     }
+
+    .collections-modal-wrapper {
+        box-shadow: none;
+        border-radius: none;
+    }
+
 }
 
 /* Media Query for width under 500px */
