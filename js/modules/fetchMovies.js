@@ -52,7 +52,7 @@ const displayMovies = (searchText) => {
                     if (sortedMovies[i].Poster !== "N/A") {
 
                         document.querySelector("#movies").innerHTML +=
-                        `
+                            `
                         <div class="movie-container">
                             <div class="movie-image">
                                 <img src=${sortedMovies[i].Poster} alt="${sortedMovies[i].Title} Poster Image" class="skeleton">
@@ -115,49 +115,58 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
     // Show available movies collections when + is clicked
     if (e.target.id[0] === "t") {
+
         // Get the movie's imdbID
         const movieID = e.target.id;
 
-        // If the target's parent's parent's parent contains a "collection-container" element, don't add it again
-        if (e.target.parentElement.parentElement.parentElement.querySelector(".collection-container") === null) {
-            // Get the available movie collections
-            firebase
-                .firestore()
-                .collection("users")
-                .doc(firebase.auth().currentUser.uid)
-                .get()
-                .then((doc) => {
-                    // "movies_collections" object from Firestore
-                    const moviesCollection = doc.data().movies_collections
+        // Get the movie's title
+        const movieTitle = e.target.parentElement.parentElement.children[0].children[0].innerText;
 
-                    // Append user's movies_collections titles (the keys)
-                    Object.keys(moviesCollection).forEach(collection => {
+        // Get the available movie collections
+        firebase
+            .firestore()
+            .collection("users")
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+            .then((doc) => {
+                // "movies_collections" object from Firestore
+                const moviesCollection = doc.data().movies_collections
 
-                        // Collection name -- get rid of whitespace before and after
-                        const collectionName = collection.replace(/\s+/g, ' ').trim();
+                // Append user's movies_collections titles (the keys)
+                Object.keys(moviesCollection).forEach(collection => {
 
-                        // Add each key to the innerHTML of the "Add to Collection" button's parent element
-                        document.getElementById(movieID).parentElement.parentElement.parentElement.innerHTML +=
-                            `
-                            <br>
-                            <div class="collection-container">
-                                <a class="collection-button" id="${collectionName}" data-imdbID="${movieID}" href="#">
-                                    ${collectionName}
-                                </a>
-                            </div>
-                            `
-                    })
+                    // Collection name -- get rid of whitespace before and after
+                    const collectionName = collection.replace(/\s+/g, ' ').trim();
+
+                    // Show the add to collection popup
+                    document.querySelector(".collections-modal").classList.toggle("hidden");
+
+                    // Add all the available collections as DOM elements inside .collections-modal-collections
+                    document.querySelector(".collections-modal-collections").innerHTML +=
+                        `
+                        <div class="collection-wrapper">
+                            <h3 class="collection-name">${collectionName}</h3>
+                            <span 
+                                class="material-icons icon collection-button" 
+                                id="${collectionName}" 
+                                data-imdbID="${movieID}"
+                                data-title="${movieTitle}"
+                                >add</span>
+                        </div>
+                        `
                 })
-        } else {
-            errorPopup("Already Open");
-        }
+            })
     }
+});
 
+// Add an event listener to the 'Add to Collection' modal/popup
+document.querySelector(".collections-modal ").addEventListener("click", (e) => {
     // When a movie collection name is clicked, add the movie it's under to the collection
-    if (e.target.className === "collection-button") {
+    if (e.target.classList.contains("collection-button")) {
+        console.log(e.target.id);
 
         // Collection name -- get rid of whitespace before and after
-        const clicked_movies_collection_name = e.target.textContent.replace(/\s+/g, ' ').trim();
+        const clicked_movies_collection_name = e.target.parentElement.children[0].textContent.replace(/\s+/g, ' ').trim();
 
         // Current timestamp
         const timestamp = new Date().toISOString();
@@ -166,7 +175,10 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         const clicked_movie_imdbID = e.target.dataset.imdbid + "_" + timestamp;
 
         // Movie Name.
-        const movieName = e.target.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
+        const movieName = e.target.dataset.title;
+
+        // console log the above variables
+        console.log(clicked_movies_collection_name, clicked_movie_imdbID, movieName);
 
         // User's doc ref.
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
@@ -180,7 +192,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
         })
     }
-});
+})
 
 // Function that sorts the movies array by "Year", descending
 function sortByReleaseYearDescending(a, b) {
@@ -195,3 +207,9 @@ function sortByReleaseYearAscending(a, b) {
     if (a.Year > b.Year) return 1;
     return 0;
 }
+
+// Close the add to collection modal when the 'X' is clicked
+document.querySelector("#close-collections-modal").addEventListener("click", () => {
+    document.querySelector(".collections-modal").classList.toggle("hidden");
+    document.querySelector(".collections-modal-collections").innerHTML = "";
+});
