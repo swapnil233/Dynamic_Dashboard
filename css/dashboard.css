@@ -404,6 +404,70 @@ input {
     overflow: hidden;
 }
 
+.collections-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 99;
+}
+
+.collections-modal h1 {
+    font-weight: 600;
+}
+
+.collections-modal h3 {
+    font-weight: 500;
+}
+
+.collections-modal-wrapper {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 400px;
+    /* Border with nice shadows */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.collections-modal-header-wrapper {
+
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collections-modal-collections {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.collection-wrapper {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-top: 40px;
+    width: 100%;
+
+}
+
 /* Create new collections form */
 .create-new-collection-continer {
     display: flex;
