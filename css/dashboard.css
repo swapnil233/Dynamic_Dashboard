@@ -676,19 +676,16 @@ input {
 
     .collections-modal-content-wrapper {
 
-    overflow: hidden;
-    padding-top: 40px;
-    margin: 0;
-    padding: 30px;
+        overflow: hidden;
+        padding-top: 40px;
+        margin: 0;
+        padding: 30px;
 
     }
 
     .collections-modal-collections {
         overflow: auto;
     }
-
-
-
 }
 
 /* Media Query for width under 500px */

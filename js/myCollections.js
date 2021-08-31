@@ -70,10 +70,7 @@ auth.onAuthStateChanged((user) => {
                     const movies_array = movies_collections[collection_name].movies;
 
                     // For each imdbID inside movies_collections -> {collection_name} -> movies array
-                    movies_array.forEach(movie => {
-
-                        // Get the imdbID
-                        let movie_imdbID = movie.split("_")[0];
+                    movies_array.forEach(movie_imdbID => {
 
                         addMovieElementToContainerForID(movie_imdbID);
 
@@ -95,13 +92,16 @@ document.querySelector("#newCollectionBtn").addEventListener("click", createNewC
 // Movie Insertion Helper Functions to add movies to the page sequentially instead of paralell
 const addMovieElementToContainerForID = (movie_imdbID) => {
     document.getElementById("movies-collections-container").innerHTML +=
-        `<div class="movie-container" id="movie_${movie_imdbID}"></div>`;
+        `<div class="movie-container movie_${movie_imdbID}" id="movie_${movie_imdbID}"></div>`;
 }
 
 // Update the movie element with the movie's data
 const updateMovieElement = (movie_imdbID, collection_name, res) => {
-    let movieContainerElement = document.getElementById(`movie_${movie_imdbID}`);
-    movieContainerElement.innerHTML =
+    let movieContainerElement = document.getElementsByClassName(`movie_${movie_imdbID}`);
+
+    // Iterate through the movieContainerElement array and for each element, update the movie element
+    for (let i = 0; i < movieContainerElement.length; i++) {
+        movieContainerElement[i].innerHTML =
         `
         <div class="movie-image">
             <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
@@ -121,7 +121,8 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
                 style="color:#f55757"">delete</span>
             </div>
         </div>
-    `;
+    `
+    }
 }
 
 // Function that filters the global movies_collections_object 
