@@ -116,9 +116,15 @@ const createNewCollection = () => {
     // Ref to the user's doc
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
-    // If newCollectionName = "All", show error message
-    if (newCollectionName === "All") {
-        errorPopup("Collection name cannot be 'All'");
+    // Use regex to check if newCollectionName is just spaces   
+    if (newCollectionName.match(/^\s*$/)) {
+        errorPopup("Collection name cannot be empty");
+        return;
+    }
+
+    // Check if newCollectionName is "All", "all", "", or null (empty string)
+    if (newCollectionName === "All" || newCollectionName === "all" || newCollectionName === "" || newCollectionName === null) {
+        errorPopup("Please use a valid collection name");
         return;
     }
 
@@ -151,8 +157,14 @@ const createNewCollection = () => {
                 document.querySelector(".search-input").value = "";
                 document.querySelector(".description").value = "";
 
-                // Add "Action" as a filter option manually, so the user doesn't have to refresh the page
-
+                // Add the new collection into .existing-collections
+                document.querySelector(".existing-collections").innerHTML += `
+                <div class="collection-name-container">
+                    <p class="collection-name">
+                        ${newCollectionName}
+                    </p>
+                </div>  
+                `
             })
         }
     })
