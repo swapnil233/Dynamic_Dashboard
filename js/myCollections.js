@@ -110,7 +110,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
         <div class="movie-content" data-imdbid="${movie_imdbID}">
             <div class="add-content-container">
                 <div>
-                    <h2 class="movie-name">${res.data.Title}</h2>
+                    <h2 class="movie-name">${res.data.Title} | <span class="light">${collection_name}</span></h2>
                     <p class="movie-release-date">Released: ${res.data.Year}</p>
                 </div>
                 

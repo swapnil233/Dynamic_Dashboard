@@ -13,6 +13,10 @@ body {
     font-weight: 200;
 }
 
+.light {
+    font-weight: 300;
+}
+
 .error-popup {
     /* A 50px width by 30px height at the top right of the screen */
     position: fixed;
@@ -443,6 +447,7 @@ input {
     /* Border with nice shadows */
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    max-width: 60%;
 }
 
 .collections-modal-header-wrapper {
@@ -668,6 +673,7 @@ input {
     .collections-modal-wrapper {
         box-shadow: none;
         border-radius: none;
+        max-width: 100%;
     }
 
     .current-movie-wrapper {
@@ -692,5 +698,12 @@ input {
 @media (max-width: 500px) {
     .movie-container {
         margin: 20px 0px;
+    }
+}
+
+/* Media Query for width under 1000px */
+@media (max-width: 1000px) {
+    .collections-modal-wrapper {
+        max-width: 90%;
     }
 }
