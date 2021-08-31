@@ -107,13 +107,18 @@ const updateMovieElement = (movie_imdbID, collection_name, res) => {
             <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
         </div>
 
-        <div class="movie-content" data-imdbid="${collection_name.replace(/\s+/g, ' ').trim()}">
+        <div class="movie-content" data-imdbid="${movie_imdbID}">
             <div class="add-content-container">
                 <div>
                     <h2 class="movie-name">${res.data.Title}</h2>
                     <p class="movie-release-date">Released: ${res.data.Year}</p>
                 </div>
-                <span class="material-icons no-overflow icon" data-imdbid="${movie_imdbID}" data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" style="color:#f55757"">delete</span>
+                
+                <span 
+                class="material-icons no-overflow icon" 
+                data-imdbid="${movie_imdbID}" 
+                data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                style="color:#f55757"">delete</span>
             </div>
         </div>
     `;
@@ -151,8 +156,7 @@ document.querySelector(".existing-collections").addEventListener("click", (event
         if (collection_name === "All") {
             Object.keys(movies_collections_object).forEach(collection_name => {
                 const collection = movies_collections_object[collection_name];
-                collection.movies.forEach(movie => {
-                    let movie_imdbID = movie.split("_")[0];
+                collection.movies.forEach(movie_imdbID => {
                     addMovieElementToContainerForID(movie_imdbID);
                     axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
                         updateMovieElement(movie_imdbID, collection_name, res)
