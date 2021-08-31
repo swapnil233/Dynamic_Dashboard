@@ -128,6 +128,12 @@ const createNewCollection = () => {
         return;
     }
 
+    // Check if newCollectionName is under 20 characters and not just spaces 
+    if (newCollectionName.length > 20) {
+        errorPopup("Collection name cannot be more than 20 characters");
+        return;
+    }
+
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
         if (doc.data().movies_collections[newCollectionName]) {
