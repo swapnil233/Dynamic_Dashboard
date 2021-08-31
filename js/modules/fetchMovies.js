@@ -12,6 +12,9 @@ document.querySelector(".search-button").addEventListener("click", e => {
     // Get movie search
     let searchText = document.querySelector(".search-input").value;
 
+    // If there are spaces before or after the search text, remove them
+    searchText = searchText.trim();
+
     displayMovies(searchText);
 });
 
