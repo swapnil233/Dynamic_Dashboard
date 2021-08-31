@@ -663,6 +663,24 @@ input {
         border-radius: none;
     }
 
+    .current-movie-wrapper {
+        display: none;
+    }
+
+    .collections-modal-content-wrapper {
+
+    overflow: hidden;
+    padding-top: 40px;
+    margin: 0;
+
+    }
+
+    .collections-modal-collections {
+        overflow: auto;
+    }
+
+
+
 }
 
 /* Media Query for width under 500px */
