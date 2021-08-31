@@ -164,6 +164,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                                 data-imdbID="${movieID}"
                                 data-title="${movieTitle}"
                                 data-active="true"
+                                style="margin-left: 30px"
                                 >add</span>
                         </div>
                         `
