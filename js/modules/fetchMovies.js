@@ -122,6 +122,9 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Get the movie's title
         const movieTitle = e.target.parentElement.parentElement.children[0].children[0].innerText;
 
+        // Get the movie's poster image url
+        const moviePoster = e.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].src;
+
         // Get the available movie collections
         firebase
             .firestore()
@@ -134,6 +137,12 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
                 // Show the add to collection popup
                 document.querySelector(".collections-modal").classList.toggle("hidden");
+
+                // Set the current movie poster image
+                document.querySelector("#current-movie-poster").src = moviePoster;
+
+                // Set the current movie poster's alt text
+                document.querySelector("#current-movie-poster").alt = movieTitle + " Poster Image";
 
                 // Append user's movies_collections titles (the keys)
                 Object.keys(moviesCollection).forEach(collection => {
@@ -151,6 +160,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                                 id="${collectionName}" 
                                 data-imdbID="${movieID}"
                                 data-title="${movieTitle}"
+                                data-active="true"
                                 >add</span>
                         </div>
                         `
@@ -163,17 +173,17 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 document.querySelector(".collections-modal ").addEventListener("click", (e) => {
     
     // When a movie collection name is clicked, add the movie it's under to the collection
-    if (e.target.classList.contains("collection-button")) {
+    if (e.target.classList.contains("collection-button") && e.target.dataset.active === "true") {
         console.log(e.target.id);
 
         // Collection name -- get rid of whitespace before and after
         const clicked_movies_collection_name = e.target.parentElement.children[0].textContent.replace(/\s+/g, ' ').trim();
 
         // Current timestamp
-        const timestamp = new Date().toISOString();
+        // const timestamp = new Date().toISOString();
 
         // Movie's imdbID.
-        const clicked_movie_imdbID = e.target.dataset.imdbid + "_" + timestamp;
+        const clicked_movie_imdbID = e.target.dataset.imdbid;
 
         // Movie Name.
         const movieName = e.target.dataset.title;
@@ -189,6 +199,12 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
             [`movies_collections.${clicked_movies_collection_name}.movies`]: firebase.firestore.FieldValue.arrayUnion(clicked_movie_imdbID)
         }).then(() => {
             successPopup(`Added ${movieName} to your ${clicked_movies_collection_name} collection`)
+            // Change the icon from plus sign to green checkmark
+            e.target.textContent = "check"
+            e.target.style.color = "green"
+
+            // Disable e.target (the add to collection button)
+            e.target.dataset.active = "false";
         }).catch((err) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
         })

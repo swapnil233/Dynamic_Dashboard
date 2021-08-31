@@ -418,21 +418,27 @@ input {
     z-index: 99;
 }
 
+.current-movie-wrapper > img {
+    width: 100%;
+    width: 300px;
+    height: 446px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 .collections-modal h1 {
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .collections-modal h3 {
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .collections-modal-wrapper {
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     padding: 2rem;
-    max-width: 400px;
     /* Border with nice shadows */
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
@@ -465,6 +471,20 @@ input {
     align-items: center;
     margin-top: 40px;
     width: 100%;
+
+}
+
+.collections-modal-content-wrapper {
+    
+    height: 100%;
+    max-height: 446px;
+    overflow: auto;
+    margin-left: 30px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
 }
 
