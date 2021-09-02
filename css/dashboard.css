@@ -335,6 +335,7 @@ input {
 
 .movies-search-container {
     margin-top: 50px;
+    width: 100%;
 }
 
 .search-form {
@@ -614,7 +615,6 @@ input {
     }
 
     .movies-search-container {
-        width: 100%;
         max-width: 100%;
         margin-top: 20px;
     }
