@@ -249,3 +249,81 @@ document.querySelector(".collections-container").addEventListener("click", (e) =
         })
     }
 })
+
+// Edit collections
+document.querySelector("#edit-collections-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Show the add to collection popup
+    document.querySelector(".collections-modal").classList.toggle("hidden");
+
+    // Get the user's doc ref
+    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
+    // Get the user's collections
+    userDocRef.get().then((doc) => {
+        const user_collections = doc.data().movies_collections;
+
+        // For each collection name, add it to the collections-modal
+        Object.keys(user_collections).forEach(collection_name => {
+            document.querySelector(".collections-modal-collections").innerHTML += 
+            `
+            <div class="collection-wrapper">
+                <h3 class="collection-name">${collection_name}</h3>
+                <span 
+                class="material-icons icon collection-button" 
+                id="${collection_name}"
+                style="margin-left: 30px">delete</span>
+            </div>
+            `
+        })
+    })
+})
+
+// Add an event listener to the 'Edit Collections' modal/popup
+document.querySelector(".collections-modal ").addEventListener("click", (e) => {
+    
+    // When a collection's delete button is clicked, delete the collection
+    if (e.target.classList.contains("collection-button")) {
+
+        // Collection name -- get rid of whitespace before and after
+        const clicked_movies_collection_name = e.target.parentElement.children[0].textContent.replace(/\s+/g, ' ').trim();
+
+        // User's doc ref.
+        var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+
+        // push into the doc ref "movies_collections" object
+        user_doc_ref.update({
+            [`movies_collections.${clicked_movies_collection_name}`]: firebase.firestore.FieldValue.delete()
+        }).then(() => {
+            successPopup(`Deleted <span style="font-weight:bold;">${clicked_movies_collection_name}</span>`)
+            // Remove the collection from the DOM
+            e.target.parentElement.remove();
+
+            // Remove that collection from filter list
+            document.querySelectorAll(".collection-name").forEach(collection_name => {
+                if (collection_name.textContent.replace(/\s+/g, ' ').trim() === clicked_movies_collection_name) {
+                    collection_name.parentElement.remove();
+                }
+            })
+
+            // Remove that collection from the global variable
+            delete movies_collections_object[clicked_movies_collection_name];
+
+            // Remove the movies of that collection from the DOM
+            document.querySelectorAll(".light").forEach(span => {
+                if (span.textContent === clicked_movies_collection_name) {
+                    span.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+                }
+            })
+        }).catch((err) => {
+            errorPopup(`Couldn't delete <span style="font-weight:bold;">${clicked_movies_collection_name}</span>`)
+        })
+    }
+})
+
+// Close the edit collections modal when the 'X' is clicked
+document.querySelector("#close-collections-modal").addEventListener("click", () => {
+    document.querySelector(".collections-modal").classList.toggle("hidden");
+    document.querySelector(".collections-modal-collections").innerHTML = "";
+});
