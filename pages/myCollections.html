@@ -43,6 +43,12 @@
                     My Collections
                 </a>
 
+                <!-- Edit Collections -->
+                <a href="#" class="nav-link hiddenOnMobile" id="edit-collections-btn">
+                    <span class="material-icons icon">edit</span>
+                    Edit Collections
+                </a>
+
                 <!-- Dropdown Wrapper -->
                 <div class="profile-dropdown-wrapper">
                     <!-- PFP and Dropdown Arrow -->
@@ -65,7 +71,7 @@
                             Home
                         </a>
 
-                        <!-- Update Profile Redirect -->
+                        <!-- Update Profile -->
                         <a href="#" id="update-profile-btn">
                             <span class="material-icons icon">manage_accounts</span>
                             Update Profile
@@ -75,6 +81,12 @@
                         <a href="./myCollections.html" class="showOnMobile">
                             <span class="material-icons icon">apps</span>
                             My Collections
+                        </a>
+
+                        <!-- Edit Collections -->
+                        <a href="#" class="showOnMobile" id="edit-collections-btn">
+                            <span class="material-icons icon">edit</span>
+                            Edit Collections
                         </a>
 
                         <!-- Logout Button -->
@@ -101,6 +113,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Movies Collections -->
+    <section class="movies-search-wrapper">
+        <!-- Create a new collection header -->
+        <div class="movies-search-container">
+            <div class="create-new-collection-continer">
+                <div>
+                    <h2 class="create-new-collection-header">Create a new collection</h1>
+                </div>
+            </div>
+
+            <!-- Create a new collection form/input -->
+            <div class="movies-search-search">
+                <form class="search-form centered-form">
+                    <input class="search-input" type="text" placeholder="Name">
+                    <input class="search-input description" type="text" placeholder="Description">
+                    <button class="create-new-collection-button" id="newCollectionBtn">
+                        <Span class="search-btn-text">Create</Span>
+                        <div class="loader hidden search-loader">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px"
+                                viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="#000"
+                                    d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                        from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                                </path>
+                            </svg>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Existing Collections -->
+            <div class="existing-collections-container">
+                <div class="existing-collections-header">
+                    <h4 class="fw-200">Filter By:</h4>
+                </div>
+                <div class="existing-collections">
+                </div>
+            </div>
+
+            <div class="collections-container" id="movies-collections-container"></div>
+        </div>
+    </section>
+
+    <!-- Modals -->
 
     <!-- Update Profile Modal -->
     <div class="modal">
@@ -155,51 +214,6 @@
             </button>
         </form>
     </div>
-
-    <!-- Movies Collections -->
-    <section class="movies-search-wrapper">
-        <!-- Create a new collection header -->
-        <div class="movies-search-container">
-            <div class="create-new-collection-continer">
-                <div>
-                    <h2 class="create-new-collection-header">Create a new collection</h1>
-                </div>
-            </div>
-
-            <!-- Create a new collection form/input -->
-            <div class="movies-search-search">
-                <form class="search-form centered-form">
-                    <input class="search-input" type="text" placeholder="Name">
-                    <input class="search-input description" type="text" placeholder="Description">
-                    <button class="create-new-collection-button" id="newCollectionBtn">
-                        <Span class="search-btn-text">Create</Span>
-                        <div class="loader hidden search-loader">
-                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px"
-                                viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                                <path fill="#000"
-                                    d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
-                                        from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
-                                </path>
-                            </svg>
-                        </div>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Existing Collections -->
-            <div class="existing-collections-container">
-                <div class="existing-collections-header">
-                    <h4 class="fw-200">Filter By:</h4>
-                </div>
-                <div class="existing-collections">
-                </div>
-            </div>
-
-            <div class="collections-container" id="movies-collections-container"></div>
-        </div>
-    </section>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
