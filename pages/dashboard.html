@@ -102,6 +102,42 @@
         </div>
     </div>
 
+    <!-- Movies Database Search -->
+    <section class="movies-search-wrapper">
+        <!-- Movies Search Bar -->
+        <div class="movies-search-container">
+            <div class="movies-search-search"> 
+                
+                <form class="search-form">
+                    <input class="search-input" type="text" placeholder="Search for movies or TV shows...">
+                    <button class="search-button">
+                        <Span class="search-btn-text">Search</Span>
+                        <div class="loader hidden search-loader">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
+                                height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
+                                xml:space="preserve">
+    
+                                <path fill="#000"
+                                    d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                        from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                                </path>
+                            </svg>
+                        </div>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Movies Search Results -->
+        <div class="movies-search-results" id="movies">
+        </div>
+    </section>
+
+    <!-- Modals -->
+
     <!-- Update Profile Modal -->
     <div class="modal">
         <!-- Update Profile Modal Content -->
@@ -156,61 +192,27 @@
         </form>
     </div>
 
-    <!-- User's Collections Modal -->
-    <div class="collections-modal hidden">
-        <div class="collections-modal-wrapper">
-            <div class="current-movie-wrapper">
-                <img src="https://picsum.photos/300/446" alt="" id="current-movie-poster" class="skeleton">
-            </div>
-
-            <div class="collections-modal-content-wrapper">
-                <div class="collections-modal-header-wrapper">
-                    <h1 class="collections-modal-header">
-                        Add to Collection
-                    </h1>
-                    <span class="material-icons icon" id="close-collections-modal" style="padding-left: 50px;">close</span>
+        <!-- User's Collections Modal -->
+        <div class="collections-modal hidden">
+            <div class="collections-modal-wrapper">
+                <div class="current-movie-wrapper">
+                    <img src="https://picsum.photos/300/446" alt="" id="current-movie-poster" class="skeleton">
                 </div>
-                
-                <div class="collections-modal-collections">
-                    <!-- This is where the collections go -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Movies Database Search -->
-    <section class="movies-search-wrapper">
-        <!-- Movies Search Bar -->
-        <div class="movies-search-container">
-            <div class="movies-search-search"> 
-                
-                <form class="search-form">
-                    <input class="search-input" type="text" placeholder="Search for movies or TV shows...">
-                    <button class="search-button">
-                        <Span class="search-btn-text">Search</Span>
-                        <div class="loader hidden search-loader">
-                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
-                                height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
-                                xml:space="preserve">
     
-                                <path fill="#000"
-                                    d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
-                                        from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
-                                </path>
-                            </svg>
-                        </div>
-                    </button>
-                </form>
-
+                <div class="collections-modal-content-wrapper">
+                    <div class="collections-modal-header-wrapper">
+                        <h1 class="collections-modal-header">
+                            Add to Collection
+                        </h1>
+                        <span class="material-icons icon" id="close-collections-modal" style="padding-left: 50px;">close</span>
+                    </div>
+                    
+                    <div class="collections-modal-collections">
+                        <!-- This is where the collections go -->
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Movies Search Results -->
-        <div class="movies-search-results" id="movies">
-        </div>
-    </section>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
