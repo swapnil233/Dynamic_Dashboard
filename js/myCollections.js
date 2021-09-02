@@ -75,7 +75,7 @@ auth.onAuthStateChanged((user) => {
                         addMovieElementToContainerForID(movie_imdbID);
 
                         axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                            updateMovieElement(movie_imdbID, collection_name, res)
+                            updateMovieElement(movie_imdbID, collection_name, res, false);
                         })
                     })
                 })
@@ -99,13 +99,13 @@ const addMovieElementToContainerForID = (movie_imdbID) => {
 }
 
 // Update the movie element with the movie's data
-const updateMovieElement = (movie_imdbID, collection_name, res) => {
+const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => {
     const movieContainerElements = document.getElementsByClassName(`movie_${movie_imdbID}`);
 
     // Iterate through the movieContainerElements array and for each element, update the movie element
     for (let i = 0; i < movieContainerElements.length; i++) {
 
-        if (collection_name === "2cpjbjcpENz2Yzq5Ume4ee") {
+        if (is_filtered) {
             movieContainerElements[i].innerHTML =
                 `
             <div class="movie-image">
@@ -195,7 +195,7 @@ document.querySelector(".existing-collections").addEventListener("click", (event
                 collection.movies.forEach(movie_imdbID => {
                     addMovieElementToContainerForID(movie_imdbID);
                     axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                        updateMovieElement(movie_imdbID, collection_name, res)
+                        updateMovieElement(movie_imdbID, collection_name, res, false);
                     })
                 })
             })
@@ -205,7 +205,7 @@ document.querySelector(".existing-collections").addEventListener("click", (event
                 let movie_imdbID = movie.split("_")[0];
                 addMovieElementToContainerForID(movie_imdbID);
                 axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                    updateMovieElement(movie_imdbID, "2cpjbjcpENz2Yzq5Ume4ee", res)
+                    updateMovieElement(movie_imdbID, collection_name, res, true)
                 })
             })
         }
@@ -214,6 +214,7 @@ document.querySelector(".existing-collections").addEventListener("click", (event
 
 // Delete a movie from a collection
 document.querySelector(".collections-container").addEventListener("click", (e) => {
+    e.preventDefault();
     if (e.target.classList.contains("icon")) {
 
         const imdbID = e.target.dataset.imdbid;
