@@ -570,6 +570,10 @@ input {
         margin-left: 10px;
     }
 
+    .pl-0-onMobile {
+        padding-left: 0 !important;
+    }
+
     .top-bar {
         max-width: 100%;
     }

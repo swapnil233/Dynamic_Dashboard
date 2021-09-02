@@ -251,23 +251,29 @@ document.querySelector(".collections-container").addEventListener("click", (e) =
 })
 
 // Edit collections
-document.querySelector("#edit-collections-btn").addEventListener("click", (e) => {
-    e.preventDefault();
+document.querySelectorAll("#edit-collections-btn").forEach(edit_collections_btn => {
+    edit_collections_btn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-    // Show the add to collection popup
-    document.querySelector(".collections-modal").classList.toggle("hidden");
+        // If the div with the class "dropdown-content" has the class "show", remove it
+        if (document.querySelector(".dropdown-content").classList.contains("show")) {
+            document.querySelector(".dropdown-content").classList.remove("show");
+        }
 
-    // Get the user's doc ref
-    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+        // Show the add to collection popup
+        document.querySelector(".collections-modal").classList.toggle("hidden");
 
-    // Get the user's collections
-    userDocRef.get().then((doc) => {
-        const user_collections = doc.data().movies_collections;
+        // Get the user's doc ref
+        const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
-        // For each collection name, add it to the collections-modal
-        Object.keys(user_collections).forEach(collection_name => {
-            document.querySelector(".collections-modal-collections").innerHTML += 
-            `
+        // Get the user's collections
+        userDocRef.get().then((doc) => {
+            const user_collections = doc.data().movies_collections;
+
+            // For each collection name, add it to the collections-modal
+            Object.keys(user_collections).forEach(collection_name => {
+                document.querySelector(".collections-modal-collections").innerHTML +=
+                    `
             <div class="collection-wrapper">
                 <h3 class="collection-name">${collection_name}</h3>
                 <span 
@@ -276,13 +282,14 @@ document.querySelector("#edit-collections-btn").addEventListener("click", (e) =>
                 style="margin-left: 30px">delete</span>
             </div>
             `
+            })
         })
     })
 })
 
 // Add an event listener to the 'Edit Collections' modal/popup
 document.querySelector(".collections-modal ").addEventListener("click", (e) => {
-    
+
     // When a collection's delete button is clicked, delete the collection
     if (e.target.classList.contains("collection-button")) {
 
