@@ -92,36 +92,67 @@ document.querySelector("#newCollectionBtn").addEventListener("click", createNewC
 // Movie Insertion Helper Functions to add movies to the page sequentially instead of paralell
 const addMovieElementToContainerForID = (movie_imdbID) => {
     document.getElementById("movies-collections-container").innerHTML +=
-        `<div class="movie-container movie_${movie_imdbID}" id="movie_${movie_imdbID}"></div>`;
+        `<div 
+            class="movie-container movie_${movie_imdbID}" 
+            id="movie_${movie_imdbID}">
+        </div>`;
 }
 
 // Update the movie element with the movie's data
 const updateMovieElement = (movie_imdbID, collection_name, res) => {
-    let movieContainerElement = document.getElementsByClassName(`movie_${movie_imdbID}`);
+    const movieContainerElements = document.getElementsByClassName(`movie_${movie_imdbID}`);
 
-    // Iterate through the movieContainerElement array and for each element, update the movie element
-    for (let i = 0; i < movieContainerElement.length; i++) {
-        movieContainerElement[i].innerHTML =
-        `
-        <div class="movie-image">
-            <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
-        </div>
+    // Iterate through the movieContainerElements array and for each element, update the movie element
+    for (let i = 0; i < movieContainerElements.length; i++) {
 
-        <div class="movie-content" data-imdbid="${movie_imdbID}">
-            <div class="add-content-container">
-                <div>
-                    <h2 class="movie-name">${res.data.Title} | <span class="light">${collection_name}</span></h2>
-                    <p class="movie-release-date">Released: ${res.data.Year}</p>
-                </div>
-                
-                <span 
-                class="material-icons no-overflow icon" 
-                data-imdbid="${movie_imdbID}" 
-                data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                style="color:#f55757"">delete</span>
+        if (collection_name === "2cpjbjcpENz2Yzq5Ume4ee") {
+            movieContainerElements[i].innerHTML =
+                `
+            <div class="movie-image">
+                <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
             </div>
-        </div>
-    `
+
+            <div class="movie-content" data-imdbid="${movie_imdbID}">
+                <div class="add-content-container">
+                    <div>
+                        <h2 class="movie-name">${res.data.Title}</h2>
+                        <p class="movie-release-date">Released: ${res.data.Year}</p>
+                    </div>
+                    
+                    <span 
+                    class="material-icons no-overflow icon" 
+                    data-imdbid="${movie_imdbID}" 
+                    data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                    style="color:#f55757"">delete
+                    </span>
+                </div>
+            </div>
+            `
+        } else {
+
+            movieContainerElements[i].innerHTML =
+                `
+                <div class="movie-image">
+                    <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
+                </div>
+
+                <div class="movie-content" data-imdbid="${movie_imdbID}">
+                    <div class="add-content-container">
+                        <div>
+                            <h2 class="movie-name">${res.data.Title} | <span class="light">${collection_name}</span></h2>
+                            <p class="movie-release-date">Released: ${res.data.Year}</p>
+                        </div>
+                        
+                        <span 
+                        class="material-icons no-overflow icon" 
+                        data-imdbid="${movie_imdbID}" 
+                        data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                        style="color:#f55757"">delete
+                        </span>
+                    </div>
+                </div>
+                `
+        }
     }
 }
 
@@ -134,16 +165,20 @@ const filterMovies = (movies_collections_object, filterBy) => {
     }
 }
 
-// Show filtered movies on the DOM when filter option clicked
+// Filter by clicked collection name
 document.querySelector(".existing-collections").addEventListener("click", (event) => {
+
+    // If clicked on collection name or collection name's container
     if (event.target.classList.contains("collection-name-container") || event.target.classList.contains("collection-name")) {
         const collection_name = event.target.textContent.replace(/\s+/g, ' ').trim();
         const collection = filterMovies(movies_collections_object, collection_name);
 
-        // Add the "active" class to the clicked collection name after removing it from all other instances
+        // Remove the active class from all collection name containers
         document.querySelectorAll(".collection-name-container").forEach(collection_name_container => {
             collection_name_container.classList.remove("active");
         })
+
+        // Add the active class to the clicked collection name container
         if (event.target.classList.contains("collection-name-container")) {
             event.target.classList.add("active");
         } else if (event.target.classList.contains("collection-name")) {
@@ -170,7 +205,7 @@ document.querySelector(".existing-collections").addEventListener("click", (event
                 let movie_imdbID = movie.split("_")[0];
                 addMovieElementToContainerForID(movie_imdbID);
                 axios.get("https://www.omdbapi.com/?i=" + movie_imdbID + "&apikey=56bdb7b4").then((res) => {
-                    updateMovieElement(movie_imdbID, collection_name, res)
+                    updateMovieElement(movie_imdbID, "2cpjbjcpENz2Yzq5Ume4ee", res)
                 })
             })
         }
@@ -206,6 +241,7 @@ document.querySelector(".collections-container").addEventListener("click", (e) =
                         // Remove the movie from the DOM
                         document.getElementById(`movie_${imdbID}`).remove();
                         successPopup(`Removed ${movieName} from ${collectionName}`)
+                        console.log("Removed " + collection_ref_in_firebase[i] + " from " + collectionName);
                     })
                 }
             }
