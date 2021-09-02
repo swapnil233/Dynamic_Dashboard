@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Dashboard</title>
+    <title>FilmList | Search</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/dashboard.css">
@@ -17,6 +17,10 @@
 
     <!-- Material Design Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
 </head>
 
 <body>
@@ -106,18 +110,17 @@
     <section class="movies-search-wrapper">
         <!-- Movies Search Bar -->
         <div class="movies-search-container">
-            <div class="movies-search-search"> 
-                
+            <div class="movies-search-search">
+
                 <form class="search-form">
                     <input class="search-input" type="text" placeholder="Search for movies or TV shows...">
                     <button class="search-button">
                         <Span class="search-btn-text">Search</Span>
                         <div class="loader hidden search-loader">
                             <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
-                                height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
-                                xml:space="preserve">
-    
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px"
+                                viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+
                                 <path fill="#000"
                                     d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
                                     <animateTransform attributeType="xml" attributeName="transform" type="rotate"
@@ -192,27 +195,28 @@
         </form>
     </div>
 
-        <!-- User's Collections Modal -->
-        <div class="collections-modal hidden">
-            <div class="collections-modal-wrapper">
-                <div class="current-movie-wrapper">
-                    <img src="https://picsum.photos/300/446" alt="" id="current-movie-poster" class="skeleton">
+    <!-- User's Collections Modal -->
+    <div class="collections-modal hidden">
+        <div class="collections-modal-wrapper">
+            <div class="current-movie-wrapper">
+                <img src="https://picsum.photos/300/446" alt="" id="current-movie-poster" class="skeleton">
+            </div>
+
+            <div class="collections-modal-content-wrapper">
+                <div class="collections-modal-header-wrapper">
+                    <h1 class="collections-modal-header">
+                        Add to Collection
+                    </h1>
+                    <span class="material-icons icon" id="close-collections-modal"
+                        style="padding-left: 50px;">close</span>
                 </div>
-    
-                <div class="collections-modal-content-wrapper">
-                    <div class="collections-modal-header-wrapper">
-                        <h1 class="collections-modal-header">
-                            Add to Collection
-                        </h1>
-                        <span class="material-icons icon" id="close-collections-modal" style="padding-left: 50px;">close</span>
-                    </div>
-                    
-                    <div class="collections-modal-collections">
-                        <!-- This is where the collections go -->
-                    </div>
+
+                <div class="collections-modal-collections">
+                    <!-- This is where the collections go -->
                 </div>
             </div>
         </div>
+    </div>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>

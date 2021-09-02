@@ -27,6 +27,8 @@ I'll post the website link once it's finished.
 - Let users filter their search by movies, series or episodes using the OMDB API param 'type' in the search page
 - Optimize showing movies_collections by storing them in a global variable in the beginning of the page load and then just show them when the user clicks on the "Add to Collection" button (or the + button) -- this way, the user doesn't have to wait for the page to load to see the collections and it reduces the amount of data that needs to be fetched from Firestore
 - Before adding a movie to the collection, check if its imdbID exists & show error if so.
+- Delete & rename existing collections
+- Re-design profile updating modal
 
 # Future: 
 - Movies collections pagination
