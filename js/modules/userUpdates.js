@@ -176,4 +176,7 @@ const createNewCollection = () => {
     })
 }
 
+// Edit Collections (delete and rename)
+
+
 export {file, updateDp, updateUsername, updateDisplayNameInDOM, verifyEmail, createNewCollection}
