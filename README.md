@@ -1,5 +1,8 @@
 
 # Movie Collections Dashboard 
+
+The site is live! Check it out at https://filmlist.ca
+
 This is a web app created entirely in vanilla HTML5, CSS3 and JavaScript utilizing ES6 features for the front-end, and Firebase's Auth, Firestore and Storage for the back-end.
 
 In this website, users can:
