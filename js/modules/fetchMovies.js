@@ -193,6 +193,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                         collection.innerHTML = "check";
                         collection.style.color = "green";
                         collection.dataset.active = "false";
+                        collection.style.cursor = "default";
                     }
                 })
             })
