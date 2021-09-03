@@ -196,3 +196,13 @@ const openAndCloseModal = (currentUser) => {
         modal.classList.toggle("show");
     })
 }
+
+document.getElementById("profile-dropdown").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (document.querySelector(".dropdown-content").classList.contains("show")) {
+        document.getElementById("profile-dropdown").children[1].children[0].innerHTML = "close"
+    } else {
+        document.getElementById("profile-dropdown").children[1].children[0].innerHTML = "menue"
+    }
+}) 
