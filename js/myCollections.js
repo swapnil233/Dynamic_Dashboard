@@ -123,7 +123,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
                     class="material-icons no-overflow icon" 
                     data-imdbid="${movie_imdbID}" 
                     data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                    style="color:#f55757"">delete
+                    style="color:#f55757; overflow:inherit;">delete
                     </span>
                 </div>
             </div>
@@ -147,7 +147,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
                         class="material-icons no-overflow icon" 
                         data-imdbid="${movie_imdbID}" 
                         data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                        style="color:#f55757"">delete
+                        style="color:#f55757; overflow:inherit;">delete
                         </span>
                     </div>
                 </div>
