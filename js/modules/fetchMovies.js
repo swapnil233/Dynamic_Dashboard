@@ -147,6 +147,18 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                 // Set the current movie poster's alt text
                 document.querySelector("#current-movie-poster").alt = movieTitle + " Poster Image";
 
+                // If the user does not have any collections, give them an option to create one
+                if (Object.keys(moviesCollection).length === 0) {
+                    document.querySelector(".collections-modal-collections").innerHTML =
+                        `
+                    <div class="create-new-collection-form" style="width: 100%;">
+                        <input type="text" id="create-collection-name" placeholder="Create your first collection">
+                        <button class="create-collection-btn" id="create-first-collection-btn" type="submit" data-imdbID="${movieID}"
+                        data-title="${movieTitle}">Create</button>
+                    </div>
+                    `
+                }
+
                 // Append user's movies_collections titles (the keys)
                 Object.keys(moviesCollection).forEach(collection => {
 
@@ -175,25 +187,19 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
 // Add an event listener to the 'Add to Collection' modal/popup
 document.querySelector(".collections-modal ").addEventListener("click", (e) => {
-    
+
     // When a movie collection name is clicked, add the movie it's under to the collection
     if (e.target.classList.contains("collection-button") && e.target.dataset.active === "true") {
         console.log(e.target.id);
 
-        // Collection name -- get rid of whitespace before and after
+        // Collection name
         const clicked_movies_collection_name = e.target.parentElement.children[0].textContent.replace(/\s+/g, ' ').trim();
-
-        // Current timestamp
-        // const timestamp = new Date().toISOString();
 
         // Movie's imdbID.
         const clicked_movie_imdbID = e.target.dataset.imdbid;
 
         // Movie Name.
         const movieName = e.target.dataset.title;
-
-        // console log the above variables
-        console.log(clicked_movies_collection_name, clicked_movie_imdbID, movieName);
 
         // User's doc ref.
         var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
@@ -211,6 +217,62 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
             e.target.dataset.active = "false";
         }).catch((err) => {
             errorPopup(`Couldn't add ${movieName} to your ${clicked_movies_collection_name} collection`)
+        })
+    }
+
+    // If e.target is the 'Create Collection' button
+    if (e.target.id === "create-first-collection-btn") {
+        e.preventDefault();
+
+        // imdbID
+        const movieID = e.target.dataset.imdbid;
+
+        // Movie Name.
+        const movieTitle = e.target.dataset.title;
+
+        // Get the collection name
+        const collectionName = document.querySelector("#create-collection-name").value;
+        console.log(collectionName);
+
+        // User's doc ref.
+        var user_doc_ref = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+
+        // push into the doc ref "movies_collections" object
+        user_doc_ref.update({
+            [`movies_collections.${collectionName}`]: {
+                movies: []
+            }
+        }).then(() => {
+            successPopup(`Created ${collectionName} collection`)
+            // Clear out the box
+            document.querySelector(".collections-modal-collections").innerHTML = "";
+
+            // Replace it with the newly created collection
+            document.querySelector(".collections-modal-collections").innerHTML +=
+            `
+            <div class="collection-wrapper">
+                <h3 class="collection-name">${collectionName}</h3>
+                <span 
+                    class="material-icons icon collection-button" 
+                    id="${collectionName}" 
+                    data-imdbID="${movieID}"
+                    data-title="${movieTitle}"
+                    data-active="true"
+                    style="margin-left: 30px"
+                    >add</span>
+            </div>
+            `
+
+            // Add the movie to the newly created collection
+            user_doc_ref.update({
+                [`movies_collections.${collectionName}.movies`]: firebase.firestore.FieldValue.arrayUnion(movieID)
+            }).then(() => {
+                // Change the icon from plus sign to green checkmark
+                document.querySelector(".collection-button").textContent = "check"
+                document.querySelector(".collection-button").style.color = "green"
+            })
+        }).catch((err) => {
+            errorPopup(`Couldn't create ${collectionName} collection`)
         })
     }
 })
