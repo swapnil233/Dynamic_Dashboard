@@ -6,6 +6,9 @@ import {
     endLoadingAnimation
 } from './interactions.js';
 
+// Global variable to store the movies_collections object
+var movies_collections_object;
+
 document.querySelector(".search-button").addEventListener("click", e => {
     e.preventDefault()
 
@@ -137,6 +140,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
             .then((doc) => {
                 // "movies_collections" object from Firestore
                 const moviesCollection = doc.data().movies_collections
+                movies_collections_object = moviesCollection;
 
                 // Show the add to collection popup
                 document.querySelector(".collections-modal").classList.toggle("hidden");
@@ -177,9 +181,19 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                                 data-title="${movieTitle}"
                                 data-active="true"
                                 style="margin-left: 30px"
-                                >add</span>
+                                >add
+                            </span>
                         </div>
                         `
+                })
+
+                // Check if the movie is already in a collection
+                document.querySelectorAll(".collection-button").forEach(collection => {
+                    if (movies_collections_object[collection.id].movies.includes(movieID)) {
+                        collection.innerHTML = "check";
+                        collection.style.color = "green";
+                        collection.dataset.active = "false";
+                    }
                 })
             })
     }
@@ -243,7 +257,9 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
                 movies: []
             }
         }).then(() => {
+            // Show success popup
             successPopup(`Created ${collectionName} collection`)
+            
             // Clear out the box
             document.querySelector(".collections-modal-collections").innerHTML = "";
 
@@ -257,7 +273,6 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
                     id="${collectionName}" 
                     data-imdbID="${movieID}"
                     data-title="${movieTitle}"
-                    data-active="true"
                     style="margin-left: 30px"
                     >add</span>
             </div>
