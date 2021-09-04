@@ -1,5 +1,8 @@
 // Import errorPopup and successPopup from interactions.js
-import { errorPopup, successPopup } from "./interactions.js";
+import {
+    errorPopup,
+    successPopup
+} from "./interactions.js";
 
 // Grab pfp and store it in 'file'
 let file = {}
@@ -116,23 +119,8 @@ const createNewCollection = () => {
     // Ref to the user's doc
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
-    // Use regex to check if newCollectionName is just spaces   
-    if (newCollectionName.match(/^\s*$/)) {
-        errorPopup("Collection name cannot be empty");
-        return;
-    }
-
-    // Check if newCollectionName is "All", "all", "", or null (empty string)
-    if (newCollectionName === "All" || newCollectionName === "all" || newCollectionName === "" || newCollectionName === null) {
-        errorPopup("Please use a valid collection name");
-        return;
-    }
-
-    // Check if newCollectionName is under 20 characters and not just spaces 
-    if (newCollectionName.length > 20) {
-        errorPopup("Collection name cannot be more than 20 characters");
-        return;
-    }
+    // Check if newCollectionName is valid
+    newCollectionNameErrorChecks(newCollectionName)
 
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
@@ -176,7 +164,39 @@ const createNewCollection = () => {
     })
 }
 
+// New Collection Name Error Checks
+const newCollectionNameErrorChecks = (newCollectionName) => {
+    
+    // Use regex to check if newCollectionName is just spaces   
+    if (newCollectionName.match(/^\s*$/)) {
+        errorPopup("Collection name cannot be empty");
+        return false;
+    }
+
+    // Check if newCollectionName is "All", "all", "", or null (empty string)
+    if (newCollectionName === "All" || newCollectionName === "all" || newCollectionName === "" || newCollectionName === null) {
+        errorPopup("Please use a valid collection name");
+        return false;
+    }
+
+    // Check if newCollectionName is under 20 characters and not just spaces 
+    if (newCollectionName.length > 20) {
+        errorPopup("Collection name cannot be more than 20 characters");
+        return false;
+    }
+
+    return true;
+}
+
 // Edit Collections (delete and rename)
 
 
-export {file, updateDp, updateUsername, updateDisplayNameInDOM, verifyEmail, createNewCollection}
+export {
+    file,
+    updateDp,
+    updateUsername,
+    updateDisplayNameInDOM,
+    verifyEmail,
+    createNewCollection,
+    newCollectionNameErrorChecks
+}
