@@ -374,6 +374,7 @@ input {
     justify-content: center;
     flex-wrap: wrap;
     max-width: 1600px;
+    margin: 0 auto;
 }
 
 .movie-image>img {
@@ -523,6 +524,7 @@ input {
 
 .existing-collections-container {
     width: 90%;
+    margin: 0 auto;
     max-width: 1400px;
     display: flex;
     justify-content: center;
