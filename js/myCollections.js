@@ -95,7 +95,8 @@ const addMovieElementToContainerForID = (movie_imdbID) => {
         `<div 
             class="movie-container movie_${movie_imdbID}" 
             id="movie_${movie_imdbID}">
-        </div>`;
+        </div>
+        `
 }
 
 // Update the movie element with the movie's data
@@ -108,26 +109,26 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
         if (is_filtered) {
             movieContainerElements[i].innerHTML =
                 `
-            <div class="movie-image">
-                <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
-            </div>
-
-            <div class="movie-content" data-imdbid="${movie_imdbID}">
-                <div class="add-content-container">
-                    <div>
-                        <h2 class="movie-name">${res.data.Title}</h2>
-                        <p class="movie-release-date">Released: ${res.data.Year}</p>
-                    </div>
-                    
-                    <span 
-                    class="material-icons no-overflow icon" 
-                    data-imdbid="${movie_imdbID}" 
-                    data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                    style="color:#f55757; overflow:inherit;">delete
-                    </span>
+                <div class="movie-image">
+                    <img src=${res.data.Poster} alt="${res.data.Title} Poster" class="skeleton">
                 </div>
-            </div>
-            `
+
+                <div class="movie-content" data-imdbid="${movie_imdbID}">
+                    <div class="add-content-container">
+                        <div>
+                            <h2 class="movie-name">${res.data.Title}</h2>
+                            <p class="movie-release-date">Released: ${res.data.Year}</p>
+                        </div>
+                        
+                        <span 
+                        class="material-icons no-overflow icon" 
+                        data-imdbid="${movie_imdbID}" 
+                        data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                        style="color:#f55757; overflow:inherit;">delete
+                        </span>
+                    </div>
+                </div>
+                `
         } else {
 
             movieContainerElements[i].innerHTML =
