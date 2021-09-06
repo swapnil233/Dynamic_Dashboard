@@ -45,12 +45,12 @@ I'll post the website link once it's finished.
 
 ![Imgur](https://imgur.com/e2ZOWb6.png)
 
-![Imgur](https://imgur.com/Z4G6i1T)
+![Imgur](https://imgur.com/Z4G6i1T.png)
 
-![Imgur](https://imgur.com/Esi0y4a)
+![Imgur](https://imgur.com/Esi0y4a.png)
 
-![Imgur](https://imgur.com/A4ZcfKz)
+![Imgur](https://imgur.com/A4ZcfKz.png)
 
-![Imgur](https://imgur.com/rngSrlZ)
+![Imgur](https://imgur.com/rngSrlZ.png)
 
-![Imgur](https://imgur.com/rsA6OjT)
+![Imgur](https://imgur.com/rsA6OjT.png)
