@@ -39,19 +39,35 @@ I'll post the website link once it's finished.
 - Randomized movies search on home page
 
 # Showcase:
+
 Login Page:
+
 ![Imgur](https://imgur.com/R0Ytz2N.png)
+
+Signup Page:
 
 ![Imgur](https://imgur.com/QFCCPX2.png)
 
+Forgot Password Page:
+
 ![Imgur](https://imgur.com/e2ZOWb6.png)
 
-![Imgur](https://imgur.com/Z4G6i1T.png)
+Searching up a Movie:
 
 ![Imgur](https://imgur.com/Esi0y4a.png)
 
+Adding a Movie to Your Collections:
+
 ![Imgur](https://imgur.com/A4ZcfKz.png)
 
+Your Collections:
+
+![Imgur](https://imgur.com/Z4G6i1T.png)
+
+Your Profile Settings:
+
 ![Imgur](https://imgur.com/rngSrlZ.png)
+
+Deleting Your Collections:
 
 ![Imgur](https://imgur.com/rsA6OjT.png)
