@@ -1,5 +1,5 @@
 
-# Movie Collections Dashboard 
+# FilmList
 
 The site is live! Check it out at https://filmlist.ca
 
