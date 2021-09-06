@@ -45,8 +45,12 @@ I'll post the website link once it's finished.
 
 ![Imgur](https://imgur.com/e2ZOWb6.png)
 
-![Imgur](https://imgur.com/LcNBHXC.png)
+![Imgur](https://imgur.com/Z4G6i1T)
 
-![Imgur](https://imgur.com/ug1rM6z.png)
+![Imgur](https://imgur.com/Esi0y4a)
 
-![Imgur](https://imgur.com/nCW9QMA.png)
+![Imgur](https://imgur.com/A4ZcfKz)
+
+![Imgur](https://imgur.com/rngSrlZ)
+
+![Imgur](https://imgur.com/rsA6OjT)
