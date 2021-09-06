@@ -39,6 +39,7 @@ I'll post the website link once it's finished.
 - Randomized movies search on home page
 
 # Showcase:
+Login Page:
 ![Imgur](https://imgur.com/R0Ytz2N.png)
 
 ![Imgur](https://imgur.com/QFCCPX2.png)
