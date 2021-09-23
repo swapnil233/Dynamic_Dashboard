@@ -5,6 +5,11 @@
     font-family: 'Roboto', sans-serif;
 }
 
+:root {
+    --color-primary: #00bcd4;
+    --color-secondary: 
+}
+
 body {
     position: relative;
 }
