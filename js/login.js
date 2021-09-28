@@ -1,3 +1,7 @@
+// Import error and success messages from ./modules/interactions.js
+
+import { successPopup, errorPopup } from './modules/interactions.js'; 
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         window.location.replace('./pages/dashboard.html')
@@ -25,7 +29,10 @@ document.getElementById('login_btn').addEventListener('click', (e) => {
             document.querySelector(".loader").classList.toggle("hidden")
             document.querySelector(".btn_text").classList.toggle("hidden")
 
+            // Show error message
+            errorPopup(error.message, 10000)
+
             // Alert the user.
-            window.alert(error.message)
+            // window.alert(error.message)
         });
 });
