@@ -1,4 +1,4 @@
-const errorPopup = (error) => {
+const errorPopup = (error, duration) => {
     const errorIcon = 
     `
     <span class="material-icons error-icon">
@@ -27,7 +27,7 @@ const errorPopup = (error) => {
     setTimeout(() => {
         // Remove the error popup from the body element.
         document.body.removeChild(errorPopup)
-    }, 2000);
+    }, duration);
 
 }
 
