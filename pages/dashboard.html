@@ -14,7 +14,7 @@
 
         gtag('config', 'G-3XQ7108W6J');
     </script>
-    
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -247,6 +247,80 @@
 
                 <div class="collections-modal-collections">
                     <!-- This is where the collections go -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User's Profile Modal -->
+    <div class="collections-modal hidden">
+        <div class="collections-modal-wrapper">
+            <div class="current-movie-wrapper">
+                <div class="profile-image">
+                    <img src="../images/no_user.png" alt="Default Profile image" style="height: 40px; width: 40px;">
+                    <h3 class="user-name">
+                        Hasan Iqbal
+                    </h3>
+                </div>
+            </div>
+
+            <div class="collections-modal-content-wrapper">
+                <div class="collections-modal-header-wrapper">
+                    <h1 class="collections-modal-header">
+                        Edit Your Profile
+                    </h1>
+                    <span class="material-icons icon" id="close-collections-modal"
+                        style="padding-left: 50px;">close</span>
+                </div>
+
+                <div class="collections-modal-collections">
+                    <!-- Update Profile Modal Content -->
+                    <form class="profile-update-form no-style-form">
+                        <!-- Profile Email Address -->
+                        <label for="profile_email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input class="disabled" type="email" name="email" id="profile_email" placeholder=" "
+                                readonly>
+                            <span class="material-icons verified">verified</span>
+                            <a href="#" class="verify-link" id="verify-email-button">Verify</a>
+                        </div>
+
+                        <!-- Profile Name -->
+                        <label for="profile_name">New Username</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="user_name" id="profile_name">
+                        </div>
+
+                        <!-- Biography -->
+                        <label for="user_bio">Short Biography</label>
+                        <div class="input-wrapper">
+                            <input type="textarea" name="user_bio" id="user_bio">
+                        </div>
+
+                        <!-- User's Display Picture -->
+                        <label for="user_dp">Display Picture</label>
+                        <div class="input-wrapper">
+                            <input type="file" name="user_dp" id="user_dp" onchange="chooseFile(event)">
+                        </div>
+
+                        <!-- Update Profile Button -->
+                        <button type="submit" id="update">
+                            <span class="update_btn_text">Update</span>
+                            <div class="update_loader hidden">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
+                                    height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
+                                    xml:space="preserve">
+
+                                    <path fill="#000"
+                                        d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                        <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                            from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
