@@ -84,7 +84,7 @@ const displayMovies = (searchText) => {
             endLoadingAnimation(document.querySelector(".search-button"), document.querySelector(".search-loader"), document.querySelector(".search-btn-text"));
 
             // Display error 
-            errorPopup("The entry was not found");
+            errorPopup("The entry was not found", 5000);
         });
 }
 
@@ -203,7 +203,7 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
             e.target.style.color = "green"
             e.target.dataset.active = "false";
         }).catch((err) => {
-            errorPopup(`Couldn't add ${movieName} to your ${collectionName} collection. Please try again`)
+            errorPopup(`Couldn't add ${movieName} to your ${collectionName} collection. Please try again`, 5000)
         })
     }
 
@@ -232,7 +232,7 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
             // If collectionName is already a key in the movies_collections object inside user_doc_ref, show an error
             user_doc_ref.get().then((doc) => {
                 if (doc.data().movies_collections[collectionName]) {
-                    errorPopup(`${collectionName} is already a collection`)
+                    errorPopup(`${collectionName} is already a collection`, 5000)
                     document.querySelector("#create-collection-name").value = "";
                     return
                 } else {
