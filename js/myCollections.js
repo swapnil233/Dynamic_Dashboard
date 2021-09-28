@@ -325,7 +325,7 @@ document.querySelector(".collections-modal ").addEventListener("click", (e) => {
                 }
             })
         }).catch((err) => {
-            errorPopup(`Couldn't delete <span style="font-weight:bold;">${clicked_movies_collection_name}</span>`)
+            errorPopup(`Couldn't delete <span style="font-weight:bold;">${clicked_movies_collection_name}</span>`, 6000)
         })
     }
 })
