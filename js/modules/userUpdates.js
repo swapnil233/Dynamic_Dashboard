@@ -27,14 +27,14 @@ const updateDp = async (currentUser) => {
                 file.type !== "image/gif"
             ) {
                 // Create a pop-up to notify user that the file is not an image
-                errorPopup("File must be .jpg, .jpeg, .png, or .gif");
+                errorPopup("File must be .jpg, .jpeg, .png, or .gif", 5000);
                 return;
             }
 
             // Check image file size
             if (file.size / 1024 / 1024 > 9) {
                 // Create a pop-up to notify user that the file is too large
-                errorPopup("File size must be less than 10mb");
+                errorPopup("File size must be less than 10mb", 5000);
                 return;
             }
             console.log("Image passed requirements")
@@ -125,7 +125,7 @@ const createNewCollection = () => {
     // If newCollectionName is already a key in the movies_collections object inside userDocRef, show an error
     userDocRef.get().then((doc) => {
         if (doc.data().movies_collections[newCollectionName]) {
-            errorPopup(`${newCollectionName} is already a collection`)
+            errorPopup(`${newCollectionName} is already a collection`, 5000)
             document.querySelector(".search-input").value = "";
             document.querySelector(".description").value = "";
             return
@@ -169,19 +169,19 @@ const newCollectionNameErrorChecks = (newCollectionName) => {
     
     // Use regex to check if newCollectionName is just spaces   
     if (newCollectionName.match(/^\s*$/)) {
-        errorPopup("Collection name cannot be empty");
+        errorPopup("Collection name cannot be empty", 5000);
         return false;
     }
 
     // Check if newCollectionName is "All", "all", "", or null (empty string)
     if (newCollectionName === "All" || newCollectionName === "all" || newCollectionName === "" || newCollectionName === null) {
-        errorPopup("Please use a valid collection name");
+        errorPopup("Please use a valid collection name", 5000);
         return false;
     }
 
     // Check if newCollectionName is under 20 characters and not just spaces 
     if (newCollectionName.length > 20) {
-        errorPopup("Collection name cannot be more than 20 characters");
+        errorPopup("Collection name cannot be more than 20 characters", 6000);
         return false;
     }
 
