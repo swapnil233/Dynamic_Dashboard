@@ -5,6 +5,57 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.error-popup {
+    /* A 50px width by 30px height at the top right of the screen */
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    /* Light red background color with slight opacity */
+    background-color: rgb(255, 65, 65);
+    color: rgb(15, 15, 15);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: lighter;
+    line-height: 1.7;
+    font-weight: normal;
+    z-index: 9999;
+}
+
+.success-popup {
+    /* A 50px width by 30px height at the top right of the screen */
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Light green background color with slight opacity */
+    background-color: rgb(43, 226, 89);
+    color: rgb(15, 15, 15);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: normal;
+    z-index: 9999;
+}
+
+.error-icon {
+    margin-right: 10px;
+}
+
+.success-icon {
+    margin-right: 10px;
+}
+
+.no-overflow {
+    width: 24px;
+    overflow: hidden;
+}
+
 body {
     height: 100vh;
     display: flex;
