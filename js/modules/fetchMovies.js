@@ -98,6 +98,45 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Movie imdbID
         const movieID = e.target.id;
 
+        // Get movie availability location from the GoWATCH API
+        const options = {
+            method: 'POST',
+            url: 'https://gowatch.p.rapidapi.com/lookup/title/tmdb_id',
+            params: {
+                id: movieID,
+                type: 'movie',
+                country: 'us'
+            },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'x-rapidapi-host': 'gowatch.p.rapidapi.com',
+                'x-rapidapi-key': '9cc25f3cc7mshf7ba0b928506be6p1e59ebjsn1fb75d4e7818'
+            },
+            data: {
+                id: movieID,
+                type: 'movie',
+                country: 'us'
+            }
+        };
+
+        //   Shows where movies can be found (e.g., Netflix, Amazon, etc.)
+        axios.request(options).then(function (response) {
+            const offers = response.data.offers;
+            const vendors = [];
+
+            //   Get an array of all the vendors
+            offers.forEach(offers => {
+                vendors.push(offers.provider);
+            });
+
+            // Remove all duplicates from the vendors array
+            const uniqueVendors = vendors.filter((vendor, index, self) => vendor && self.indexOf(vendor) === index);
+
+            console.log(uniqueVendors);
+        }).catch(function (error) {
+            console.error(error);
+        });
+
         // Movie title
         const movieTitle = e.target.parentElement.parentElement.children[0].children[0].innerText;
 
