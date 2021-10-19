@@ -25,6 +25,7 @@ In this website, users can:
 2. Ability to see a movie's entire information when clicked
 3. Renaming Collections
 4. Moving movies inside collections
+5. See where movie/show is available to steam or buy (e.g., Netflix, Hulu, etc.)
 
 # Showcase:
 
