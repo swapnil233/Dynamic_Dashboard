@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XQ7108W6J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3XQ7108W6J');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>FilmList | Home</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
+</head>
+<body>
+    <!-- Nav Bar -->
+    <div class="top-bar">
+        <div class="topbar-wrapper">
+
+            <div class="top-left">
+                <a href="./dashboard.html" style="text-decoration: none;">
+                    <span class="logo">🍿 FilmList</span>
+                </a>
+            </div>
+
+            <div class="top-right">
+                <!-- Dropdown Wrapper -->
+                <div class="profile-dropdown-wrapper">
+                    <!-- PFP and Dropdown Arrow -->
+                    <div id="profile-dropdown">
+                        <span class="no-overflow material-icons icon">
+                            <span class="material-icons icon">menue</span>
+                        </span>
+                    </div>
+
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-content" id="myDropdown">
+
+                        <!-- Home Redirect -->
+                        <a href="./homePage.html" class="showOnMobile">
+                            <span class="material-icons icon">home</span>
+                            Home
+                        </a>
+
+                        <!-- Login Button -->
+                        
+                        <button class="logout-login-button" type="submit" id="login_btn">
+                            <span class="btn_text">Log In</span>
+                            <span class="material-icons icon login-icon">login</span>
+                            
+                            <!-- Logout Button Loader -->
+                            <div class="loader hidden">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px"
+                                    height="15px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
+                                    xml:space="preserve">
+
+                                    <path fill="#000"
+                                        d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                        <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                            from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAj09MQ7pVM7Fqo6G-IvRGYGf5To7bQyFk",
+            authDomain: "simplelogin-369dd.firebaseapp.com",
+            projectId: "simplelogin-369dd",
+            storageBucket: "simplelogin-369dd.appspot.com",
+            messagingSenderId: "334337354126",
+            appId: "1:334337354126:web:d647adefa26d0df2605cdf"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
+
+    <!-- Scripts -->
+    <script src="../js/home.js" type="module"></script>
+
+    <!-- Axios.js -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+</body>
+</html>
