@@ -544,6 +544,7 @@ input {
 }
 
 .existing-collections {
+    padding: 10px 0px;
     display: flex;
     overflow: auto;
 }
