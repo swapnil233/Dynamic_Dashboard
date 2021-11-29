@@ -67,6 +67,7 @@ const displayMovies = (searchText) => {
 
                                     <div class="add-to-collection">
                                         <span class="material-icons icon" id=${sortedMovies[i].imdbID}>add</span>
+                                        <span class="material-icons-outlined icon" id="info_${sortedMovies[i].imdbID}">info</span>
                                     </div>
                                 </div>
                             </div>
@@ -98,45 +99,6 @@ document.querySelector("#movies").addEventListener("click", (e) => {
         // Movie imdbID
         const movieID = e.target.id;
 
-        // Get movie availability location from the GoWATCH API
-        const options = {
-            method: 'POST',
-            url: 'https://gowatch.p.rapidapi.com/lookup/title/tmdb_id',
-            params: {
-                id: movieID,
-                type: 'movie',
-                country: 'us'
-            },
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'x-rapidapi-host': 'gowatch.p.rapidapi.com',
-                'x-rapidapi-key': '9cc25f3cc7mshf7ba0b928506be6p1e59ebjsn1fb75d4e7818'
-            },
-            data: {
-                id: movieID,
-                type: 'movie',
-                country: 'us'
-            }
-        };
-
-        //   Shows where movies can be found (e.g., Netflix, Amazon, etc.)
-        axios.request(options).then(function (response) {
-            const offers = response.data.offers;
-            const vendors = [];
-
-            //   Get an array of all the vendors
-            offers.forEach(offers => {
-                vendors.push(offers.provider);
-            });
-
-            // Remove all duplicates from the vendors array
-            const uniqueVendors = vendors.filter((vendor, index, self) => vendor && self.indexOf(vendor) === index);
-
-            console.log(uniqueVendors);
-        }).catch(function (error) {
-            console.error(error);
-        });
-
         // Movie title
         const movieTitle = e.target.parentElement.parentElement.children[0].children[0].innerText;
 
@@ -159,6 +121,9 @@ document.querySelector("#movies").addEventListener("click", (e) => {
 
                 // Show the "add to collection" popup modal
                 document.querySelector(".collections-modal").classList.toggle("hidden");
+
+                // Show Title
+                document.querySelector(".collections-modal-header").innerText = "Add to a Collection"
 
                 // Show the movie's poster in the popup modal
                 document.querySelector("#current-movie-poster").src = moviePoster;
@@ -210,6 +175,79 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                     }
                 })
             })
+    }
+
+    // If info button is clicked
+    if (e.target.id.includes("info")) {
+        const imdbID = e.target.id.split("_")[1];
+
+        axios.get('https://www.omdbapi.com/?i=' + imdbID + '&plot=full&apikey=56bdb7b4')
+        .then((res) => {
+
+            const year_released = res.data.Released;
+            const runtime = res.data.Runtime;
+            const ratings = res.data.imdbRating;
+            const vote_count = res.data.imdbVotes;
+            const actors = res.data.Actors.split(",");
+            const director = res.data.Director;
+            const plot = res.data.Plot;
+
+            // Show the "add to collection" popup modal
+            document.querySelector(".collections-modal").classList.toggle("hidden");
+
+            // Show movie title
+            document.querySelector(".collections-modal-header").innerText = res.data.Title;
+
+            // Show the movie's poster in the popup modal
+            document.querySelector("#current-movie-poster").src = res.data.Poster;
+            document.querySelector("#current-movie-poster").alt = res.data.Title + " Poster Image";
+
+            // Show in the modal: year released, runtime, genre, ratings, actors, director(s)
+            // For the actors and directors, show a bubble with their face
+
+
+
+            document.querySelector(".collections-modal-collections").innerHTML = `
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Year Released:</div>
+                <div class="movie-info-content">${year_released}</div>
+            </div>
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Runtime:</div>
+                <div class="movie-info-content">${runtime}</div>
+            </div>
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Rating:</div>
+                <div class="movie-info-content">${ratings}</div>
+            </div>
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Vote Count:</div>
+                <div class="movie-info-content">${vote_count}</div>
+            </div>
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Director(s):</div>
+                <div class="movie-info-content">${director}</div>
+            </div>
+            <div class="movie-info-holder">
+                <div class="movie-info-title">Actors:</div>
+                <div class="movie-info-actors-content"></div>
+            </div>
+            <div class="movie-info-holder plot-container">
+                <div class="movie-info-title plot-heading">Plot:</div>
+                <div class="movie-info-content" style="line-height:1.2">${plot}</div>
+            </div>
+            `
+
+            actors.forEach(actor => {
+                // Remove all spaces from around the actor's name
+                actor.replace(/\s+/g, ' ').trim();
+
+                // Push the actor's name to the popup modal
+                document.querySelector(".movie-info-actors-content").innerHTML += `
+                    <div class="movie-info-content">${actor}</div>
+                `
+            })
+        })
     }
 });
 
