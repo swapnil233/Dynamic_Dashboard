@@ -120,12 +120,23 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
                             <p class="movie-release-date">Released: ${res.data.Year}</p>
                         </div>
                         
-                        <span 
-                        class="material-icons no-overflow icon" 
-                        data-imdbid="${movie_imdbID}" 
-                        data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                        style="color:#f55757; overflow:inherit;">delete
-                        </span>
+                        <div class="icons-container">
+                            <span 
+                            class="material-icons no-overflow icon" 
+                            data-type="delete"
+                            data-imdbid="${movie_imdbID}" 
+                            data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                            style="color:#f55757; overflow:inherit;">delete
+                            </span>
+
+                            <span 
+                            class="material-icons no-overflow icon" 
+                            data-type="watched"
+                            data-imdbid="${movie_imdbID}" 
+                            data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                            style="color:black; overflow:inherit;">radio_button_unchecked
+                            </span>
+                        </div>
                     </div>
                 </div>
                 `
@@ -144,12 +155,22 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
                             <p class="movie-release-date">Released: ${res.data.Year}</p>
                         </div>
                         
-                        <span 
-                        class="material-icons no-overflow icon" 
-                        data-imdbid="${movie_imdbID}" 
-                        data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
-                        style="color:#f55757; overflow:inherit;">delete
-                        </span>
+                        <div class="icons-container">
+                            <span 
+                            class="material-icons no-overflow icon" 
+                            data-type="delete"
+                            data-imdbid="${movie_imdbID}" 
+                            data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                            style="color:#f55757; overflow:inherit;">delete
+                            </span>
+
+                            <span 
+                            class="material-icons no-overflow icon" 
+                            data-type="watched"
+                            data-imdbid="${movie_imdbID}" 
+                            data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
+                            style="color:black; overflow:inherit;">radio_button_unchecked
+                            </span>
                     </div>
                 </div>
                 `
@@ -216,11 +237,11 @@ document.querySelector(".existing-collections").addEventListener("click", (event
 // Delete a movie from a collection
 document.querySelector(".collections-container").addEventListener("click", (e) => {
     e.preventDefault();
-    if (e.target.classList.contains("icon")) {
+    if (e.target.dataset.type === "delete") {
 
         const imdbID = e.target.dataset.imdbid;
         const collectionName = e.target.dataset.fromcollection;
-        const movieName = e.target.parentElement.querySelector(".movie-name").textContent;
+        const movieName = e.target.parentElement.parentElement.querySelector(".movie-name").textContent;
 
         // Get the user's doc ref
         const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
