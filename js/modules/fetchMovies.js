@@ -205,8 +205,6 @@ document.querySelector("#movies").addEventListener("click", (e) => {
             // Show in the modal: year released, runtime, genre, ratings, actors, director(s)
             // For the actors and directors, show a bubble with their face
 
-
-
             document.querySelector(".collections-modal-collections").innerHTML = `
             <div class="movie-info-holder">
                 <div class="movie-info-title">Year Released:</div>
@@ -234,7 +232,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
             </div>
             <div class="movie-info-holder plot-container">
                 <div class="movie-info-title plot-heading">Plot:</div>
-                <div class="movie-info-content" style="line-height:1.2">${plot}</div>
+                <div class="movie-info-content" style="line-height:1.5">${plot}</div>
             </div>
             `
 
@@ -379,8 +377,12 @@ function sortByReleaseYearAscending(a, b) {
     return 0;
 }
 
-// Close the add to collection modal when the 'X' is clicked
+// Close the add to collection modal when the 'X' is clicked & scroll it back to the top.
 document.querySelector("#close-collections-modal").addEventListener("click", () => {
+    // Scroll the .collections-modal-collections div to the top
+    document.querySelector(".collections-modal-collections").scrollTop = 0;
+
+    // Close the modal & clear out the contents
     document.querySelector(".collections-modal").classList.toggle("hidden");
     document.querySelector(".collections-modal-collections").innerHTML = "";
 });
