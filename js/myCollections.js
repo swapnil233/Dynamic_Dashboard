@@ -171,7 +171,7 @@ const updateMovieElement = (movie_imdbID, collection_name, res, is_filtered) => 
                             data-fromcollection="${collection_name.replace(/\s+/g, ' ').trim()}" 
                             style="color:black; overflow:inherit;">radio_button_unchecked
                             </span>
-                    </div>
+                        </div>
                 </div>
                 `
         }
@@ -195,6 +195,12 @@ document.querySelector(".existing-collections").addEventListener("click", (event
         const collection_name = event.target.textContent.replace(/\s+/g, ' ').trim();
         const collection = filterMovies(movies_collections_object, collection_name);
 
+        // Don't make an API call if the collection is already being displayed
+        if (event.target.classList.contains("active") || event.target.parentElement.classList.contains("active")) {
+            return;
+        }
+
+        // Otherwise...
         // Remove the active class from all collection name containers
         document.querySelectorAll(".collection-name-container").forEach(collection_name_container => {
             collection_name_container.classList.remove("active");
