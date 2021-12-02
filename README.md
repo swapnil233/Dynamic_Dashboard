@@ -21,7 +21,7 @@ In this website, users can:
 11. Delete collections
 12. Delete individual movies from collections 
 
-# Planned Features for the Future:
+# Coming Soon:
 1. Adding friends and seeing their collections
 2. ~Ability to see a movie's entire information when clicked~
 3. Renaming Collections
