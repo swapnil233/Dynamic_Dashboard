@@ -15,14 +15,15 @@ In this website, users can:
 	c. Display Picture
 5. Verify their email address
 6. Search up movies and TV shows
-7. Create new movie collections
-8. Add movies to their movie collections
-9. Delete collections
-10. Delete individual movies from collections 
+7. Look up info about the movie/show, such as release date, runtime, ratings, vote count, director(s), actors, and the plot.
+9. Create new collections
+10. Add movies/shows to their movie collections
+11. Delete collections
+12. Delete individual movies from collections 
 
-# Planned Features for the Future:
+# Coming Soon:
 1. Adding friends and seeing their collections
-2. Ability to see a movie's entire information when clicked
+2. ~Ability to see a movie's entire information when clicked~
 3. Renaming Collections
 4. Moving movies inside collections
 5. See where movie/show is available to steam or buy (e.g., Netflix, Hulu, etc.)
