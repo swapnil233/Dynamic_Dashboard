@@ -573,6 +573,12 @@ input {
     height: 100%;
 }
 
+.showing-movies-for {
+    max-width: 1600px;
+    width: 600px;
+    margin: 0 auto;
+}
+
 /* Screen widths 1000px & down */
 @media (max-width: 1000px) {
     .collections-modal-wrapper {
@@ -708,7 +714,7 @@ input {
     .collections-modal-content-wrapper {
         overflow: hidden;
         margin: 0;
-        padding: 40px 0 0 0;
+        padding: 40px 20px;
     }
 
     .collections-modal-collections {
