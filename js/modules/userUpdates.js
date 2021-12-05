@@ -37,8 +37,6 @@ const updateDp = async (currentUser) => {
                 errorPopup("File size must be less than 10mb", 5000);
                 return;
             }
-            console.log("Image passed requirements")
-            console.log("Uploading picture");
 
             // Create storage ref & put the file in it
             const userPicRef = storage.ref("users/" + currentUser.uid + "/profileImage");
@@ -75,15 +73,25 @@ const updateDp = async (currentUser) => {
 
 // Update username
 const updateUsername = async (newName) => {
-    await auth.currentUser.updateProfile({
-        displayName: newName
-    })
+    // 100 characters max for display name
+    if (newName.length > 50) {
+        // Create a pop-up to notify user that the file is too large
+        errorPopup("Display name must be less than 50 characters", 5000);
+        return;
+    } else {
+        await auth.currentUser.updateProfile({
+            displayName: newName
+        })
+    
+        // Once the name has been updated, append it to the user dropdown menu
+        updateDisplayNameInDOM(auth.currentUser)
+    
+        // Update username in placeholder
+        document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
 
-    // Once the name has been updated, append it to the user dropdown menu
-    updateDisplayNameInDOM(auth.currentUser)
-
-    // Update username in placeholder
-    document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
+        // Success message
+        successPopup("Username updated successfully!")
+    }
 }
 
 // Verify Email Address

@@ -135,9 +135,6 @@ const openAndCloseModal = (currentUser) => {
                     }, {
                         merge: true
                     })
-                    
-                    // Success message
-                    successPopup("Username updated successfully!")
                 })
             }
 

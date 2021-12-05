@@ -209,6 +209,11 @@ input {
     padding: 12px 16px;
     text-decoration: none;
     font-weight: 300;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-content a:first-of-type {
+    border-top: 1px solid #ddd;
 }
 
 .dropdown-content a:hover {
@@ -262,7 +267,8 @@ input {
 .profile-update-header-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
 }
 
@@ -632,7 +638,7 @@ input {
     }
 
     .profile-update-header-wrapper>h1 {
-        font-size: 18px;
+        font-size: 25px;
         margin-bottom: 10px;
     }
 

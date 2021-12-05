@@ -202,8 +202,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
             document.querySelector("#current-movie-poster").src = res.data.Poster;
             document.querySelector("#current-movie-poster").alt = res.data.Title + " Poster Image";
 
-            // Show in the modal: year released, runtime, genre, ratings, actors, director(s)
-            // For the actors and directors, show a bubble with their face
+            // Show in the modal: year released, runtime, genre, ratings, actors, director(s), plot and vote count
 
             document.querySelector(".collections-modal-collections").innerHTML = `
             <div class="movie-info-holder">
@@ -235,7 +234,7 @@ document.querySelector("#movies").addEventListener("click", (e) => {
                 <div class="movie-info-content" style="line-height:1.5">${plot}</div>
             </div>
             `
-
+            
             actors.forEach(actor => {
                 // Remove all spaces from around the actor's name
                 actor.replace(/\s+/g, ' ').trim();
