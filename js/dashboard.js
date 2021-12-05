@@ -12,7 +12,8 @@ import {
     updateDp,
     updateUsername,
     updateDisplayNameInDOM,
-    verifyEmail
+    verifyEmail,
+    checkNotifications
 } from "./modules/userUpdates.js"
 
 auth.onAuthStateChanged((user) => {
@@ -44,6 +45,9 @@ auth.onAuthStateChanged((user) => {
         } else {
             document.querySelector(".verified").classList.toggle("show")
         }
+
+        // Notifications
+        checkNotifications();
 
         // Logout
         document.getElementById('logout_btn').addEventListener("click", (e) => {

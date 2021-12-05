@@ -210,6 +210,13 @@ input {
     text-decoration: none;
     font-weight: 300;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-content span {
+    margin-left: 0;
+    margin-right: 10px;
 }
 
 .dropdown-content a:first-of-type {

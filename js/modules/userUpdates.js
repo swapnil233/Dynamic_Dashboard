@@ -82,10 +82,10 @@ const updateUsername = async (newName) => {
         await auth.currentUser.updateProfile({
             displayName: newName
         })
-    
+
         // Once the name has been updated, append it to the user dropdown menu
         updateDisplayNameInDOM(auth.currentUser)
-    
+
         // Update username in placeholder
         document.querySelector("#profile_name").placeholder = auth.currentUser.displayName;
 
@@ -174,7 +174,7 @@ const createNewCollection = () => {
 
 // New Collection Name Error Checks
 const newCollectionNameErrorChecks = (newCollectionName) => {
-    
+
     // Use regex to check if newCollectionName is just spaces   
     if (newCollectionName.match(/^\s*$/)) {
         errorPopup("Collection name cannot be empty", 5000);
@@ -198,6 +198,26 @@ const newCollectionNameErrorChecks = (newCollectionName) => {
 
 // Edit Collections (delete and rename)
 
+// Show how many notifications there are
+const checkNotifications = () => {
+    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
+    // If user doesn't have a notifications document in their firebase
+    userDocRef.get().then((doc) => {
+        if (!doc.data().notifications) {
+            document.querySelector("#check-notificatios-btn").innerHTML += "No new notifications";
+            return
+        }
+
+        const notifications = doc.data().notifications;
+
+        if (notifications.length === 0) {
+            document.querySelector("#check-notificatios-btn").innerHTML = "No new notifications";
+        } else {
+            document.querySelector("#check-notificatios-btn").innerHTML += `${Object.keys(notifications.friend_requests).length} new notifications`;
+        }
+    })
+}
 
 export {
     file,
@@ -206,5 +226,6 @@ export {
     updateDisplayNameInDOM,
     verifyEmail,
     createNewCollection,
-    newCollectionNameErrorChecks
+    newCollectionNameErrorChecks,
+    checkNotifications
 }
