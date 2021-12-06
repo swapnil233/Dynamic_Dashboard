@@ -199,23 +199,64 @@ const newCollectionNameErrorChecks = (newCollectionName) => {
 // Edit Collections (delete and rename)
 
 // Show how many notifications there are
+
+/*
+Notifications Schema:
+
+"notifications": {
+    "friend_requests": {
+        "VJ04Lz2q05RLWzMKsSVt7rmJRx42": {
+            accepted: false
+        }
+    }
+*/
+
 const checkNotifications = () => {
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
     // If user doesn't have a notifications document in their firebase
     userDocRef.get().then((doc) => {
         if (!doc.data().notifications) {
+            // Show no notifications
             document.querySelector("#check-notificatios-btn").innerHTML += "No new notifications";
+
+            // Create a new notifications document
+            userDocRef.set({
+                notifications: {
+                    friend_requests: {}
+                }
+            }, {
+                merge: true
+            })
+
             return
         }
 
+        // User's notifications document
         const notifications = doc.data().notifications;
 
-        if (notifications.length === 0) {
-            document.querySelector("#check-notificatios-btn").innerHTML = "No new notifications";
+        // User's notifications count
+        let notifications_count = 0;
+
+        // Loop through notifications object, where each key is a notification type, and each key's value is an object. 
+        Object.keys(notifications).forEach((key) => {
+            // Loop through each notification object
+            Object.keys(notifications[key]).forEach((notification) => {
+                // If the notification has not been accepted/seen, increment notifications_count
+                if (notifications[key][notification].accepted === false) {
+                    notifications_count++;
+                }
+            })
+        })
+
+        // Display notifications count in the dropdown menu
+        if (notifications_count === 0) {
+            document.querySelector("#check-notificatios-btn").innerHTML += "No new notifications";
         } else {
-            document.querySelector("#check-notificatios-btn").innerHTML += `${Object.keys(notifications.friend_requests).length} new notifications`;
+            document.querySelector("#check-notificatios-btn").innerHTML += `${notifications_count} new notifications`;
         }
+    }).catch((error) => {
+        errorPopup(error.message, 5000);
     })
 }
 
