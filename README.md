@@ -30,18 +30,6 @@ In this website, users can:
 
 # Showcase:
 
-Login Page:
-
-![Imgur](https://imgur.com/R0Ytz2N.png)
-
-Signup Page:
-
-![Imgur](https://imgur.com/QFCCPX2.png)
-
-Forgot Password Page:
-
-![Imgur](https://imgur.com/e2ZOWb6.png)
-
 Searching up a Movie:
 
 ![Imgur](https://imgur.com/Esi0y4a.png)
@@ -61,3 +49,19 @@ Your Profile Settings:
 Deleting Your Collections:
 
 ![Imgur](https://imgur.com/rsA6OjT.png)
+
+Viewing Movie/Show's Information:
+
+![Imgur](https://imgur.com/SxWLNIO.png)
+
+Login Page:
+
+![Imgur](https://imgur.com/R0Ytz2N.png)
+
+Signup Page:
+
+![Imgur](https://imgur.com/QFCCPX2.png)
+
+Forgot Password Page:
+
+![Imgur](https://imgur.com/e2ZOWb6.png)
