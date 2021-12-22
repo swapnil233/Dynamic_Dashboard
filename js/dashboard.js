@@ -13,7 +13,8 @@ import {
     updateUsername,
     updateDisplayNameInDOM,
     verifyEmail,
-    checkNotifications
+    checkNotificationCount,
+    notificationsPopup
 } from "./modules/userUpdates.js"
 
 auth.onAuthStateChanged((user) => {
@@ -46,8 +47,8 @@ auth.onAuthStateChanged((user) => {
             document.querySelector(".verified").classList.toggle("show")
         }
 
-        // Notifications
-        checkNotifications();
+        // Notification count
+        checkNotificationCount();
 
         // Logout
         document.getElementById('logout_btn').addEventListener("click", (e) => {
@@ -207,3 +208,12 @@ document.getElementById("profile-dropdown").addEventListener("click", (e) => {
         document.getElementById("profile-dropdown").children[1].children[0].innerHTML = "menue"
     }
 }) 
+
+document.getElementById("check-notificatios-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Hide/show the notification popup
+    document.querySelector("#notifications-popup").innerHTML = "";
+    document.querySelector(".notifications-modal").classList.toggle("hidden");
+    notificationsPopup()
+})

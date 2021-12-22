@@ -211,7 +211,7 @@ Notifications Schema:
     }
 */
 
-const checkNotifications = () => {
+const checkNotificationCount = () => {
     const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
 
     // If user doesn't have a notifications document in their firebase
@@ -260,6 +260,69 @@ const checkNotifications = () => {
     })
 }
 
+const notificationsPopup = () => {
+    // Get the user's doc
+    const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid);
+
+    // Get the user's notifications document
+    userDocRef.get().then((doc) => {
+        // User's notifications document
+        const notifications = doc.data().notifications;
+
+        // User's notifications count
+        let notifications_count = 0;
+
+        // Loop through notifications object, where each key is a notification type, and each key's value is an object.
+        Object.keys(notifications).forEach((key) => {
+            // Loop through each notification object
+            Object.keys(notifications[key]).forEach((notification) => {
+                // If the notification has not been accepted/seen, increment notifications_count
+                if (notifications[key][notification].accepted === false) {
+                    notifications_count++;
+                }
+            })
+        })
+
+        // If there are no notifications, show a message
+        if (notifications_count === 0) {
+            document.querySelector("#notifications-popup").innerHTML += `
+            <div class="notifications-popup-container">
+                <p class="notifications-popup-message">
+                    No new notifications
+                </p>
+            </div>
+            `
+        } else {
+            // Loop through notifications object, where each key is a notification type, and each key's value is an object.
+            Object.keys(notifications).forEach((key) => {
+                // Loop through each notification object
+                Object.keys(notifications[key]).forEach((notification) => {
+                    // If the notification has not been accepted/seen, display it
+                    if (notifications[key][notification].accepted === false) {
+                        // Get the notification's sender's name
+                        firebase.firestore().collection("users").doc(notification).get().then((doc) => {
+                            // Display the notification
+                            document.querySelector("#notifications-popup").innerHTML += `
+                            <div class="notifications-popup-container">
+                                <p class="notifications-popup-message">
+                                    ${doc.data().name} sent you a friend request
+                                </p>
+                                <div class="notifications-popup-buttons">
+                                    <button class="notifications-popup-accept-btn">Accept</button>
+                                    <button class="notifications-popup-decline-btn">Decline</button>
+                                </div>
+                            </div>
+                            `
+                        })
+                    }
+                })
+            })
+        }
+    }).catch((error) => {
+        errorPopup(error.message, 5000);
+    })
+}
+
 export {
     file,
     updateDp,
@@ -268,5 +331,6 @@ export {
     verifyEmail,
     createNewCollection,
     newCollectionNameErrorChecks,
-    checkNotifications
+    checkNotificationCount,
+    notificationsPopup
 }
