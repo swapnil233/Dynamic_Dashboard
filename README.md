@@ -30,6 +30,10 @@ In this website, users can:
 
 # Showcase:
 
+<img width="1080" alt="08" src="https://user-images.githubusercontent.com/36313876/179436372-b9c3bb4c-7a93-407a-8ea4-ad5ad2addfc0.png">
+
+![01](https://user-images.githubusercontent.com/36313876/179436428-69cae4f0-201d-4714-a406-68b8b1081903.png)
+
 Searching up a Movie:
 
 ![Imgur](https://imgur.com/Esi0y4a.png)
