@@ -1,38 +1,35 @@
 // Import error and success messages from ./modules/interactions.js
+import { successPopup, errorPopup } from "./modules/interactions.js";
 
-import { successPopup, errorPopup } from './modules/interactions.js'; 
+const loginBtn = document.getElementById("login_btn");
+const loader = document.querySelector(".loader");
+const btnText = document.querySelector(".btn_text");
 
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        window.location.replace('./pages/dashboard.html')
-    } else {
-        console.log("no user signed in")
-    }
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    window.location.replace("./pages/dashboard.html");
+  } else {
+    console.log("No user signed in");
+  }
 });
 
-document.getElementById('login_btn').addEventListener('click', (e) => {
-    e.preventDefault();
+loginBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
 
-    // Start loading animation
-    document.querySelector(".loader").classList.toggle("hidden")
-    document.querySelector(".btn_text").classList.toggle("hidden")
+  toggleLoadingAnimation();
 
-    // Get email and pass values
-    const user_email = document.getElementById('user_email').value;
-    const user_pass = document.getElementById('user_pass').value;
+  const userEmail = document.getElementById("user_email").value;
+  const userPass = document.getElementById("user_pass").value;
 
-    // Log In
-    firebase.auth().signInWithEmailAndPassword(user_email, user_pass)
-        // If sign-in is not successful
-        .catch((error) => {
-            // Stop loading animation & revert to "Log In" prompt
-            document.querySelector(".loader").classList.toggle("hidden")
-            document.querySelector(".btn_text").classList.toggle("hidden")
-
-            // Show error message
-            errorPopup(error.message, 10000)
-
-            // Alert the user.
-            // window.alert(error.message)
-        });
+  try {
+    await firebase.auth().signInWithEmailAndPassword(userEmail, userPass);
+  } catch (error) {
+    toggleLoadingAnimation();
+    errorPopup(error.message, 10000);
+  }
 });
+
+function toggleLoadingAnimation() {
+  loader.classList.toggle("hidden");
+  btnText.classList.toggle("hidden");
+}
